@@ -1,4 +1,4 @@
-// Copyright 2023 The Cloudprober Authors.
+// Copyright 2023 Manu Garg.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import (
 )
 
 var (
-	//	homeURL      = flag.String("home_url", "", "Home URL for the documentation.")
 	outFmt        = flag.String("format", "yaml", "textpb or yaml")
 	outDir        = flag.String("out_dir", "docs", "Output directory for the documentation.")
 	protoRootDir  = flag.String("proto_root_dir", ".", "Root directory for the proto files.")

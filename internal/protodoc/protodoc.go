@@ -15,19 +15,11 @@
 package protodoc
 
 import (
-	"flag"
 	"html/template"
 	"strings"
 
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
-)
-
-var (
-	homeURL = flag.String("home_url", "", "Home URL for the documentation.")
-	// outFmt  = flag.String("format", "yaml", "textpb or yaml")
-	// outDir       = flag.String("out_dir", "docs", "Output directory for the documentation.")
-	// protoRootDir = flag.String("proto_root_dir", ".", "Root directory for the proto files.")
 )
 
 var Files = &protoregistry.Files{}

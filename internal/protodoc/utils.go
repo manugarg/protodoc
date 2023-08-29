@@ -15,9 +15,14 @@
 package protodoc
 
 import (
+	"flag"
 	"strings"
 
 	"github.com/cloudprober/cloudprober/logger"
+)
+
+var (
+	homeURL = flag.String("home_url", "", "Home URL for the documentation.")
 )
 
 func kindToURL(kind string) string {
