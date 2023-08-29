@@ -21,22 +21,17 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-func TestMain(m *testing.M) {
-	BuildFileDescRegistry(Files, "testdata", "github.com/manugarg/protodoc", nil)
-	m.Run()
-}
-
 func TestFinalToToken(t *testing.T) {
+	const fldName = "cloudprober.probes.ProbeDef.interval_msec"
+
 	tests := []struct {
 		name      string
-		fldName   string
 		f         Formatter
 		nocomment bool
 		want      *Token
 	}{
 		{
 			name:      "no comment",
-			fldName:   "cloudprober.probes.ProbeDef.interval_msec",
 			nocomment: true,
 			want: &Token{
 				Kind:    "int32",
@@ -45,12 +40,8 @@ func TestFinalToToken(t *testing.T) {
 			},
 		},
 		{
-			name:    "not yaml",
-			fldName: "cloudprober.probes.ProbeDef.interval_msec",
-			f: Formatter{
-				yaml:   false,
-				prefix: "",
-			},
+			name:      "not yaml",
+			f:         Formatter{},
 			nocomment: false,
 			want: &Token{
 				Kind:    "int32",
@@ -59,12 +50,8 @@ func TestFinalToToken(t *testing.T) {
 			},
 		},
 		{
-			name:    "yaml",
-			fldName: "cloudprober.probes.ProbeDef.interval_msec",
-			f: Formatter{
-				yaml:   true,
-				prefix: "",
-			},
+			name:      "yaml",
+			f:         Formatter{}.WithYAML(true),
 			nocomment: false,
 			want: &Token{
 				Kind:    "int32",
@@ -73,12 +60,8 @@ func TestFinalToToken(t *testing.T) {
 			},
 		},
 		{
-			name:    "yaml with prefix",
-			fldName: "cloudprober.probes.ProbeDef.interval_msec",
-			f: Formatter{
-				yaml:   true,
-				prefix: "  ",
-			},
+			name:      "yaml with prefix",
+			f:         Formatter{}.WithYAML(true).WithPrefix("  "),
 			nocomment: false,
 			want: &Token{
 				Kind:    "int32",
@@ -91,7 +74,7 @@ func TestFinalToToken(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			desc, err := Files.FindDescriptorByName(protoreflect.FullName(tt.fldName))
+			desc, err := Files.FindDescriptorByName(protoreflect.FullName(fldName))
 			assert.NoError(t, err)
 
 			fld := desc.(protoreflect.FieldDescriptor)

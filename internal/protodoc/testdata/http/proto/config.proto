@@ -4,5 +4,11 @@ package cloudprober.probes.http;
 
 option go_package = "github.com/manugarg/protodoc/http/proto";
 
+message Header {
+    required string name = 1;
+    required string value = 2;
+}
+
 message ProbeConf {
+    repeated Header header = 1;
 }

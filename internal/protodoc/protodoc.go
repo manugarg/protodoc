@@ -90,32 +90,6 @@ func finalToken(fld protoreflect.FieldDescriptor, f Formatter, nocomment bool) *
 	return tok
 }
 
-func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[string]bool) *Token {
-	ed := fld.Enum()
-	if ed != nil {
-		name := string(fld.Name())
-		if f.yaml {
-			name = fld.JSONName()
-		}
-		if (*done)[string(ed.Name())] {
-			return nil
-		}
-		(*done)[string(ed.Name())] = true
-		return formatEnum(ed, name, f)
-	}
-
-	oo := fld.ContainingOneof()
-	if oo != nil {
-		if (*done)[string(oo.Name())] {
-			return nil
-		}
-		(*done)[string(oo.Name())] = true
-		return formatOneOf(oo, f)
-	}
-
-	return finalToken(fld, f, false)
-}
-
 func dumpExtendedMsg(fld protoreflect.FieldDescriptor, f Formatter) ([]*Token, []protoreflect.FullName) {
 	var nextMessageName []protoreflect.FullName
 	var lines []*Token
