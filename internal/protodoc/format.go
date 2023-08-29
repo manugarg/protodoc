@@ -93,10 +93,6 @@ func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[strin
 		if f.yaml {
 			name = fld.JSONName()
 		}
-		if (*done)[string(ed.Name())] {
-			return nil
-		}
-		(*done)[string(ed.Name())] = true
 		return formatEnum(ed, name, f)
 	}
 

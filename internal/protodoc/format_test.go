@@ -85,6 +85,8 @@ func TestFinalToToken(t *testing.T) {
 
 func TestFormatOneOf(t *testing.T) {
 	const fldName = "cloudprober.probes.ProbeDef.http_probe"
+	// Used for duplication test for oneof fileds.
+	const fldName2 = "cloudprober.probes.ProbeDef.dns_probe"
 
 	tests := []struct {
 		name string
@@ -127,10 +129,18 @@ func TestFormatOneOf(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			desc, err := Files.FindDescriptorByName(protoreflect.FullName(fldName))
 			assert.NoError(t, err)
+			fld := desc.(protoreflect.FieldDescriptor)
 
-			oofd := desc.(protoreflect.FieldDescriptor).ContainingOneof()
+			done := map[string]bool{}
+			assert.Equal(t, tt.want, fieldToToken(fld, tt.f, &done))
 
-			assert.Equal(t, tt.want, formatOneOf(oofd, tt.f))
+			// Make sure we get nil for the second field from same oneof.
+			desc, err = Files.FindDescriptorByName(protoreflect.FullName(fldName2))
+			assert.NoError(t, err)
+			fld = desc.(protoreflect.FieldDescriptor)
+			assert.Nil(t, fieldToToken(fld, tt.f, &done))
+
+			assert.Equal(t, tt.want, formatOneOf(fld.ContainingOneof(), tt.f))
 		})
 	}
 }
@@ -167,9 +177,12 @@ func TestFormatEnum(t *testing.T) {
 			desc, err := Files.FindDescriptorByName(protoreflect.FullName(fldName))
 			assert.NoError(t, err)
 
-			ed := desc.(protoreflect.FieldDescriptor).Enum()
+			fld := desc.(protoreflect.FieldDescriptor)
 
-			assert.Equal(t, tt.want, formatEnum(ed, "type", tt.f))
+			done := map[string]bool{}
+			assert.Equal(t, tt.want, fieldToToken(fld, tt.f, &done))
+
+			assert.Equal(t, tt.want, formatEnum(fld.Enum(), "type", tt.f))
 		})
 	}
 }
