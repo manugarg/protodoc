@@ -1,0 +1,83 @@
+syntax = "proto2";
+
+package cloudprober.probes;
+
+import "github.com/manugarg/protodoc/http/proto/config.proto";
+
+option go_package = "github.com/manugarg/protodoc/";
+
+// Next tag: 101
+message ProbeDef {
+  required string name = 1;
+
+  enum Type {
+    HTTP = 1;
+    TCP = 2;
+
+    // One of the extension probe types. See "extensions" below for more
+    // details.
+    EXTENSION = 98;
+
+    // USER_DEFINED probe type is for a one off probe that you want to compile
+    // into cloudprober, but you don't expect it to be reused. If you expect
+    // it to be reused, you should consider adding it using the extensions
+    // mechanism.
+    USER_DEFINED = 99;
+  }
+  required Type type = 2;
+
+  // Interval between two probe runs in milliseconds.
+  // Only one of "interval" and "inteval_msec" should be defined.
+  // Default interval is 2s.
+  optional int32 interval_msec = 4;
+
+  // Interval between two probe runs in string format, e.g. 10s.
+  // Only one of "interval" and "inteval_msec" should be defined.
+  // Default interval is 2s.
+  optional string interval = 16;
+
+  // Timeout for each probe in milliseconds
+  // Only one of "timeout" and "timeout_msec" should be defined.
+  // Default timeout is 1s.
+  optional int32 timeout_msec = 5;
+
+  // Timeout for each probe in string format, e.g. 10s.
+  // Only one of "timeout" and "timeout_msec" should be defined.
+  // Default timeout is 1s.
+  optional string timeout = 17;
+
+  // Additional labels to add to the probe results. Label's value can either be
+  // static or can be derived from target's labels.
+  //
+  // Example:
+  //   additional_label {
+  //     key: "src_zone"
+  //     value: "{{.zone}}"
+  //   }
+  //   additional_label {
+  //     key: "app"
+  //     value: "@target.label.app@"
+  //   }
+  // (See a more detailed example at: examples/additional_label/cloudprober.cfg)
+  repeated AdditionalLabel additional_label = 14;
+
+  oneof probe {
+    http.ProbeConf http_probe = 20;
+    // This field's contents are passed on to the user defined probe, registered
+    // for this probe's name through probes.RegisterUserDefined().
+    string user_defined_probe = 99;
+  }
+
+  // Extensions allow users to to add new probe types (for example, a probe type
+  // that utilizes a custom protocol) in a systematic manner.
+  extensions 200 to max;
+}
+
+message AdditionalLabel {
+  required string key = 1;
+
+  // Value can either be a static value or can be derived from target's labels.
+  // To get value from target's labels, use target.labels.<target's label key>
+  // as value.
+  required string value = 2;
+}
