@@ -28,13 +28,19 @@ import (
 
 var (
 	outFmt        = flag.String("format", "yaml", "textpb or yaml")
-	outDir        = flag.String("out_dir", "docs", "Output directory for the documentation.")
+	outDir        = flag.String("out_dir", "proto_docs", "Output directory for the documentation.")
 	protoRootDir  = flag.String("proto_root_dir", ".", "Root directory for the proto files.")
 	packagePrefix = flag.String("package_prefix", "", "Package prefix to resolve import paths")
 )
 
 func main() {
 	flag.Parse()
+
+	if err := os.MkdirAll(*outDir, 0755); err != nil {
+		if !os.IsExist(err) {
+			panic(err)
+		}
+	}
 
 	l := &logger.Logger{}
 
@@ -94,4 +100,5 @@ func main() {
 		template.Must(template.New("package").Parse(protodoc.PackageTmpl)).Execute(outF, toks)
 	}
 
+	l.Infof("Documentation generated in %s", *outDir)
 }
