@@ -21,9 +21,12 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-func TestFinalToToken(t *testing.T) {
+func TestMain(m *testing.M) {
 	BuildFileDescRegistry(Files, "testdata", "github.com/manugarg/protodoc", nil)
+	m.Run()
+}
 
+func TestFinalToToken(t *testing.T) {
 	tests := []struct {
 		name      string
 		fldName   string
@@ -93,6 +96,97 @@ func TestFinalToToken(t *testing.T) {
 
 			fld := desc.(protoreflect.FieldDescriptor)
 			assert.Equal(t, tt.want, finalToken(fld, tt.f, tt.nocomment))
+		})
+	}
+}
+
+func TestFormatOneOf(t *testing.T) {
+	const fldName = "cloudprober.probes.ProbeDef.http_probe"
+
+	tests := []struct {
+		name string
+		f    Formatter
+		want *Token
+	}{
+		{
+			name: "default",
+			want: &Token{
+				Kind: "oneof",
+				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+&nbsp;user_defined_probe &lt;string&gt;]`,
+			},
+		},
+		{
+			name: "yaml",
+			f: Formatter{
+				yaml: true,
+			},
+			want: &Token{
+				Kind: "oneof",
+				TextHTML: `[httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+&nbsp;userDefinedProbe &lt;string&gt;]`,
+			},
+		},
+		{
+			name: "with-prefix",
+			f: Formatter{
+				prefix: "  ",
+			},
+			want: &Token{
+				Kind:   "oneof",
+				Prefix: "  ",
+				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;user_defined_probe &lt;string&gt;]`,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			desc, err := Files.FindDescriptorByName(protoreflect.FullName(fldName))
+			assert.NoError(t, err)
+
+			oofd := desc.(protoreflect.FieldDescriptor).ContainingOneof()
+
+			assert.Equal(t, tt.want, formatOneOf(oofd, tt.f))
+		})
+	}
+}
+
+func TestFormatEnum(t *testing.T) {
+	const fldName = "cloudprober.probes.ProbeDef.type"
+
+	tests := []struct {
+		name string
+		f    Formatter
+		want *Token
+	}{
+		{
+			name: "default",
+			want: &Token{
+				Kind: "enum",
+				Text: "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
+			},
+		},
+		{
+			name: "with-prefix",
+			f: Formatter{
+				prefix: "  ",
+			},
+			want: &Token{
+				Kind:   "enum",
+				Prefix: "  ",
+				Text:   "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			desc, err := Files.FindDescriptorByName(protoreflect.FullName(fldName))
+			assert.NoError(t, err)
+
+			ed := desc.(protoreflect.FieldDescriptor).Enum()
+
+			assert.Equal(t, tt.want, formatEnum(ed, "type", tt.f))
 		})
 	}
 }

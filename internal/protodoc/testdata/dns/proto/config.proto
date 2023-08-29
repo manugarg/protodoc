@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package cloudprober.probes.dns;
+
+option go_package = "github.com/manugarg/protodoc/dns/proto";
+
+message ProbeConf {
+}
