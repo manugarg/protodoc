@@ -20,6 +20,13 @@ jobs:
           path: cloudprober
           fetch-depth: 1
 
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: go.mod
+          cache: true
+        id: go
+
       - name: Setup public worktree
         run: git worktree add docs gh-pages
 
