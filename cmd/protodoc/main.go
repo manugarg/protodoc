@@ -33,6 +33,25 @@ var (
 	packagePrefix = flag.String("package_prefix", "", "Package prefix to resolve import paths")
 )
 
+type msgTokens struct {
+	Name   string
+	Tokens []*protodoc.Token
+}
+
+var docTmpl = template.Must(template.New("index").Parse(protodoc.DocTmpl))
+
+func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
+	outF, err := os.OpenFile(filepath.Join(*outDir, pkg+".html"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		l.Criticalf("Error opening output file: %v", err)
+	}
+	defer outF.Close()
+
+	if err := docTmpl.Execute(outF, mTokens); err != nil {
+		l.Criticalf("Error executing template: %v", err)
+	}
+}
+
 func main() {
 	flag.Parse()
 
@@ -55,13 +74,11 @@ func main() {
 	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml")
 
 	toks, nextMessageNames := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(2))
-	outF, err := os.OpenFile(filepath.Join(*outDir, "index.html"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		l.Criticalf("Error opening output file: %v", err)
-	}
-	template.Must(template.New("index").Parse(protodoc.IndexTmpl)).Execute(outF, protodoc.ProcessTokensForHTML(toks))
+	mTokens := &msgTokens{Name: "", Tokens: protodoc.ProcessTokensForHTML(toks)}
+	writeDoc("index", []*msgTokens{mTokens}, l)
 
 	msgToDoc := map[string][]*protodoc.Token{}
+
 	for len(nextMessageNames) > 0 {
 		var nextLoop []protoreflect.FullName
 		for _, msgName := range nextMessageNames {
@@ -69,6 +86,7 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
+
 			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(1).WithPrefix("  "))
 			msgToDoc[string(msgName)] = toks
 			nextLoop = append(nextLoop, next...)
@@ -82,22 +100,14 @@ func main() {
 	}
 
 	packages := protodoc.ArrangeIntoPackages(msgs, l)
-	type msgTokens struct {
-		Name   string
-		Tokens []*protodoc.Token
-	}
 
 	for pkg, msgs := range packages {
 		sort.Strings(msgs)
-		toks := []*msgTokens{}
+		mtoks := []*msgTokens{}
 		for _, msg := range msgs {
-			toks = append(toks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg])})
+			mtoks = append(mtoks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg])})
 		}
-		outF, err := os.OpenFile(filepath.Join(*outDir, pkg+".html"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
-		if err != nil {
-			l.Criticalf("Error opening output file: %v", err)
-		}
-		template.Must(template.New("package").Parse(protodoc.PackageTmpl)).Execute(outF, toks)
+		writeDoc(pkg, mtoks, l)
 	}
 
 	l.Infof("Documentation generated in %s", *outDir)

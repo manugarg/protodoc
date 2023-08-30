@@ -36,7 +36,11 @@ func formatComment(fld protoreflect.FieldDescriptor, f Formatter) string {
 	comment := wf.GetSourceInfo().GetLeadingComments()
 	if comment != "" && strings.TrimSpace(comment) != "" {
 		var temp []string
-		for _, line := range strings.Split(comment, "\n") {
+		lines := strings.Split(comment, "\n")
+		for i, line := range lines {
+			if i == len(lines)-1 && strings.TrimSpace(line) == "" {
+				continue
+			}
 			temp = append(temp, f.prefix+"#"+line)
 		}
 		comment = strings.Join(temp, "\n")
@@ -59,7 +63,7 @@ func formatOneOf(ood protoreflect.OneofDescriptor, f Formatter) *Token {
 	text := "["
 	for i, tok := range oneofFields {
 		if i != 0 && i%2 == 0 {
-			text += "<br>\n" + strings.ReplaceAll(f.prefix+" ", " ", "&nbsp;")
+			text += "\n" + strings.ReplaceAll(f.prefix+" ", " ", "&nbsp;")
 		}
 		if i == len(oneofFields)-1 {
 			text += tok + "]"
@@ -106,4 +110,33 @@ func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[strin
 	}
 
 	return finalToken(fld, f, false)
+}
+
+func ProcessTokensForHTML(toks []*Token) []*Token {
+	for _, tok := range toks {
+		tok.URL = kindToURL(tok.Kind)
+
+		if tok.MessageHeader {
+			tok.Suffix = " {"
+			if tok.yaml {
+				tok.Suffix = ":"
+			}
+			tok.Sep = " "
+		} else {
+			if tok.Default != "" {
+				tok.Suffix = template.HTML(" | default: " + tok.Default)
+			}
+			tok.Sep = ": "
+		}
+
+		if tok.TextHTML == "" {
+			tok.TextHTML = template.HTML(template.HTMLEscapeString(tok.Text))
+		}
+
+		tok.ExtraLine = "\n"
+		if tok.NoExtraLine {
+			tok.ExtraLine = ""
+		}
+	}
+	return toks
 }

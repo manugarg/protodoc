@@ -15,7 +15,6 @@
 package protodoc
 
 import (
-	"html/template"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -49,9 +48,10 @@ func TestDumpMessage(t *testing.T) {
 			f:    Formatter{}.WithDepth(2),
 			wantToks: []*Token{
 				{
-					Kind:   "cloudprober.probes.http.Header",
-					Text:   "header",
-					Suffix: template.HTML(" {"),
+					Kind:          "cloudprober.probes.http.Header",
+					Text:          "header",
+					MessageHeader: true,
+					NoExtraLine:   true,
 				},
 				{
 					Kind:   "string",
@@ -59,10 +59,10 @@ func TestDumpMessage(t *testing.T) {
 					Prefix: "  ",
 				},
 				{
-					Kind:   "string",
-					Text:   "value",
-					Prefix: "  ",
-					Suffix: template.HTML("<br>"),
+					Kind:        "string",
+					Text:        "value",
+					Prefix:      "  ",
+					NoExtraLine: true,
 				},
 				{
 					Kind: "",
@@ -75,19 +75,23 @@ func TestDumpMessage(t *testing.T) {
 			f:    Formatter{}.WithDepth(2).WithYAML(true),
 			wantToks: []*Token{
 				{
-					Kind:   "cloudprober.probes.http.Header",
-					Text:   "header",
-					Suffix: template.HTML(":"),
+					Kind:          "cloudprober.probes.http.Header",
+					Text:          "header",
+					MessageHeader: true,
+					NoExtraLine:   true,
+					yaml:          true,
 				},
 				{
 					Kind:   "string",
 					Text:   "name",
 					Prefix: "  - ",
+					yaml:   true,
 				},
 				{
 					Kind:   "string",
 					Text:   "value",
 					Prefix: "    ",
+					yaml:   true,
 				},
 			},
 		},
@@ -101,93 +105,6 @@ func TestDumpMessage(t *testing.T) {
 			toks, _ := DumpMessage(md, tt.f)
 
 			assert.Equal(t, tt.wantToks, toks)
-		})
-	}
-}
-
-func TestProcessTokensForHTML(t *testing.T) {
-	type args struct {
-		toks []*Token
-	}
-	tests := []struct {
-		name string
-		in   *Token
-		want *Token
-	}{
-		{
-			name: "simple",
-			in: &Token{
-				Kind:   "string",
-				Prefix: "  ",
-			},
-			want: &Token{
-				Kind:       "string",
-				Prefix:     "  ",
-				PrefixHTML: "&nbsp;&nbsp;",
-				Suffix:     "<br><br>",
-			},
-		},
-		{
-			name: "with-url",
-			in: &Token{
-				Kind:   "cloudprober.probes.ProbeDef",
-				Prefix: "  ",
-			},
-			want: &Token{
-				Kind:       "cloudprober.probes.ProbeDef",
-				URL:        "probes.html#cloudprober.probes.ProbeDef",
-				Prefix:     "  ",
-				PrefixHTML: "&nbsp;&nbsp;",
-				Suffix:     "<br><br>",
-			},
-		},
-		{
-			name: "with-default",
-			in: &Token{
-				Kind:    "string",
-				Prefix:  "  ",
-				Default: "2s",
-			},
-			want: &Token{
-				Kind:       "string",
-				Prefix:     "  ",
-				PrefixHTML: "&nbsp;&nbsp;",
-				Suffix:     " | default: 2s<br><br>",
-				Default:    "2s",
-			},
-		},
-		{
-			name: "existing-br-suffix",
-			in: &Token{
-				Kind:   "string",
-				Prefix: "  ",
-				Suffix: "<br>",
-			},
-			want: &Token{
-				Kind:       "string",
-				Prefix:     "  ",
-				PrefixHTML: "&nbsp;&nbsp;",
-				Suffix:     "<br>",
-			},
-		},
-		{
-			name: "existing-br-suffix",
-			in: &Token{
-				Kind:   "string",
-				Prefix: "  ",
-				Suffix: "}",
-			},
-			want: &Token{
-				Kind:       "string",
-				Prefix:     "  ",
-				PrefixHTML: "&nbsp;&nbsp;",
-				Suffix:     "}<br>",
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, []*Token{tt.want}, ProcessTokensForHTML([]*Token{tt.in}))
 		})
 	}
 }

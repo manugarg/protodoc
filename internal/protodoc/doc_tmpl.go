@@ -14,7 +14,7 @@
 
 package protodoc
 
-var PackageTmpl = `
+var DocTmpl = `
 <html>
 <head>
     <title>Cloudprober Configuration</title>
@@ -24,26 +24,34 @@ var PackageTmpl = `
         }
         .comment {
             color: #888;
-            font-family: monospace;
-            white-space: pre;
+        }
+        pre {
+            border: 1px solid #ddd;
+            border-left: 4px solid #e6522c;
+            border-radius: 0;
+            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
-{{range .}}
-<h2 id="{{ .Name }}">{{ .Name }}</h2>
-    {{range .Tokens}}
-        {{- if .Comment}}
-            <div class="comment">{{.Comment}}</div>
-        {{- end -}}
-        {{- if .URL}}
-            {{- .PrefixHTML}}{{- .TextHTML}}: <<a href="{{.URL}}">{{- .Kind}}</a>>{{- .Suffix }}
-        {{- else if .Kind}}
-            {{- .PrefixHTML}}{{- .TextHTML}}: <{{- .Kind}}>{{- .Suffix }}
-        {{- else}}
-            {{- .PrefixHTML}}{{- .TextHTML}}{{- .Suffix }}
-        {{- end}}
-    {{end}}
-{{end}}
+<pre>
+<code>
+{{- range . -}}
+  {{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
+  {{- range .Tokens -}}
+  {{- if .Comment -}}<div class="comment">{{.Comment}}</div>{{ end }}
+  {{- if .URL }}
+    {{- .Prefix}}{{.TextHTML}}{{.Sep}}<<a href="{{.URL}}">{{- .Kind}}</a>>{{.Suffix}}
+  {{- else if .Kind }}
+    {{- .Prefix}}{{.TextHTML}}{{.Sep}}<{{.Kind}}>{{.Suffix}}
+  {{- else }}
+    {{- .Prefix}}{{.TextHTML}}{{.Suffix}}
+  {{- end }}
+  {{- .ExtraLine }}
+{{ end -}}
+{{- end -}}
+</code>
+</pre>
 </body>
 </html>`

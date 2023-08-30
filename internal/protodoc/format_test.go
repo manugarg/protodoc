@@ -45,7 +45,7 @@ func TestFinalToToken(t *testing.T) {
 			nocomment: false,
 			want: &Token{
 				Kind:    "int32",
-				Comment: "# Interval between two probe runs in milliseconds.\n# Only one of \"interval\" and \"inteval_msec\" should be defined.\n# Default interval is 2s.\n#",
+				Comment: "# Interval between two probe runs in milliseconds.\n# Only one of \"interval\" and \"inteval_msec\" should be defined.\n# Default interval is 2s.",
 				Text:    "interval_msec",
 			},
 		},
@@ -54,8 +54,9 @@ func TestFinalToToken(t *testing.T) {
 			f:         Formatter{}.WithYAML(true),
 			nocomment: false,
 			want: &Token{
+				yaml:    true,
 				Kind:    "int32",
-				Comment: "# Interval between two probe runs in milliseconds.\n# Only one of \"interval\" and \"inteval_msec\" should be defined.\n# Default interval is 2s.\n#",
+				Comment: "# Interval between two probe runs in milliseconds.\n# Only one of \"interval\" and \"inteval_msec\" should be defined.\n# Default interval is 2s.",
 				Text:    "intervalMsec",
 			},
 		},
@@ -64,9 +65,10 @@ func TestFinalToToken(t *testing.T) {
 			f:         Formatter{}.WithYAML(true).WithPrefix("  "),
 			nocomment: false,
 			want: &Token{
+				yaml:    true,
 				Kind:    "int32",
 				Prefix:  "  ",
-				Comment: "  # Interval between two probe runs in milliseconds.\n  # Only one of \"interval\" and \"inteval_msec\" should be defined.\n  # Default interval is 2s.\n  #",
+				Comment: "  # Interval between two probe runs in milliseconds.\n  # Only one of \"interval\" and \"inteval_msec\" should be defined.\n  # Default interval is 2s.",
 				Text:    "intervalMsec",
 			},
 		},
@@ -97,7 +99,7 @@ func TestFormatOneOf(t *testing.T) {
 			name: "default",
 			want: &Token{
 				Kind: "oneof",
-				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;user_defined_probe &lt;string&gt;]`,
 			},
 		},
@@ -108,7 +110,7 @@ func TestFormatOneOf(t *testing.T) {
 			},
 			want: &Token{
 				Kind: "oneof",
-				TextHTML: `[httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+				TextHTML: `[httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;userDefinedProbe &lt;string&gt;]`,
 			},
 		},
@@ -120,7 +122,7 @@ func TestFormatOneOf(t *testing.T) {
 			want: &Token{
 				Kind:   "oneof",
 				Prefix: "  ",
-				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | <br>
+				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;user_defined_probe &lt;string&gt;]`,
 			},
 		},
@@ -183,6 +185,94 @@ func TestFormatEnum(t *testing.T) {
 			assert.Equal(t, tt.want, fieldToToken(fld, tt.f, &done))
 
 			assert.Equal(t, tt.want, formatEnum(fld.Enum(), "type", tt.f))
+		})
+	}
+}
+
+func TestProcessTokensForHTML(t *testing.T) {
+	type args struct {
+		toks []*Token
+	}
+	tests := []struct {
+		name string
+		in   *Token
+		want *Token
+	}{
+		{
+			name: "simple",
+			in: &Token{
+				Kind:   "string",
+				Prefix: "  ",
+			},
+			want: &Token{
+				Kind:      "string",
+				Prefix:    "  ",
+				ExtraLine: "\n",
+			},
+		},
+		{
+			name: "with-url",
+			in: &Token{
+				Kind: "cloudprober.probes.ProbeDef",
+			},
+			want: &Token{
+				Kind:      "cloudprober.probes.ProbeDef",
+				URL:       "probes.html#cloudprober.probes.ProbeDef",
+				ExtraLine: "\n",
+			},
+		},
+		{
+			name: "with-default",
+			in: &Token{
+				Kind:    "string",
+				Default: "2s",
+			},
+			want: &Token{
+				Kind:      "string",
+				Suffix:    " | default: 2s",
+				Default:   "2s",
+				ExtraLine: "\n",
+			},
+		},
+		{
+			name: "header-not-yaml",
+			in: &Token{
+				Kind:          "string",
+				MessageHeader: true,
+				NoExtraLine:   true,
+			},
+			want: &Token{
+				Kind:          "string",
+				MessageHeader: true,
+				Suffix:        " {",
+				Sep:           " ",
+				NoExtraLine:   true,
+				ExtraLine:     "",
+			},
+		},
+		{
+			name: "header-yaml",
+			in: &Token{
+				Kind:          "string",
+				MessageHeader: true,
+				yaml:          true,
+			},
+			want: &Token{
+				Kind:          "string",
+				MessageHeader: true,
+				yaml:          true,
+				Suffix:        ":",
+				Sep:           " ",
+				ExtraLine:     "\n",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.want.Sep == "" {
+				tt.want.Sep = ": "
+			}
+			assert.Equal(t, []*Token{tt.want}, ProcessTokensForHTML([]*Token{tt.in}))
 		})
 	}
 }

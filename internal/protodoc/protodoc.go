@@ -16,7 +16,6 @@ package protodoc
 
 import (
 	"html/template"
-	"strings"
 
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
@@ -33,8 +32,14 @@ type Token struct {
 	URL     string
 	Default string
 
-	PrefixHTML template.HTML
-	TextHTML   template.HTML
+	MessageHeader bool
+	yaml          bool
+	NoExtraLine   bool
+
+	// Filed by token processor
+	TextHTML  template.HTML
+	Sep       string
+	ExtraLine string
 }
 
 type Formatter struct {
@@ -73,6 +78,7 @@ func finalToken(fld protoreflect.FieldDescriptor, f Formatter, nocomment bool) *
 	}
 
 	tok := &Token{
+		yaml:    f.yaml,
 		Prefix:  f.prefix,
 		Comment: comment,
 		Kind:    kind,
@@ -96,10 +102,9 @@ func dumpExtendedMsg(fld protoreflect.FieldDescriptor, f Formatter) ([]*Token, [
 
 	nextMessageName = append(nextMessageName, fld.Message().FullName())
 	tok := finalToken(fld, f, false)
-	tok.Suffix = " {"
-	if f.yaml {
-		tok.Suffix = ":"
-	}
+	tok.MessageHeader = true
+	tok.NoExtraLine = true
+
 	lines = append(lines, tok)
 
 	newPrefix := f.prefix + "  "
@@ -115,7 +120,7 @@ func dumpExtendedMsg(fld protoreflect.FieldDescriptor, f Formatter) ([]*Token, [
 	// If it's not a yaml, add a "}" at the end and limit the line break before
 	// that to just one (default is 2).
 	if !f.yaml {
-		lines[len(lines)-1].Suffix = "<br>"
+		lines[len(lines)-1].NoExtraLine = true
 		lines = append(lines, &Token{Prefix: f.prefix, Text: "}"})
 	}
 	nextMessageName = append(nextMessageName, next...)
@@ -149,28 +154,4 @@ func DumpMessage(md protoreflect.MessageDescriptor, f Formatter) ([]*Token, []pr
 	}
 
 	return lines, nextMessageName
-}
-
-func ProcessTokensForHTML(toks []*Token) []*Token {
-	for _, tok := range toks {
-		tok.PrefixHTML = template.HTML(strings.ReplaceAll(tok.Prefix, " ", "&nbsp;"))
-
-		tok.URL = kindToURL(tok.Kind)
-
-		if tok.Suffix == "" {
-			tok.Suffix = template.HTML("<br><br>")
-			if tok.Default != "" {
-				tok.Suffix = template.HTML(" | default: " + tok.Default + "<br><br>")
-			}
-		} else {
-			if !strings.HasSuffix(string(tok.Suffix), "<br>") {
-				tok.Suffix = template.HTML(tok.Suffix + "<br>")
-			}
-		}
-
-		if tok.TextHTML == "" {
-			tok.TextHTML = template.HTML(template.HTMLEscapeString(tok.Text))
-		}
-	}
-	return toks
 }
