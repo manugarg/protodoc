@@ -8,67 +8,57 @@
         }
         .comment {
             color: #888;
-            font-family: monospace;
-            white-space: pre;
+        }
+        pre {
+            border: 1px solid #ddd;
+            border-left: 4px solid #e6522c;
+            border-radius: 0;
+            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
+<pre>
+<code><h2 id="cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</h2>  key: &lt;string>
 
-<h2 id="cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</h2>
-    &nbsp;&nbsp;key: &lt;string><br><br>
-    
-            <div class="comment">  # Value can either be a static value or can be derived from target&#39;s labels.
+<div class="comment">  # Value can either be a static value or can be derived from target&#39;s labels.
   # To get value from target&#39;s labels, use target.labels.&lt;target&#39;s label key&gt;
-  # as value.
-  #</div>&nbsp;&nbsp;value: &lt;string><br><br>
-    
+  # as value.</div>  value: &lt;string>
 
-<h2 id="cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</h2>
-    
-            <div class="comment">  # Whether to log metrics or not.
-  #</div>&nbsp;&nbsp;logMetrics: &lt;bool><br><br>
-    
+<h2 id="cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</h2><div class="comment">  # Whether to log metrics or not.</div>  logMetrics: &lt;bool>
 
-<h2 id="cloudprober.probes.ProbeDef">cloudprober.probes.ProbeDef</h2>
-    &nbsp;&nbsp;name: &lt;string><br><br>
-    &nbsp;&nbsp;type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|EXTENSION|USER_DEFINED): &lt;enum><br><br>
-    
-            <div class="comment">  # Which machines this probe should run on. If defined, cloudprober will run
-  # this probe only if machine&#39;s hostname matches this value.
-  #</div>&nbsp;&nbsp;runOn: &lt;string><br><br>
-    
-            <div class="comment">  # Interval between two probe runs in milliseconds.
+<h2 id="cloudprober.probes.ProbeDef">cloudprober.probes.ProbeDef</h2>  name: &lt;string>
+
+  type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|EXTENSION|USER_DEFINED): &lt;enum>
+
+<div class="comment">  # Which machines this probe should run on. If defined, cloudprober will run
+  # this probe only if machine&#39;s hostname matches this value.</div>  runOn: &lt;string>
+
+<div class="comment">  # Interval between two probe runs in milliseconds.
   # Only one of &#34;interval&#34; and &#34;inteval_msec&#34; should be defined.
-  # Default interval is 2s.
-  #</div>&nbsp;&nbsp;intervalMsec: &lt;int32><br><br>
-    
-            <div class="comment">  # Interval between two probe runs in string format, e.g. 10s.
+  # Default interval is 2s.</div>  intervalMsec: &lt;int32>
+
+<div class="comment">  # Interval between two probe runs in string format, e.g. 10s.
   # Only one of &#34;interval&#34; and &#34;inteval_msec&#34; should be defined.
-  # Default interval is 2s.
-  #</div>&nbsp;&nbsp;interval: &lt;string><br><br>
-    
-            <div class="comment">  # Timeout for each probe in milliseconds
+  # Default interval is 2s.</div>  interval: &lt;string>
+
+<div class="comment">  # Timeout for each probe in milliseconds
   # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
-  # Default timeout is 1s.
-  #</div>&nbsp;&nbsp;timeoutMsec: &lt;int32><br><br>
-    
-            <div class="comment">  # Timeout for each probe in string format, e.g. 10s.
+  # Default timeout is 1s.</div>  timeoutMsec: &lt;int32>
+
+<div class="comment">  # Timeout for each probe in string format, e.g. 10s.
   # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
-  # Default timeout is 1s.
-  #</div>&nbsp;&nbsp;timeout: &lt;string><br><br>
-    
-            <div class="comment">  # Targets for the probe
-  #</div>&nbsp;&nbsp;targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>><br><br>
-    
-            <div class="comment">  # Latency distribution. If specified, latency is stored as a distribution.
-  #</div>&nbsp;&nbsp;latencyDistribution: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>><br><br>
-    
-            <div class="comment">  # Latency unit. Any string that&#39;s parseable by time.ParseDuration.
-  # Valid values: &#34;ns&#34;, &#34;us&#34; (or &#34;µs&#34;), &#34;ms&#34;, &#34;s&#34;, &#34;m&#34;, &#34;h&#34;.
-  #</div>&nbsp;&nbsp;latencyUnit: &lt;string> | default: us<br><br>
-    
-            <div class="comment">  # Latency metric name. You may want to change the latency metric name, if:
+  # Default timeout is 1s.</div>  timeout: &lt;string>
+
+<div class="comment">  # Targets for the probe</div>  targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>>
+
+<div class="comment">  # Latency distribution. If specified, latency is stored as a distribution.</div>  latencyDistribution: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>>
+
+<div class="comment">  # Latency unit. Any string that&#39;s parseable by time.ParseDuration.
+  # Valid values: &#34;ns&#34;, &#34;us&#34; (or &#34;µs&#34;), &#34;ms&#34;, &#34;s&#34;, &#34;m&#34;, &#34;h&#34;.</div>  latencyUnit: &lt;string> | default: us
+
+<div class="comment">  # Latency metric name. You may want to change the latency metric name, if:
   # you&#39;re using latency_distribution for some probes, and regular metric for
   # other probes, and you want to differentiate between the two.
   # For example:
@@ -81,16 +71,16 @@
   #   probe {
   #     name: &#34;app1&#34;
   #     ...
-  #   }
-  #</div>&nbsp;&nbsp;latencyMetricName: &lt;string> | default: latency<br><br>
-    
-            <div class="comment">  # Validators are in experimental phase right now and can change at any time.
-  # NOTE: Only PING, HTTP and DNS probes support validators.
-  #</div>&nbsp;&nbsp;validator: &lt;<a href="validators.html#cloudprober.validators.Validator">cloudprober.validators.Validator</a>><br><br>
-    &nbsp;&nbsp;[sourceIp &lt;string&gt; | sourceInterface &lt;string&gt;]: &lt;oneof><br><br>
-    &nbsp;&nbsp;ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum><br><br>
-    
-            <div class="comment">  # How often to export stats. Probes usually run at a higher frequency (e.g.
+  #   }</div>  latencyMetricName: &lt;string> | default: latency
+
+<div class="comment">  # Validators are in experimental phase right now and can change at any time.
+  # NOTE: Only PING, HTTP and DNS probes support validators.</div>  validator: &lt;<a href="validators.html#cloudprober.validators.Validator">cloudprober.validators.Validator</a>>
+
+  [sourceIp &lt;string&gt; | sourceInterface &lt;string&gt;]: &lt;oneof>
+
+  ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
+
+<div class="comment">  # How often to export stats. Probes usually run at a higher frequency (e.g.
   # every second); stats from individual probes are aggregated within
   # cloudprober until exported. In most cases, users don&#39;t need to change the
   # default.
@@ -99,10 +89,9 @@
   # For all probes except UDP:
   #   stats_export_interval=max(interval, 10s)
   # For UDP:
-  #   stats_export_interval=max(2*max(interval, timeout), 10s)
-  #</div>&nbsp;&nbsp;statsExportIntervalMsec: &lt;int32><br><br>
-    
-            <div class="comment">  # Additional labels to add to the probe results. Label&#39;s value can either be
+  #   stats_export_interval=max(2*max(interval, timeout), 10s)</div>  statsExportIntervalMsec: &lt;int32>
+
+<div class="comment">  # Additional labels to add to the probe results. Label&#39;s value can either be
   # static or can be derived from target&#39;s labels.
   #
   # Example:
@@ -114,76 +103,64 @@
   #     key: &#34;app&#34;
   #     value: &#34;@target.label.app@&#34;
   #   }
-  # (See a more detailed example at: examples/additional_label/cloudprober.cfg)
-  #</div>&nbsp;&nbsp;additionalLabel: &lt;<a href="probes.html#cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</a>><br><br>
-    
-            <div class="comment">  # (Experimental) If set, test is inversed, i.e. we count it as success if
+  # (See a more detailed example at: examples/additional_label/cloudprober.cfg)</div>  additionalLabel: &lt;<a href="probes.html#cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</a>>
+
+<div class="comment">  # (Experimental) If set, test is inversed, i.e. we count it as success if
   # target doesn&#39;t respond. This is useful, for example, that your firewall is
   # working as expected.
   #
   # This is currently implemented only by PING and TCP probes.
-  # Note: This field is currently experimental, and may change in future.
-  #</div>&nbsp;&nbsp;negativeTest: &lt;bool><br><br>
-    &nbsp;&nbsp;alert: &lt;<a href="probes.html#cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</a>><br><br>
-    &nbsp;&nbsp;[pingProbe &lt;<a href="probes.html#cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</a>&gt; | httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | externalProbe &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;udpProbe &lt;<a href="probes.html#cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</a>&gt; | udpListenerProbe &lt;<a href="probes.html#cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;grpcProbe &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</a>&gt; | tcpProbe &lt;<a href="probes.html#cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;userDefinedProbe &lt;string&gt;]: &lt;oneof><br><br>
-    &nbsp;&nbsp;debugOptions: &lt;<a href="probes.html#cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</a>><br><br>
-    
+  # Note: This field is currently experimental, and may change in future.</div>  negativeTest: &lt;bool>
 
-<h2 id="cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</h2>
-    
-            <div class="comment">  # Name of the alert. Default is to use the probe name.
-  #</div>&nbsp;&nbsp;name: &lt;string><br><br>
-    &nbsp;&nbsp;[condition &lt;<a href="probes.html#cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</a>&gt;]: &lt;oneof><br><br>
-    
-            <div class="comment">  # How to notify in case of alert.
-  #</div>&nbsp;&nbsp;notify: &lt;<a href="probes.html#cloudprober.probes.alerting.NotifyConfig">cloudprober.probes.alerting.NotifyConfig</a>><br><br>
-    
-            <div class="comment">  # Dashboard URL template.
-  # Default: http://localhost:9313/status?probe=@probe@
-  #</div>&nbsp;&nbsp;dashboardUrlTemplate: &lt;string><br><br>
-    &nbsp;&nbsp;playbookUrlTemplate: &lt;string><br><br>
-    
-            <div class="comment">  # Default: &#34;Cloudprober alert @alert@ for @target@&#34;
-  #</div>&nbsp;&nbsp;summaryTemplate: &lt;string><br><br>
-    
-            <div class="comment">  # Default:
+  alert: &lt;<a href="probes.html#cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</a>>
+
+  [pingProbe &lt;<a href="probes.html#cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</a>&gt; | httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | externalProbe &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;udpProbe &lt;<a href="probes.html#cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</a>&gt; | udpListenerProbe &lt;<a href="probes.html#cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;grpcProbe &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</a>&gt; | tcpProbe &lt;<a href="probes.html#cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;userDefinedProbe &lt;string&gt;]: &lt;oneof>
+
+  debugOptions: &lt;<a href="probes.html#cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</a>>
+
+<h2 id="cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</h2><div class="comment">  # Name of the alert. Default is to use the probe name.</div>  name: &lt;string>
+
+  [condition &lt;<a href="probes.html#cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</a>&gt;]: &lt;oneof>
+
+<div class="comment">  # How to notify in case of alert.</div>  notify: &lt;<a href="probes.html#cloudprober.probes.alerting.NotifyConfig">cloudprober.probes.alerting.NotifyConfig</a>>
+
+<div class="comment">  # Dashboard URL template.
+  # Default: http://localhost:9313/status?probe=@probe@</div>  dashboardUrlTemplate: &lt;string>
+
+  playbookUrlTemplate: &lt;string>
+
+<div class="comment">  # Default: &#34;Cloudprober alert @alert@ for @target@&#34;</div>  summaryTemplate: &lt;string>
+
+<div class="comment">  # Default:
   # Cloudprober alert &#34;@alert@&#34; for &#34;@target@&#34;:
   # Failures: @failures@ out of @total@ probes
   # Failing since: @since@
   # Probe: @probe@
   # Dashboard: @dashboard_url@
   # Playbook: @playbook_url@
-  # Condition ID: @condition_id@
-  #</div>&nbsp;&nbsp;detailsTemplate: &lt;string><br><br>
-    &nbsp;&nbsp;[repeatIntervalSec &lt;int32&gt;]: &lt;oneof><br><br>
-    
+  # Condition ID: @condition_id@</div>  detailsTemplate: &lt;string>
 
-<h2 id="cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</h2>
-    &nbsp;&nbsp;failures: &lt;int32><br><br>
-    &nbsp;&nbsp;total: &lt;int32><br><br>
-    
+  [repeatIntervalSec &lt;int32&gt;]: &lt;oneof>
 
-<h2 id="cloudprober.probes.alerting.Email">cloudprober.probes.alerting.Email</h2>
-    &nbsp;&nbsp;to: &lt;string><br><br>
-    &nbsp;&nbsp;from: &lt;string><br><br>
-    
-            <div class="comment">  # Default: Environment variable SMTP_SERVER 
-  #</div>&nbsp;&nbsp;smtpServer: &lt;string><br><br>
-    
-            <div class="comment">  # Default: Environment variable SMTP_USERNAME
-  #</div>&nbsp;&nbsp;smtpUsername: &lt;string><br><br>
-    
-            <div class="comment">  # Default: Environment variable SMTP_PASSWORD
-  #</div>&nbsp;&nbsp;smtpPassword: &lt;string><br><br>
-    
+<h2 id="cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</h2>  failures: &lt;int32>
 
-<h2 id="cloudprober.probes.alerting.NotifyConfig">cloudprober.probes.alerting.NotifyConfig</h2>
-    
-            <div class="comment">  # Command to run when alert is fired. In the command line following fields
+  total: &lt;int32>
+
+<h2 id="cloudprober.probes.alerting.Email">cloudprober.probes.alerting.Email</h2>  to: &lt;string>
+
+  from: &lt;string>
+
+<div class="comment">  # Default: Environment variable SMTP_SERVER </div>  smtpServer: &lt;string>
+
+<div class="comment">  # Default: Environment variable SMTP_USERNAME</div>  smtpUsername: &lt;string>
+
+<div class="comment">  # Default: Environment variable SMTP_PASSWORD</div>  smtpPassword: &lt;string>
+
+<h2 id="cloudprober.probes.alerting.NotifyConfig">cloudprober.probes.alerting.NotifyConfig</h2><div class="comment">  # Command to run when alert is fired. In the command line following fields
   # are substituted:
   #  @alert@: Alert name
   #  @probe@: Probe name
@@ -196,219 +173,170 @@
   #
   # For example, if you want to send an email when an alert is fired, you can
   # use the following command:
-  # command: &#34;/usr/bin/mail -s &#39;Alert @alert@ fired for @target@&#39; manu@a.b&#34;
-  #</div>&nbsp;&nbsp;command: &lt;string><br><br>
-    
-            <div class="comment">  # Email notification configuration.
-  #</div>&nbsp;&nbsp;email: &lt;<a href="probes.html#cloudprober.probes.alerting.Email">cloudprober.probes.alerting.Email</a>><br><br>
-    
-            <div class="comment">  # PagerDuty configuration.
-  #</div>&nbsp;&nbsp;pagerDuty: &lt;<a href="probes.html#cloudprober.probes.alerting.PagerDuty">cloudprober.probes.alerting.PagerDuty</a>><br><br>
-    
-            <div class="comment">  # Slack configuration.
-  #</div>&nbsp;&nbsp;slack: &lt;<a href="probes.html#cloudprober.probes.alerting.Slack">cloudprober.probes.alerting.Slack</a>><br><br>
-    
+  # command: &#34;/usr/bin/mail -s &#39;Alert @alert@ fired for @target@&#39; manu@a.b&#34;</div>  command: &lt;string>
 
-<h2 id="cloudprober.probes.alerting.PagerDuty">cloudprober.probes.alerting.PagerDuty</h2>
-    
-            <div class="comment">  # PagerDuty Routing Key.
+<div class="comment">  # Email notification configuration.</div>  email: &lt;<a href="probes.html#cloudprober.probes.alerting.Email">cloudprober.probes.alerting.Email</a>>
+
+<div class="comment">  # PagerDuty configuration.</div>  pagerDuty: &lt;<a href="probes.html#cloudprober.probes.alerting.PagerDuty">cloudprober.probes.alerting.PagerDuty</a>>
+
+<div class="comment">  # Slack configuration.</div>  slack: &lt;<a href="probes.html#cloudprober.probes.alerting.Slack">cloudprober.probes.alerting.Slack</a>>
+
+<h2 id="cloudprober.probes.alerting.PagerDuty">cloudprober.probes.alerting.PagerDuty</h2><div class="comment">  # PagerDuty Routing Key.
   # The routing key is used to determine which service the alerts are sent to
   # and is generated with the service. The routing key is found under the 
   # service, when the events v2 integration is enabled, under integrations,
   # in the pagerduty console.
   # Note: set either routing_key or routing_key_env_var. routing_key
-  # takes precedence over routing_key_env_var.
-  #</div>&nbsp;&nbsp;routingKey: &lt;string><br><br>
-    
-            <div class="comment">  # The environment variable that is used to contain the pagerduty routing 
-  # key.
-  #</div>&nbsp;&nbsp;routingKeyEnvVar: &lt;string><br><br>
-    
-            <div class="comment">  # PagerDuty API URL.
-  # Used to overwrite the default PagerDuty API URL.
-  #</div>&nbsp;&nbsp;apiUrl: &lt;string><br><br>
-    
+  # takes precedence over routing_key_env_var.</div>  routingKey: &lt;string>
 
-<h2 id="cloudprober.probes.alerting.Slack">cloudprober.probes.alerting.Slack</h2>
-    
-            <div class="comment">  # Webhook URL
+<div class="comment">  # The environment variable that is used to contain the pagerduty routing 
+  # key.</div>  routingKeyEnvVar: &lt;string>
+
+<div class="comment">  # PagerDuty API URL.
+  # Used to overwrite the default PagerDuty API URL.</div>  apiUrl: &lt;string>
+
+<h2 id="cloudprober.probes.alerting.Slack">cloudprober.probes.alerting.Slack</h2><div class="comment">  # Webhook URL
   # The Slack notifications use a webhook URL to send the notifications to
   # a Slack channel. The webhook URL can be found in the Slack console under
   # the &#34;Incoming Webhooks&#34; section.
   # https://api.slack.com/messaging/webhooks
   # Note: set either webhook_url or webhook_url_env_var. webhook_url
-  # takes precedence over webhook_url_env_var.
-  #</div>&nbsp;&nbsp;webhookUrl: &lt;string><br><br>
-    
-            <div class="comment">  # The environment variable that is used to contain the slack webhook URL.
-  #</div>&nbsp;&nbsp;webhookUrlEnvVar: &lt;string><br><br>
-    
+  # takes precedence over webhook_url_env_var.</div>  webhookUrl: &lt;string>
 
-<h2 id="cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</h2>
-    
-            <div class="comment">  # Domain to use when making DNS queries
-  #</div>&nbsp;&nbsp;resolvedDomain: &lt;string> | default: www.google.com.<br><br>
-    &nbsp;&nbsp;queryType: (NONE|A|NS|CNAME|SOA|PTR|MX|TXT|RP|AFSDB|SIG|KEY|AAAA|LOC|SRV|NAPTR|KX|CERT|DNAME|APL|DS|SSHFP|IPSECKEY|RRSIG|NSEC|DNSKEY|DHCID|NSEC3|NSEC3PARAM|TLSA|HIP|CDS|CDNSKEY|OPENPGPKEY|TKEY|TSIG|URI|CAA|TA|DLV): &lt;enum><br><br>
-    
-            <div class="comment">  # Minimum number of answers expected. Default behavior is to return success
-  # if DNS response status is NOERROR.
-  #</div>&nbsp;&nbsp;minAnswers: &lt;uint32> | default: 0<br><br>
-    
-            <div class="comment">  # Whether to resolve the target (target is DNS server here) before making
+<div class="comment">  # The environment variable that is used to contain the slack webhook URL.</div>  webhookUrlEnvVar: &lt;string>
+
+<h2 id="cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</h2><div class="comment">  # Domain to use when making DNS queries</div>  resolvedDomain: &lt;string> | default: www.google.com.
+
+  queryType: (NONE|A|NS|CNAME|SOA|PTR|MX|TXT|RP|AFSDB|SIG|KEY|AAAA|LOC|SRV|NAPTR|KX|CERT|DNAME|APL|DS|SSHFP|IPSECKEY|RRSIG|NSEC|DNSKEY|DHCID|NSEC3|NSEC3PARAM|TLSA|HIP|CDS|CDNSKEY|OPENPGPKEY|TKEY|TSIG|URI|CAA|TA|DLV): &lt;enum>
+
+<div class="comment">  # Minimum number of answers expected. Default behavior is to return success
+  # if DNS response status is NOERROR.</div>  minAnswers: &lt;uint32> | default: 0
+
+<div class="comment">  # Whether to resolve the target (target is DNS server here) before making
   # the request. If set to false, we hand over the target directly to the DNS
   # client. Otherwise, we resolve the target first to an IP address.  By
   # default we resolve first if it&#39;s a discovered resource, e.g., a k8s
-  # endpoint.
-  #</div>&nbsp;&nbsp;resolveFirst: &lt;bool><br><br>
-    
+  # endpoint.</div>  resolveFirst: &lt;bool>
 
-<h2 id="cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</h2>
-    &nbsp;&nbsp;mode: (ONCE|SERVER): &lt;enum><br><br>
-    
-            <div class="comment">  # Command.  For ONCE probes, arguments are processed for the following field
+<h2 id="cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</h2>  mode: (ONCE|SERVER): &lt;enum>
+
+<div class="comment">  # Command.  For ONCE probes, arguments are processed for the following field
   # substitutions:
   # @probe@    Name of the probe
   # @target@   Hostname of the target
   # @address@  IP address of the target
   #
   # For example, for target ig-us-central1-a, /tools/recreate_vm -vm @target@
-  # will get converted to: /tools/recreate_vm -vm ig-us-central1-a
-  #</div>&nbsp;&nbsp;command: &lt;string><br><br>
-    
-            <div class="comment">  # Command environment variables. These are passed on to the external probe
-  # process as environment variables.
-  #</div>&nbsp;&nbsp;envVar: &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf.EnvVarEntry">cloudprober.probes.external.ProbeConf.EnvVarEntry</a>><br><br>
-    &nbsp;&nbsp;options: &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf.Option">cloudprober.probes.external.ProbeConf.Option</a>><br><br>
-    
-            <div class="comment">  # Export output as metrics, where output is the output returned by the
+  # will get converted to: /tools/recreate_vm -vm ig-us-central1-a</div>  command: &lt;string>
+
+<div class="comment">  # Command environment variables. These are passed on to the external probe
+  # process as environment variables.</div>  envVar: &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf.EnvVarEntry">cloudprober.probes.external.ProbeConf.EnvVarEntry</a>>
+
+  options: &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf.Option">cloudprober.probes.external.ProbeConf.Option</a>>
+
+<div class="comment">  # Export output as metrics, where output is the output returned by the
   # external probe process, over stdout for ONCE probes, and through ProbeReply
   # for SERVER probes. Cloudprober expects variables to be in the following
   # format in the output:
-  # var1 value1 (for example: total_errors 589)
-  #</div>&nbsp;&nbsp;outputAsMetrics: &lt;bool> | default: true<br><br>
-    &nbsp;&nbsp;outputMetricsOptions: &lt;<a href="metrics.html#cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</a>><br><br>
-    
+  # var1 value1 (for example: total_errors 589)</div>  outputAsMetrics: &lt;bool> | default: true
 
-<h2 id="cloudprober.probes.external.ProbeConf.EnvVarEntry">cloudprober.probes.external.ProbeConf.EnvVarEntry</h2>
-    &nbsp;&nbsp;key: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;string><br><br>
-    
+  outputMetricsOptions: &lt;<a href="metrics.html#cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</a>>
 
-<h2 id="cloudprober.probes.external.ProbeConf.Option">cloudprober.probes.external.ProbeConf.Option</h2>
-    &nbsp;&nbsp;name: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;string><br><br>
-    
+<h2 id="cloudprober.probes.external.ProbeConf.EnvVarEntry">cloudprober.probes.external.ProbeConf.EnvVarEntry</h2>  key: &lt;string>
 
-<h2 id="cloudprober.probes.grpc.GenericRequest">cloudprober.probes.grpc.GenericRequest</h2>
-    
-            <div class="comment">  # Protoset contains descriptor source protos generated from the *.proto
+  value: &lt;string>
+
+<h2 id="cloudprober.probes.external.ProbeConf.Option">cloudprober.probes.external.ProbeConf.Option</h2>  name: &lt;string>
+
+  value: &lt;string>
+
+<h2 id="cloudprober.probes.grpc.GenericRequest">cloudprober.probes.grpc.GenericRequest</h2><div class="comment">  # Protoset contains descriptor source protos generated from the *.proto
   # files. You can use protoc to generate protoset files:
   #   protoc --proto_path=. --descriptor_set_out=myservice.protoset \
-  #     --include_imports my/custom/server/service.proto
-  #</div>&nbsp;&nbsp;protosetFile: &lt;string><br><br>
-    &nbsp;&nbsp;[listServices &lt;bool&gt; | listServiceMethods &lt;string&gt; | <br>
-&nbsp;&nbsp;&nbsp;describeServiceMethod &lt;string&gt; | callServiceMethod &lt;string&gt;]: &lt;oneof><br><br>
-    
-            <div class="comment">  # Request data (in JSON format) for the call_service_method request.
-  #</div>&nbsp;&nbsp;body: &lt;string><br><br>
-    
+  #     --include_imports my/custom/server/service.proto</div>  protosetFile: &lt;string>
 
-<h2 id="cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</h2>
-    
-            <div class="comment">  # Optional oauth config. For GOOGLE_DEFAULT_CREDENTIALS, use:
-  # oauth_config: { bearer_token { gce_service_account: &#34;default&#34; } }
-  #</div>&nbsp;&nbsp;oauthConfig: &lt;<a href="oauth.html#cloudprober.oauth.Config">cloudprober.oauth.Config</a>><br><br>
-    
-            <div class="comment">  # If alts_config is provided, gRPC client uses ALTS for authentication and
+  [listServices &lt;bool&gt; | listServiceMethods &lt;string&gt; | 
+&nbsp;&nbsp;&nbsp;describeServiceMethod &lt;string&gt; | callServiceMethod &lt;string&gt;]: &lt;oneof>
+
+<div class="comment">  # Request data (in JSON format) for the call_service_method request.</div>  body: &lt;string>
+
+<h2 id="cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</h2><div class="comment">  # Optional oauth config. For GOOGLE_DEFAULT_CREDENTIALS, use:
+  # oauth_config: { bearer_token { gce_service_account: &#34;default&#34; } }</div>  oauthConfig: &lt;<a href="oauth.html#cloudprober.oauth.Config">cloudprober.oauth.Config</a>>
+
+<div class="comment">  # If alts_config is provided, gRPC client uses ALTS for authentication and
   # encryption. For default alts configs, use:
-  # alts_config: {}
-  #</div>&nbsp;&nbsp;altsConfig: &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf.ALTSConfig">cloudprober.probes.grpc.ProbeConf.ALTSConfig</a>><br><br>
-    
-            <div class="comment">  # If TLSConfig is specified, it&#39;s used for authentication.
-  # Note that only one of ALTSConfig and TLSConfig can be enabled at a time.
-  #</div>&nbsp;&nbsp;tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>><br><br>
-    
-            <div class="comment">  # if insecure_transport is set to true, TLS will not be used.
-  #</div>&nbsp;&nbsp;insecureTransport: &lt;bool><br><br>
-    &nbsp;&nbsp;method: (ECHO|READ|WRITE|HEALTH_CHECK|GENERIC): &lt;enum><br><br>
-    
-            <div class="comment">  # Blob size for ECHO, READ, and WRITE methods.
-  #</div>&nbsp;&nbsp;blobSize: &lt;int32> | default: 1024<br><br>
-    
-            <div class="comment">  # For HEALTH_CHECK, name of the service to health check.
-  #</div>&nbsp;&nbsp;healthCheckService: &lt;string><br><br>
-    
-            <div class="comment">  # For HEALTH_CHECK, ignore status. By default, HEALTH_CHECK test passes
+  # alts_config: {}</div>  altsConfig: &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf.ALTSConfig">cloudprober.probes.grpc.ProbeConf.ALTSConfig</a>>
+
+<div class="comment">  # If TLSConfig is specified, it&#39;s used for authentication.
+  # Note that only one of ALTSConfig and TLSConfig can be enabled at a time.</div>  tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+
+<div class="comment">  # if insecure_transport is set to true, TLS will not be used.</div>  insecureTransport: &lt;bool>
+
+  method: (ECHO|READ|WRITE|HEALTH_CHECK|GENERIC): &lt;enum>
+
+<div class="comment">  # Blob size for ECHO, READ, and WRITE methods.</div>  blobSize: &lt;int32> | default: 1024
+
+<div class="comment">  # For HEALTH_CHECK, name of the service to health check.</div>  healthCheckService: &lt;string>
+
+<div class="comment">  # For HEALTH_CHECK, ignore status. By default, HEALTH_CHECK test passes
   # only if response-status is SERVING. Setting the following option makes
-  # HEALTH_CHECK pass regardless of the response-status.
-  #</div>&nbsp;&nbsp;healthCheckIgnoreStatus: &lt;bool><br><br>
-    
-            <div class="comment">  # Request definition for the GENERIC method.
-  #</div>&nbsp;&nbsp;request: &lt;<a href="probes.html#cloudprober.probes.grpc.GenericRequest">cloudprober.probes.grpc.GenericRequest</a>><br><br>
-    &nbsp;&nbsp;numConns: &lt;int32> | default: 2<br><br>
-    &nbsp;&nbsp;keepAlive: &lt;bool> | default: true<br><br>
-    
-            <div class="comment">  # If connect_timeout is not specified, reuse probe timeout.
-  #</div>&nbsp;&nbsp;connectTimeoutMsec: &lt;int32><br><br>
-    
-            <div class="comment">  # URI scheme allows gRPC to use different resolvers
+  # HEALTH_CHECK pass regardless of the response-status.</div>  healthCheckIgnoreStatus: &lt;bool>
+
+<div class="comment">  # Request definition for the GENERIC method.</div>  request: &lt;<a href="probes.html#cloudprober.probes.grpc.GenericRequest">cloudprober.probes.grpc.GenericRequest</a>>
+
+  numConns: &lt;int32> | default: 2
+
+  keepAlive: &lt;bool> | default: true
+
+<div class="comment">  # If connect_timeout is not specified, reuse probe timeout.</div>  connectTimeoutMsec: &lt;int32>
+
+<div class="comment">  # URI scheme allows gRPC to use different resolvers
   # Example URI scheme: &#34;google-c2p:///&#34;
-  # See https://github.com/grpc/grpc/blob/master/doc/naming.md for more details
-  #</div>&nbsp;&nbsp;uriScheme: &lt;string><br><br>
-    &nbsp;&nbsp;headers: &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf.Header">cloudprober.probes.grpc.ProbeConf.Header</a>><br><br>
-    
+  # See https://github.com/grpc/grpc/blob/master/doc/naming.md for more details</div>  uriScheme: &lt;string>
 
-<h2 id="cloudprober.probes.grpc.ProbeConf.ALTSConfig">cloudprober.probes.grpc.ProbeConf.ALTSConfig</h2>
-    
-            <div class="comment">  # If provided, ALTS verifies that peer is using one of the given service
-  # accounts.
-  #</div>&nbsp;&nbsp;targetServiceAccount: &lt;string><br><br>
-    
-            <div class="comment">  # Handshaker service address. Default is to use the local metadata server.
-  # For most of the ALTS use cases, default address should be okay.
-  #</div>&nbsp;&nbsp;handshakerServiceAddress: &lt;string><br><br>
-    
+  headers: &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf.Header">cloudprober.probes.grpc.ProbeConf.Header</a>>
 
-<h2 id="cloudprober.probes.grpc.ProbeConf.Header">cloudprober.probes.grpc.ProbeConf.Header</h2>
-    &nbsp;&nbsp;name: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;string><br><br>
-    
+<h2 id="cloudprober.probes.grpc.ProbeConf.ALTSConfig">cloudprober.probes.grpc.ProbeConf.ALTSConfig</h2><div class="comment">  # If provided, ALTS verifies that peer is using one of the given service
+  # accounts.</div>  targetServiceAccount: &lt;string>
 
-<h2 id="cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</h2>
-    &nbsp;&nbsp;protocol: (HTTP|HTTPS): &lt;enum><br><br>
-    
-            <div class="comment">  # Relative URL (to append to all targets). Must begin with &#39;/&#39;
-  #</div>&nbsp;&nbsp;relativeUrl: &lt;string><br><br>
-    
-            <div class="comment">  # Port for HTTP requests. If not specfied, port is selected in the following
+<div class="comment">  # Handshaker service address. Default is to use the local metadata server.
+  # For most of the ALTS use cases, default address should be okay.</div>  handshakerServiceAddress: &lt;string>
+
+<h2 id="cloudprober.probes.grpc.ProbeConf.Header">cloudprober.probes.grpc.ProbeConf.Header</h2>  name: &lt;string>
+
+  value: &lt;string>
+
+<h2 id="cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</h2>  protocol: (HTTP|HTTPS): &lt;enum>
+
+<div class="comment">  # Relative URL (to append to all targets). Must begin with &#39;/&#39;</div>  relativeUrl: &lt;string>
+
+<div class="comment">  # Port for HTTP requests. If not specfied, port is selected in the following
   # order:
   #  - If port is provided by the targets (e.g. kubernetes endpoint or
   #    service), that port is used.
-  #  - 80 for HTTP and 443 for HTTPS.
-  #</div>&nbsp;&nbsp;port: &lt;int32><br><br>
-    
-            <div class="comment">  # Whether to resolve the target before making the request. If set to false,
+  #  - 80 for HTTP and 443 for HTTPS.</div>  port: &lt;int32>
+
+<div class="comment">  # Whether to resolve the target before making the request. If set to false,
   # we hand over the target and relative_url directly to the golang&#39;s HTTP
   # module, Otherwise, we resolve the target first to an IP address and
   # make a request using that while passing target name as Host header.
   # By default we resolve first if it&#39;s a discovered resource, e.g., a k8s
-  # endpoint.
-  #</div>&nbsp;&nbsp;resolveFirst: &lt;bool><br><br>
-    
-            <div class="comment">  # Export response (body) count as a metric
-  #</div>&nbsp;&nbsp;exportResponseAsMetrics: &lt;bool> | default: false<br><br>
-    &nbsp;&nbsp;method: (GET|POST|PUT|HEAD|DELETE|PATCH|OPTIONS): &lt;enum><br><br>
-    
-            <div class="comment">  # HTTP request headers
+  # endpoint.</div>  resolveFirst: &lt;bool>
+
+<div class="comment">  # Export response (body) count as a metric</div>  exportResponseAsMetrics: &lt;bool> | default: false
+
+  method: (GET|POST|PUT|HEAD|DELETE|PATCH|OPTIONS): &lt;enum>
+
+<div class="comment">  # HTTP request headers
   # It is recommended to use &#34;header&#34; instead of &#34;headers&#34; for new configs.
   # header {
   #   key: &#34;Authorization&#34;
   #   value: &#34;Bearer {{env &#34;AUTH_TOKEN&#34;}}&#34;
-  # }   
-  #</div>&nbsp;&nbsp;headers: &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf.Header">cloudprober.probes.http.ProbeConf.Header</a>><br><br>
-    &nbsp;&nbsp;header: &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf.HeaderEntry">cloudprober.probes.http.ProbeConf.HeaderEntry</a>><br><br>
-    
-            <div class="comment">  # Request body. This field works similar to the curl&#39;s data flag. If there
+  # }   </div>  headers: &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf.Header">cloudprober.probes.http.ProbeConf.Header</a>>
+
+  header: &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf.HeaderEntry">cloudprober.probes.http.ProbeConf.HeaderEntry</a>>
+
+<div class="comment">  # Request body. This field works similar to the curl&#39;s data flag. If there
   # are multiple &#34;body&#34; fields, we combine their values with a &#39;&amp;&#39; in between.
   #
   # Also, we try to guess the content-type header based on the data:
@@ -421,92 +349,70 @@
   #  body: &#34;grant_type=client_credentials&#34;
   #  body: &#34;scope=transferMoney&#34;
   #  body: &#34;clientId=aweseomeClient&#34;
-  #  body: &#34;clientSecret=noSecret&#34;
-  #</div>&nbsp;&nbsp;body: &lt;string><br><br>
-    
-            <div class="comment">  # Enable HTTP keep-alive. If set to true, underlying connection is reused
-  # for further probes. Default is to close the connection after every request.
-  #</div>&nbsp;&nbsp;keepAlive: &lt;bool><br><br>
-    
-            <div class="comment">  # OAuth Config
-  #</div>&nbsp;&nbsp;oauthConfig: &lt;<a href="oauth.html#cloudprober.oauth.Config">cloudprober.oauth.Config</a>><br><br>
-    
-            <div class="comment">  # Disable HTTP2
+  #  body: &#34;clientSecret=noSecret&#34;</div>  body: &lt;string>
+
+<div class="comment">  # Enable HTTP keep-alive. If set to true, underlying connection is reused
+  # for further probes. Default is to close the connection after every request.</div>  keepAlive: &lt;bool>
+
+<div class="comment">  # OAuth Config</div>  oauthConfig: &lt;<a href="oauth.html#cloudprober.oauth.Config">cloudprober.oauth.Config</a>>
+
+<div class="comment">  # Disable HTTP2
   # Golang HTTP client automatically enables HTTP/2 if server supports it. This
-  # option disables that behavior to enforce HTTP/1.1 for testing purpose.
-  #</div>&nbsp;&nbsp;disableHttp2: &lt;bool><br><br>
-    
-            <div class="comment">  # Disable TLS certificate validation. If set to true, any certificate
+  # option disables that behavior to enforce HTTP/1.1 for testing purpose.</div>  disableHttp2: &lt;bool>
+
+<div class="comment">  # Disable TLS certificate validation. If set to true, any certificate
   # presented by the server for any host name will be accepted
   # Deprecation: This option is now subsumed by the tls_config below. To
   # disable cert validation use:
   # tls_config {
   #   disable_cert_validation: true
-  # }
-  #</div>&nbsp;&nbsp;disableCertValidation: &lt;bool><br><br>
-    
-            <div class="comment">  # TLS config
-  #</div>&nbsp;&nbsp;tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>><br><br>
-    
-            <div class="comment">  # Proxy URL, e.g. http://myproxy:3128
-  #</div>&nbsp;&nbsp;proxyUrl: &lt;string><br><br>
-    
-            <div class="comment">  # User agent. Default user agent is Go&#39;s default user agent.
-  #</div>&nbsp;&nbsp;userAgent: &lt;string><br><br>
-    
-            <div class="comment">  # Maximum idle connections to keep alive
-  #</div>&nbsp;&nbsp;maxIdleConns: &lt;int32> | default: 256<br><br>
-    
-            <div class="comment">  # The maximum amount of redirects the HTTP client will follow.
-  # To disable redirects, use max_redirects: 0.
-  #</div>&nbsp;&nbsp;maxRedirects: &lt;int32><br><br>
-    
-            <div class="comment">  # Interval between targets.
-  #</div>&nbsp;&nbsp;intervalBetweenTargetsMsec: &lt;int32> | default: 10<br><br>
-    
-            <div class="comment">  # Requests per probe.
+  # }</div>  disableCertValidation: &lt;bool>
+
+<div class="comment">  # TLS config</div>  tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+
+<div class="comment">  # Proxy URL, e.g. http://myproxy:3128</div>  proxyUrl: &lt;string>
+
+<div class="comment">  # User agent. Default user agent is Go&#39;s default user agent.</div>  userAgent: &lt;string>
+
+<div class="comment">  # Maximum idle connections to keep alive</div>  maxIdleConns: &lt;int32> | default: 256
+
+<div class="comment">  # The maximum amount of redirects the HTTP client will follow.
+  # To disable redirects, use max_redirects: 0.</div>  maxRedirects: &lt;int32>
+
+<div class="comment">  # Interval between targets.</div>  intervalBetweenTargetsMsec: &lt;int32> | default: 10
+
+<div class="comment">  # Requests per probe.
   # Number of HTTP requests per probe. Requests are executed concurrently and
   # each HTTP re contributes to probe results. For example, if you run two
-  # requests per probe, &#34;total&#34; counter will be incremented by 2.
-  #</div>&nbsp;&nbsp;requestsPerProbe: &lt;int32> | default: 1<br><br>
-    
-            <div class="comment">  # How long to wait between two requests to the same target. Only relevant
+  # requests per probe, &#34;total&#34; counter will be incremented by 2.</div>  requestsPerProbe: &lt;int32> | default: 1
+
+<div class="comment">  # How long to wait between two requests to the same target. Only relevant
   # if requests_per_probe is also configured.
   #
   # This value should be less than (interval - timeout) / requests_per_probe.
   # This is to ensure that all requests are executed within one probe interval
   # and all of them get sufficient time. For example, if probe interval is 2s,
   # timeout is 1s, and requests_per_probe is 10,  requests_interval_msec
-  # should be less than 10ms.
-  #</div>&nbsp;&nbsp;requestsIntervalMsec: &lt;int32> | default: 0<br><br>
-    
+  # should be less than 10ms.</div>  requestsIntervalMsec: &lt;int32> | default: 0
 
-<h2 id="cloudprober.probes.http.ProbeConf.Header">cloudprober.probes.http.ProbeConf.Header</h2>
-    &nbsp;&nbsp;name: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;string><br><br>
-    
+<h2 id="cloudprober.probes.http.ProbeConf.Header">cloudprober.probes.http.ProbeConf.Header</h2>  name: &lt;string>
 
-<h2 id="cloudprober.probes.http.ProbeConf.HeaderEntry">cloudprober.probes.http.ProbeConf.HeaderEntry</h2>
-    &nbsp;&nbsp;key: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;string><br><br>
-    
+  value: &lt;string>
 
-<h2 id="cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</h2>
-    
-            <div class="comment">  # Packets per probe
-  #</div>&nbsp;&nbsp;packetsPerProbe: &lt;int32> | default: 2<br><br>
-    
-            <div class="comment">  # How long to wait between two packets to the same target
-  #</div>&nbsp;&nbsp;packetsIntervalMsec: &lt;int32> | default: 25<br><br>
-    
-            <div class="comment">  # Resolve targets after these many probes
-  #</div>&nbsp;&nbsp;resolveTargetsInterval: &lt;int32> | default: 5<br><br>
-    
-            <div class="comment">  # Ping payload size in bytes. It cannot be smaller than 8, number of bytes
-  # required for the nanoseconds timestamp.
-  #</div>&nbsp;&nbsp;payloadSize: &lt;int32> | default: 56<br><br>
-    
-            <div class="comment">  # Use datagram socket for ICMP.
+<h2 id="cloudprober.probes.http.ProbeConf.HeaderEntry">cloudprober.probes.http.ProbeConf.HeaderEntry</h2>  key: &lt;string>
+
+  value: &lt;string>
+
+<h2 id="cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</h2><div class="comment">  # Packets per probe</div>  packetsPerProbe: &lt;int32> | default: 2
+
+<div class="comment">  # How long to wait between two packets to the same target</div>  packetsIntervalMsec: &lt;int32> | default: 25
+
+<div class="comment">  # Resolve targets after these many probes</div>  resolveTargetsInterval: &lt;int32> | default: 5
+
+<div class="comment">  # Ping payload size in bytes. It cannot be smaller than 8, number of bytes
+  # required for the nanoseconds timestamp.</div>  payloadSize: &lt;int32> | default: 56
+
+<div class="comment">  # Use datagram socket for ICMP.
   # This option enables unprivileged pings (that is, you don&#39;t require root
   # privilege to send ICMP packets). Note that most of the Linux distributions
   # don&#39;t allow unprivileged pings by default. To enable unprivileged pings on
@@ -519,83 +425,61 @@
   # that the same setting (with ipv4 in the path) applies to IPv6 as well.
   #
   # Note: This option is not supported on Windows and is automatically
-  # disabled there.
-  #</div>&nbsp;&nbsp;useDatagramSocket: &lt;bool> | default: true<br><br>
-    
-            <div class="comment">  # Disable integrity checks. To detect data courruption in the network, we
-  # craft the outgoing ICMP packet payload in a certain format and verify that
-  # the reply payload matches the same format.
-  #</div>&nbsp;&nbsp;disableIntegrityCheck: &lt;bool> | default: false<br><br>
-    
-            <div class="comment">  # Do not allow OS-level fragmentation, only works on Linux systems.
-  #</div>&nbsp;&nbsp;disableFragmentation: &lt;bool> | default: false<br><br>
-    
+  # disabled there.</div>  useDatagramSocket: &lt;bool> | default: true
 
-<h2 id="cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</h2>
-    
-            <div class="comment">  # Port for TCP requests. If not specfied, and port is provided by the
-  # targets (e.g. kubernetes endpoint or service), that port is used.
-  #</div>&nbsp;&nbsp;port: &lt;int32><br><br>
-    
-            <div class="comment">  # Whether to resolve the target before making the request. If set to false,
+<div class="comment">  # Disable integrity checks. To detect data courruption in the network, we
+  # craft the outgoing ICMP packet payload in a certain format and verify that
+  # the reply payload matches the same format.</div>  disableIntegrityCheck: &lt;bool> | default: false
+
+<div class="comment">  # Do not allow OS-level fragmentation, only works on Linux systems.</div>  disableFragmentation: &lt;bool> | default: false
+
+<h2 id="cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</h2><div class="comment">  # Port for TCP requests. If not specfied, and port is provided by the
+  # targets (e.g. kubernetes endpoint or service), that port is used.</div>  port: &lt;int32>
+
+<div class="comment">  # Whether to resolve the target before making the request. If set to false,
   # we hand over the target golang&#39;s net.Dial module, Otherwise, we resolve
   # the target first to an IP address and make a request using that. By
   # default we resolve first if it&#39;s a discovered resource, e.g., a k8s
-  # endpoint.
-  #</div>&nbsp;&nbsp;resolveFirst: &lt;bool><br><br>
-    
-            <div class="comment">  # Interval between targets.
-  #</div>&nbsp;&nbsp;intervalBetweenTargetsMsec: &lt;int32> | default: 10<br><br>
-    
+  # endpoint.</div>  resolveFirst: &lt;bool>
 
-<h2 id="cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</h2>
-    
-            <div class="comment">  # Port to send UDP Ping to (UDP Echo).  If running with the UDP server that
+<div class="comment">  # Interval between targets.</div>  intervalBetweenTargetsMsec: &lt;int32> | default: 10
+
+<h2 id="cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</h2><div class="comment">  # Port to send UDP Ping to (UDP Echo).  If running with the UDP server that
   # comes with cloudprober, it should be same as
-  # ProberConfig.udp_echo_server_port.
-  #</div>&nbsp;&nbsp;port: &lt;int32> | default: 31122<br><br>
-    
-            <div class="comment">  # Number of sending side ports to use.
-  #</div>&nbsp;&nbsp;numTxPorts: &lt;int32> | default: 16<br><br>
-    
-            <div class="comment">  # message max to account for MTU.
-  #</div>&nbsp;&nbsp;maxLength: &lt;int32> | default: 1300<br><br>
-    
-            <div class="comment">  # Payload size
-  #</div>&nbsp;&nbsp;payloadSize: &lt;int32><br><br>
-    
-            <div class="comment">  # Changes the exported monitoring streams to be per port:
+  # ProberConfig.udp_echo_server_port.</div>  port: &lt;int32> | default: 31122
+
+<div class="comment">  # Number of sending side ports to use.</div>  numTxPorts: &lt;int32> | default: 16
+
+<div class="comment">  # message max to account for MTU.</div>  maxLength: &lt;int32> | default: 1300
+
+<div class="comment">  # Payload size</div>  payloadSize: &lt;int32>
+
+<div class="comment">  # Changes the exported monitoring streams to be per port:
   # 1. Changes the streams names to total-per-port, success-per-port etc.
   # 2. Adds src_port and dst_port as stream labels.
-  # Note that the field name is experimental and may change in the future.
-  #</div>&nbsp;&nbsp;exportMetricsByPort: &lt;bool> | default: false<br><br>
-    
-            <div class="comment">  # Whether to use all transmit ports per probe, per target.
+  # Note that the field name is experimental and may change in the future.</div>  exportMetricsByPort: &lt;bool> | default: false
+
+<div class="comment">  # Whether to use all transmit ports per probe, per target.
   # Default is to probe each target once per probe and round-robin through the
   # source ports.
   # Setting this field to true changes the behavior to send traffic from all
   # ports to all targets in each probe.
   # For example, if num_tx_ports is set to 16, in every probe cycle, we&#39;ll send
   # 16 packets to every target (1 per tx port).
-  # Note that setting this field to true will increase the probe traffic.
-  #</div>&nbsp;&nbsp;useAllTxPortsPerProbe: &lt;bool> | default: false<br><br>
-    
-            <div class="comment">  # maxTargets is the maximum number of targets supported by this probe type.
+  # Note that setting this field to true will increase the probe traffic.</div>  useAllTxPortsPerProbe: &lt;bool> | default: false
+
+<div class="comment">  # maxTargets is the maximum number of targets supported by this probe type.
   # If there are more targets, they are pruned from the list to bring targets
   # list under maxTargets.  A large number of targets has impact on resource
-  # consumption.
-  #</div>&nbsp;&nbsp;maxTargets: &lt;int32> | default: 500<br><br>
-    
+  # consumption.</div>  maxTargets: &lt;int32> | default: 500
 
-<h2 id="cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</h2>
-    
-            <div class="comment">  # Port to listen.
-  #</div>&nbsp;&nbsp;port: &lt;int32> | default: 32212<br><br>
-    &nbsp;&nbsp;type: (INVALID|ECHO|DISCARD): &lt;enum><br><br>
-    
-            <div class="comment">  # Number of packets sent in a single probe.
-  #</div>&nbsp;&nbsp;packetsPerProbe: &lt;int32> | default: 1<br><br>
-    
+<h2 id="cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</h2><div class="comment">  # Port to listen.</div>  port: &lt;int32> | default: 32212
 
+  type: (INVALID|ECHO|DISCARD): &lt;enum>
+
+<div class="comment">  # Number of packets sent in a single probe.</div>  packetsPerProbe: &lt;int32> | default: 1
+
+</code>
+</pre>
 </body>
 </html>

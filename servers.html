@@ -8,78 +8,64 @@
         }
         .comment {
             color: #888;
-            font-family: monospace;
-            white-space: pre;
+        }
+        pre {
+            border: 1px solid #ddd;
+            border-left: 4px solid #e6522c;
+            border-radius: 0;
+            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
+<pre>
+<code><h2 id="cloudprober.servers.ServerDef">cloudprober.servers.ServerDef</h2>  type: (HTTP|UDP|GRPC|EXTERNAL): &lt;enum>
 
-<h2 id="cloudprober.servers.ServerDef">cloudprober.servers.ServerDef</h2>
-    &nbsp;&nbsp;type: (HTTP|UDP|GRPC|EXTERNAL): &lt;enum><br><br>
-    &nbsp;&nbsp;[httpServer &lt;<a href="servers.html#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="servers.html#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;grpcServer &lt;<a href="servers.html#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="servers.html#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof><br><br>
-    
+  [httpServer &lt;<a href="servers.html#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="servers.html#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;grpcServer &lt;<a href="servers.html#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="servers.html#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof>
 
-<h2 id="cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</h2>
-    &nbsp;&nbsp;command: &lt;string><br><br>
-    
+<h2 id="cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</h2>  command: &lt;string>
 
-<h2 id="cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</h2>
-    &nbsp;&nbsp;port: &lt;int32> | default: 3142<br><br>
-    
-            <div class="comment">  # Enables gRPC reflection for publicly visible services, allowing grpc_cli to
-  # work. See https://grpc.io/grpc/core/md_doc_server_reflection_tutorial.html.
-  #</div>&nbsp;&nbsp;enableReflection: &lt;bool> | default: false<br><br>
-    
-            <div class="comment">  # If use_dedicated_server is set to true, then create a new gRPC server
+<h2 id="cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</h2>  port: &lt;int32> | default: 3142
+
+<div class="comment">  # Enables gRPC reflection for publicly visible services, allowing grpc_cli to
+  # work. See https://grpc.io/grpc/core/md_doc_server_reflection_tutorial.html.</div>  enableReflection: &lt;bool> | default: false
+
+<div class="comment">  # If use_dedicated_server is set to true, then create a new gRPC server
   # to handle probes. Otherwise, attempt to reuse gRPC server from runconfig
-  # if that was set.
-  #</div>&nbsp;&nbsp;useDedicatedServer: &lt;bool> | default: true<br><br>
-    
+  # if that was set.</div>  useDedicatedServer: &lt;bool> | default: true
 
-<h2 id="cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</h2>
-    &nbsp;&nbsp;port: &lt;int32> | default: 3141<br><br>
-    &nbsp;&nbsp;protocol: (HTTP|HTTPS): &lt;enum><br><br>
-    
-            <div class="comment">  # Maximum duration for reading the entire request, including the body.
-  #</div>&nbsp;&nbsp;readTimeoutMs: &lt;int32> | default: 10000<br><br>
-    
-            <div class="comment">  # Maximum duration before timing out writes of the response.
-  #</div>&nbsp;&nbsp;writeTimeoutMs: &lt;int32> | default: 10000<br><br>
-    
-            <div class="comment">  # Maximum amount of time to wait for the next request when keep-alives are
-  # enabled.
-  #</div>&nbsp;&nbsp;idleTimeoutMs: &lt;int32> | default: 60000<br><br>
-    
-            <div class="comment">  # Certificate file to use for HTTPS servers.
-  #</div>&nbsp;&nbsp;tlsCertFile: &lt;string><br><br>
-    
-            <div class="comment">  # Private key file corresponding to the certificate above.
-  #</div>&nbsp;&nbsp;tlsKeyFile: &lt;string><br><br>
-    
-            <div class="comment">  # Disable HTTP/2 for HTTPS servers.
-  #</div>&nbsp;&nbsp;disableHttp2: &lt;bool><br><br>
-    
-            <div class="comment">  # Pattern data handler returns pattern data at the url /data_&lt;size_in_bytes&gt;,
-  # e.g. &#34;/data_2048&#34;.
-  #</div>&nbsp;&nbsp;patternDataHandler: &lt;<a href="servers.html#cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</a>><br><br>
-    
+<h2 id="cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</h2>  port: &lt;int32> | default: 3141
 
-<h2 id="cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</h2>
-    
-            <div class="comment">  # Response sizes to server, e.g. 1024.
-  #</div>&nbsp;&nbsp;responseSize: &lt;int32><br><br>
-    
-            <div class="comment">  # Pattern is repeated to build the response, with &#34;response_size mod
-  # pattern_size&#34; filled by &#39;0&#39; bytes.
-  #</div>&nbsp;&nbsp;pattern: &lt;string> | default: cloudprober<br><br>
-    
+  protocol: (HTTP|HTTPS): &lt;enum>
 
-<h2 id="cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</h2>
-    &nbsp;&nbsp;port: &lt;int32><br><br>
-    &nbsp;&nbsp;type: (ECHO|DISCARD): &lt;enum><br><br>
-    
+<div class="comment">  # Maximum duration for reading the entire request, including the body.</div>  readTimeoutMs: &lt;int32> | default: 10000
 
+<div class="comment">  # Maximum duration before timing out writes of the response.</div>  writeTimeoutMs: &lt;int32> | default: 10000
+
+<div class="comment">  # Maximum amount of time to wait for the next request when keep-alives are
+  # enabled.</div>  idleTimeoutMs: &lt;int32> | default: 60000
+
+<div class="comment">  # Certificate file to use for HTTPS servers.</div>  tlsCertFile: &lt;string>
+
+<div class="comment">  # Private key file corresponding to the certificate above.</div>  tlsKeyFile: &lt;string>
+
+<div class="comment">  # Disable HTTP/2 for HTTPS servers.</div>  disableHttp2: &lt;bool>
+
+<div class="comment">  # Pattern data handler returns pattern data at the url /data_&lt;size_in_bytes&gt;,
+  # e.g. &#34;/data_2048&#34;.</div>  patternDataHandler: &lt;<a href="servers.html#cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</a>>
+
+<h2 id="cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</h2><div class="comment">  # Response sizes to server, e.g. 1024.</div>  responseSize: &lt;int32>
+
+<div class="comment">  # Pattern is repeated to build the response, with &#34;response_size mod
+  # pattern_size&#34; filled by &#39;0&#39; bytes.</div>  pattern: &lt;string> | default: cloudprober
+
+<h2 id="cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</h2>  port: &lt;int32>
+
+  type: (ECHO|DISCARD): &lt;enum>
+
+</code>
+</pre>
 </body>
 </html>
