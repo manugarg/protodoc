@@ -1,0 +1,225 @@
+
+<html>
+<head>
+    <title>Cloudprober Configuration</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        .comment {
+            color: #888;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+
+<h2 id="cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</h2>
+    &nbsp;&nbsp;serverAddress: &lt;string><br><br>
+    
+            <div class="comment">  # Optional oauth config for authentication.
+  #</div>&nbsp;&nbsp;oauthConfig: &lt;<a href="oauth.html#cloudprober.oauth.Config">cloudprober.oauth.Config</a>><br><br>
+    
+            <div class="comment">  # TLS config, it can be used to:
+  # - Specify a CA cert for server cert verification:
+  #     tls_config {
+  #       ca_cert_file: &#34;....&#34;
+  #     }
+  #
+  # - Specify client&#39;s TLS cert and key:
+  #     tls_config {
+  #       tls_cert_file: &#34;...&#34;
+  #       tls_key_file: &#34;...&#34;
+  #     }
+  #</div>&nbsp;&nbsp;tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>><br><br>
+    
+
+<h2 id="cloudprober.rds.Filter">cloudprober.rds.Filter</h2>
+    &nbsp;&nbsp;key: &lt;string><br><br>
+    &nbsp;&nbsp;value: &lt;string><br><br>
+    
+
+<h2 id="cloudprober.rds.IPConfig">cloudprober.rds.IPConfig</h2>
+    
+            <div class="comment">  # NIC index
+  #</div>&nbsp;&nbsp;nicIndex: &lt;int32> | default: 0<br><br>
+    &nbsp;&nbsp;ipType: (DEFAULT|PUBLIC|ALIAS): &lt;enum><br><br>
+    &nbsp;&nbsp;ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum><br><br>
+    
+
+<h2 id="cloudprober.rds.Provider">cloudprober.rds.Provider</h2>
+    
+            <div class="comment">  # Provider identifier, e.g. &#34;gcp&#34;. Server routes incoming requests to various
+  # providers based on this id.
+  #</div>&nbsp;&nbsp;id: &lt;string><br><br>
+    &nbsp;&nbsp;[fileConfig &lt;<a href="rds.html#cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</a>&gt; | gcpConfig &lt;<a href="rds.html#cloudprober.rds.gcp.ProviderConfig">cloudprober.rds.gcp.ProviderConfig</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;kubernetesConfig &lt;<a href="rds.html#cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</a>&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.rds.ServerConf">cloudprober.rds.ServerConf</h2>
+    
+            <div class="comment">  # List of providers that server supports.
+  #</div>&nbsp;&nbsp;provider: &lt;<a href="rds.html#cloudprober.rds.Provider">cloudprober.rds.Provider</a>><br><br>
+    
+
+<h2 id="cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</h2>
+    
+            <div class="comment">  # File that contains resources in either textproto or json format.
+  # Example in textproto format:
+  #
+  # resource {
+  #   name: &#34;switch-xx-01&#34;
+  #   ip: &#34;10.11.112.3&#34;
+  #   port: 8080
+  #   labels {
+  #     key: &#34;device_type&#34;
+  #     value: &#34;switch&#34;
+  #   }
+  # }
+  # resource {
+  #   name: &#34;switch-yy-01&#34;
+  #   ip: &#34;10.16.110.12&#34;
+  #   port: 8080
+  # }
+  #</div>&nbsp;&nbsp;filePath: &lt;string><br><br>
+    &nbsp;&nbsp;format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum><br><br>
+    
+            <div class="comment">  # If specified, file will be re-read at the given interval.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32><br><br>
+    
+            <div class="comment">  # Whenever possible, we reload a file only if it has been modified since the
+  # last load. If following option is set, mod time check is disabled.
+  # Note that mod-time check doesn&#39;t work for GCS.
+  #</div>&nbsp;&nbsp;disableModifiedTimeCheck: &lt;bool><br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.ForwardingRules">cloudprober.rds.gcp.ForwardingRules</h2>
+    
+            <div class="comment">  # Optionl region filter regex to limit discovery to specific regions, e.g.
+  # &#34;region_filter:europe-*&#34;
+  #</div>&nbsp;&nbsp;regionFilter: &lt;string><br><br>
+    
+            <div class="comment">  # How often resources should be refreshed.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 300<br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.GCEInstances">cloudprober.rds.gcp.GCEInstances</h2>
+    
+            <div class="comment">  # Optional zone filter regex to limit discovery to the specific zones
+  # For example, zone_filter: &#34;us-east1-*&#34; will limit instances discovery to
+  # only to the zones in the &#34;us-east1&#34; region.
+  #</div>&nbsp;&nbsp;zoneFilter: &lt;string><br><br>
+    
+            <div class="comment">  # How often resources should be refreshed.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 300<br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.ProviderConfig">cloudprober.rds.gcp.ProviderConfig</h2>
+    
+            <div class="comment">  # GCP projects. If running on GCE, it defaults to the local project.
+  #</div>&nbsp;&nbsp;project: &lt;string><br><br>
+    
+            <div class="comment">  # GCE instances discovery options. This field should be declared for the GCE
+  # instances discovery to be enabled.
+  #</div>&nbsp;&nbsp;gceInstances: &lt;<a href="rds.html#cloudprober.rds.gcp.GCEInstances">cloudprober.rds.gcp.GCEInstances</a>><br><br>
+    
+            <div class="comment">  # Forwarding rules discovery options. This field should be declared for the
+  # forwarding rules discovery to be enabled.
+  # Note that RDS supports only regional forwarding rules.
+  #</div>&nbsp;&nbsp;forwardingRules: &lt;<a href="rds.html#cloudprober.rds.gcp.ForwardingRules">cloudprober.rds.gcp.ForwardingRules</a>><br><br>
+    
+            <div class="comment">  # RTC variables discovery options.
+  #</div>&nbsp;&nbsp;rtcVariables: &lt;<a href="rds.html#cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</a>><br><br>
+    
+            <div class="comment">  # PubSub messages discovery options.
+  #</div>&nbsp;&nbsp;pubsubMessages: &lt;<a href="rds.html#cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</a>><br><br>
+    
+            <div class="comment">  # Compute API version.
+  #</div>&nbsp;&nbsp;apiVersion: &lt;string> | default: v1<br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</h2>
+    &nbsp;&nbsp;subscription: &lt;<a href="rds.html#cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</a>><br><br>
+    
+            <div class="comment">  # Only for testing.
+  #</div>&nbsp;&nbsp;apiEndpoint: &lt;string><br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</h2>
+    
+            <div class="comment">  # Subscription name. If it doesn&#39;t exist already, we try to create one.
+  #</div>&nbsp;&nbsp;name: &lt;string><br><br>
+    
+            <div class="comment">  # Topic name. This is used to create the subscription if it doesn&#39;t exist
+  # already.
+  #</div>&nbsp;&nbsp;topicName: &lt;string><br><br>
+    
+            <div class="comment">  # If subscription already exists, how far back to seek back on restart.
+  # Note that duplicate data is fine as we filter by publish time.
+  #</div>&nbsp;&nbsp;seekBackDurationSec: &lt;int32> | default: 3600<br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</h2>
+    &nbsp;&nbsp;rtcConfig: &lt;<a href="rds.html#cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</a>><br><br>
+    
+
+<h2 id="cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</h2>
+    &nbsp;&nbsp;name: &lt;string><br><br>
+    
+            <div class="comment">  # How often RTC variables should be evaluated/expanded.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 10<br><br>
+    
+
+<h2 id="cloudprober.rds.kubernetes.Endpoints">cloudprober.rds.kubernetes.Endpoints</h2>
+    
+
+<h2 id="cloudprober.rds.kubernetes.Ingresses">cloudprober.rds.kubernetes.Ingresses</h2>
+    
+
+<h2 id="cloudprober.rds.kubernetes.Pods">cloudprober.rds.kubernetes.Pods</h2>
+    
+
+<h2 id="cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</h2>
+    
+            <div class="comment">  # Namespace to list resources for. If not specified, we default to all
+  # namespaces.
+  #</div>&nbsp;&nbsp;namespace: &lt;string><br><br>
+    
+            <div class="comment">  # Pods discovery options. This field should be declared for the pods
+  # discovery to be enabled.
+  #</div>&nbsp;&nbsp;pods: &lt;<a href="rds.html#cloudprober.rds.kubernetes.Pods">cloudprober.rds.kubernetes.Pods</a>><br><br>
+    
+            <div class="comment">  # Endpoints discovery options. This field should be declared for the
+  # endpoints discovery to be enabled.
+  #</div>&nbsp;&nbsp;endpoints: &lt;<a href="rds.html#cloudprober.rds.kubernetes.Endpoints">cloudprober.rds.kubernetes.Endpoints</a>><br><br>
+    
+            <div class="comment">  # Services discovery options. This field should be declared for the
+  # services discovery to be enabled.
+  #</div>&nbsp;&nbsp;services: &lt;<a href="rds.html#cloudprober.rds.kubernetes.Services">cloudprober.rds.kubernetes.Services</a>><br><br>
+    
+            <div class="comment">  # Ingresses discovery options. This field should be declared for the
+  # ingresses discovery to be enabled.
+  # Note: Ingress support is experimental and may change in future.
+  #</div>&nbsp;&nbsp;ingresses: &lt;<a href="rds.html#cloudprober.rds.kubernetes.Ingresses">cloudprober.rds.kubernetes.Ingresses</a>><br><br>
+    
+            <div class="comment">  # Label selectors to filter resources. This is useful for large clusters.
+  # label_selector: [&#34;app=cloudprober&#34;, &#34;env!=dev&#34;]
+  #</div>&nbsp;&nbsp;labelSelector: &lt;string><br><br>
+    
+            <div class="comment">  # Kubernetes API server address. If not specified, we assume in-cluster mode
+  # and get it from the local environment variables.
+  #</div>&nbsp;&nbsp;apiServerAddress: &lt;string><br><br>
+    
+            <div class="comment">  # TLS config to authenticate communication with the API server.
+  #</div>&nbsp;&nbsp;tlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>><br><br>
+    
+            <div class="comment">  # How often resources should be evaluated/expanded.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 60<br><br>
+    
+
+<h2 id="cloudprober.rds.kubernetes.Services">cloudprober.rds.kubernetes.Services</h2>
+    
+
+</body>
+</html>

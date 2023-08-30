@@ -1,0 +1,233 @@
+
+<html>
+<head>
+    <title>Cloudprober Configuration</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        .comment {
+            color: #888;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+
+<h2 id="cloudprober.targets.DummyTargets">cloudprober.targets.DummyTargets</h2>
+    
+
+<h2 id="cloudprober.targets.GlobalTargetsOptions">cloudprober.targets.GlobalTargetsOptions</h2>
+    
+            <div class="comment">  # RDS server address
+  # Deprecated: This option is now deprecated, please use rds_server_options
+  # instead.
+  #</div>&nbsp;&nbsp;rdsServerAddress: &lt;string><br><br>
+    
+            <div class="comment">  # RDS server options, for example:
+  # rds_server_options {
+  #   server_address: &#34;rds-server.xyz:9314&#34;
+  #   oauth_config: {
+  #     ...
+  #   }
+  # }
+  #</div>&nbsp;&nbsp;rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>><br><br>
+    
+            <div class="comment">  # GCE targets options.
+  #</div>&nbsp;&nbsp;globalGceTargetsOptions: &lt;<a href="targets.html#cloudprober.targets.gce.GlobalOptions">cloudprober.targets.gce.GlobalOptions</a>><br><br>
+    
+            <div class="comment">  # Lame duck options. If provided, targets module checks for the lame duck
+  # targets and removes them from the targets list.
+  #</div>&nbsp;&nbsp;lameDuckOptions: &lt;<a href="targets.html#cloudprober.targets.lameduck.Options">cloudprober.targets.lameduck.Options</a>><br><br>
+    
+
+<h2 id="cloudprober.targets.K8sTargets">cloudprober.targets.K8sTargets</h2>
+    
+            <div class="comment">  # Targets namespace. If this field is unset, we select resources from all
+  # namespaces.
+  #</div>&nbsp;&nbsp;namespace: &lt;string><br><br>
+    
+            <div class="comment">  # labelSelector uses the same format as kubernetes API calls. 
+  # Example:
+  #   labelSelector: &#34;k8s-app&#34;       # label k8s-app exists
+  #   labelSelector: &#34;role=frontend&#34; # label role=frontend
+  #   labelSelector: &#34;!canary&#34;       # canary label doesn&#39;t exist
+  #</div>&nbsp;&nbsp;labelSelector: &lt;string><br><br>
+    &nbsp;&nbsp;[services &lt;string&gt; | endpoints &lt;string&gt; | <br>
+&nbsp;&nbsp;&nbsp;ingresses &lt;string&gt; | pods &lt;string&gt;]: &lt;oneof><br><br>
+    
+            <div class="comment">  # portFilter can be used to filter resources by port name. This is useful
+  # for resources like endpoints and services, where each resource may have
+  # multiple ports, and we may hit just a subset of those ports. portFilter
+  # takes a regex -- we apply it on port names if port name is available,
+  # otherwise we apply it port numbers.
+  # Example: &#34;.*-dns&#34;, &#34;metrics&#34;, &#34;.*-service&#34;, etc.
+  #</div>&nbsp;&nbsp;portFilter: &lt;string><br><br>
+    
+            <div class="comment">  # How often to re-check k8s API servers. Note this field will be irrelevant
+  # when (and if) we move to the watch API. Default is 30s.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32><br><br>
+    &nbsp;&nbsp;rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>><br><br>
+    
+
+<h2 id="cloudprober.targets.RDSTargets">cloudprober.targets.RDSTargets</h2>
+    
+            <div class="comment">  # RDS server options, for example:
+  # rds_server_options {
+  #   server_address: &#34;rds-server.xyz:9314&#34;
+  #   oauth_config: {
+  #     ...
+  #   }
+  # }
+  #</div>&nbsp;&nbsp;rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>><br><br>
+    
+            <div class="comment">  # Resource path specifies the resources to return. Resources paths have the
+  # following format:
+  # &lt;resource_provider&gt;://&lt;resource_type&gt;/&lt;additional_params&gt;
+  #
+  # Examples:
+  # For GCE instances in projectA: &#34;gcp://gce_instances/&lt;projectA&gt;&#34;
+  # Kubernetes Pods : &#34;k8s://pods&#34;
+  #</div>&nbsp;&nbsp;resourcePath: &lt;string><br><br>
+    
+            <div class="comment">  # Filters to filter resources by.
+  #</div>&nbsp;&nbsp;filter: &lt;<a href="rds.html#cloudprober.rds.Filter">cloudprober.rds.Filter</a>><br><br>
+    
+            <div class="comment">  # IP config to specify the IP address to pick for a resource.
+  #</div>&nbsp;&nbsp;ipConfig: &lt;<a href="rds.html#cloudprober.rds.IPConfig">cloudprober.rds.IPConfig</a>><br><br>
+    
+
+<h2 id="cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</h2>
+    &nbsp;&nbsp;[hostNames &lt;string&gt; | sharedTargets &lt;string&gt; | <br>
+&nbsp;&nbsp;&nbsp;gceTargets &lt;<a href="targets.html#cloudprober.targets.gce.TargetsConf">cloudprober.targets.gce.TargetsConf</a>&gt; | rdsTargets &lt;<a href="targets.html#cloudprober.targets.RDSTargets">cloudprober.targets.RDSTargets</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;fileTargets &lt;<a href="targets.html#cloudprober.targets.file.TargetsConf">cloudprober.targets.file.TargetsConf</a>&gt; | k8s &lt;<a href="targets.html#cloudprober.targets.K8sTargets">cloudprober.targets.K8sTargets</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;dummyTargets &lt;<a href="targets.html#cloudprober.targets.DummyTargets">cloudprober.targets.DummyTargets</a>&gt;]: &lt;oneof><br><br>
+    
+            <div class="comment">  # Regex to apply on the targets.
+  #</div>&nbsp;&nbsp;regex: &lt;string><br><br>
+    
+            <div class="comment">  # Exclude lameducks. Lameduck targets can be set through RTC (realtime
+  # configurator) service. This functionality works only if lame_duck_options
+  # are specified.
+  #</div>&nbsp;&nbsp;excludeLameducks: &lt;bool> | default: true<br><br>
+    
+
+<h2 id="cloudprober.targets.file.TargetsConf">cloudprober.targets.file.TargetsConf</h2>
+    
+            <div class="comment">  # File that contains resources in either textproto or json format.
+  # Example in textproto format:
+  #
+  # resource {
+  #   name: &#34;switch-xx-01&#34;
+  #   ip: &#34;10.11.112.3&#34;
+  #   port: 8080
+  #   labels {
+  #     key: &#34;device_type&#34;
+  #     value: &#34;switch&#34;
+  #   }
+  # }
+  # resource {
+  #   name: &#34;switch-yy-01&#34;
+  #   ip: &#34;10.16.110.12&#34;
+  #   port: 8080
+  # }
+  #</div>&nbsp;&nbsp;filePath: &lt;string><br><br>
+    &nbsp;&nbsp;filter: &lt;<a href="rds.html#cloudprober.rds.Filter">cloudprober.rds.Filter</a>><br><br>
+    &nbsp;&nbsp;format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum><br><br>
+    
+            <div class="comment">  # If specified, file will be re-read at the given interval.
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32><br><br>
+    
+
+<h2 id="cloudprober.targets.gce.ForwardingRules">cloudprober.targets.gce.ForwardingRules</h2>
+    
+            <div class="comment">  # Important: if multiple probes use forwarding_rules targets, only the
+  # settings in the definition will take effect.
+  # TODO(manugarg): Fix this behavior.
+  #
+  # For regional forwarding rules, regions to return forwarding rules for.
+  # Default is to return forwarding rules from the region that the VM is
+  # running in. To return forwarding rules from all regions, specify region as
+  # &#34;all&#34;.
+  #</div>&nbsp;&nbsp;region: &lt;string><br><br>
+    
+            <div class="comment">  # For global forwarding rules, if it is set to true,  it will ignore 
+  # the value for the above region property.
+  #</div>&nbsp;&nbsp;globalRule: &lt;bool> | default: false<br><br>
+    
+
+<h2 id="cloudprober.targets.gce.GlobalOptions">cloudprober.targets.gce.GlobalOptions</h2>
+    
+            <div class="comment">  # How often targets should be evaluated/expanded
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 900<br><br>
+    
+            <div class="comment">  # Compute API version.
+  #</div>&nbsp;&nbsp;apiVersion: &lt;string> | default: v1<br><br>
+    
+
+<h2 id="cloudprober.targets.gce.Instances">cloudprober.targets.gce.Instances</h2>
+    
+            <div class="comment">  # Use DNS to resolve target names (instances). If set to false (default),
+  # IP addresses specified in the compute.Instance resource is used. If set
+  # to true all the other resolving options are ignored.
+  #</div>&nbsp;&nbsp;useDnsToResolve: &lt;bool> | default: false<br><br>
+    &nbsp;&nbsp;networkInterface: &lt;<a href="targets.html#cloudprober.targets.gce.Instances.NetworkInterface">cloudprober.targets.gce.Instances.NetworkInterface</a>><br><br>
+    
+            <div class="comment">  # Labels to filter instances by (&#34;key:value-regex&#34; format).
+  #</div>&nbsp;&nbsp;label: &lt;string><br><br>
+    
+
+<h2 id="cloudprober.targets.gce.Instances.NetworkInterface">cloudprober.targets.gce.Instances.NetworkInterface</h2>
+    &nbsp;&nbsp;index: &lt;int32> | default: 0<br><br>
+    &nbsp;&nbsp;ipType: (PRIVATE|PUBLIC|ALIAS): &lt;enum><br><br>
+    
+
+<h2 id="cloudprober.targets.gce.TargetsConf">cloudprober.targets.gce.TargetsConf</h2>
+    
+            <div class="comment">  # If running on GCE, this defaults to the local project.
+  # Note: Multiple projects support in targets is experimental and may go away
+  # with future iterations.
+  #</div>&nbsp;&nbsp;project: &lt;string><br><br>
+    &nbsp;&nbsp;[instances &lt;<a href="targets.html#cloudprober.targets.gce.Instances">cloudprober.targets.gce.Instances</a>&gt; | forwardingRules &lt;<a href="targets.html#cloudprober.targets.gce.ForwardingRules">cloudprober.targets.gce.ForwardingRules</a>&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.targets.lameduck.Options">cloudprober.targets.lameduck.Options</h2>
+    
+            <div class="comment">  # How often to check for lame-ducked targets
+  #</div>&nbsp;&nbsp;reEvalSec: &lt;int32> | default: 10<br><br>
+    
+            <div class="comment">  # Runtime config project. If running on GCE, this defaults to the project
+  # containing the VM.
+  #</div>&nbsp;&nbsp;runtimeconfigProject: &lt;string><br><br>
+    
+            <div class="comment">  # Lame duck targets runtime config name. An operator will create a variable
+  # here to mark a target as lame-ducked.
+  #</div>&nbsp;&nbsp;runtimeconfigName: &lt;string> | default: lame-duck-targets<br><br>
+    
+            <div class="comment">  # Lame duck targets pubsub topic name. An operator will create a message
+  # here to mark a target as lame-ducked.
+  #</div>&nbsp;&nbsp;pubsubTopic: &lt;string><br><br>
+    
+            <div class="comment">  # Lame duck expiration time. We ignore variables (targets) that have been
+  # updated more than these many seconds ago. This is a safety mechanism for
+  # failing to cleanup. Also, the idea is that if a target has actually
+  # disappeared, automatic targets expansion will take care of that some time
+  # during this expiration period.
+  #</div>&nbsp;&nbsp;expirationSec: &lt;int32> | default: 300<br><br>
+    
+            <div class="comment">  # Use an RDS client to get lame-duck-targets.
+  # This option is always true now and will be removed after v0.10.7.
+  #</div>&nbsp;&nbsp;useRds: &lt;bool><br><br>
+    
+            <div class="comment">  # RDS server options, for example:
+  # rds_server_options {
+  #   server_address: &#34;rds-server.xyz:9314&#34;
+  #   oauth_config: {
+  #     ...
+  #   }
+  #</div>&nbsp;&nbsp;rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>><br><br>
+    
+
+</body>
+</html>

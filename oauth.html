@@ -1,0 +1,64 @@
+
+<html>
+<head>
+    <title>Cloudprober Configuration</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        .comment {
+            color: #888;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+
+<h2 id="cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</h2>
+    &nbsp;&nbsp;[file &lt;string&gt; | cmd &lt;string&gt; | <br>
+&nbsp;&nbsp;&nbsp;gceServiceAccount &lt;string&gt; | k8sLocalToken &lt;bool&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[refreshIntervalSec &lt;float&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.oauth.Config">cloudprober.oauth.Config</h2>
+    &nbsp;&nbsp;[httpRequest &lt;<a href="oauth.html#cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="oauth.html#cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;googleCredentials &lt;<a href="oauth.html#cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[refreshExpiryBufferSec &lt;int32&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</h2>
+    &nbsp;&nbsp;jsonFile: &lt;string><br><br>
+    &nbsp;&nbsp;scope: &lt;string><br><br>
+    
+            <div class="comment">  # Use encoded JWT directly as access token, instead of implementing the whole
+  # OAuth2.0 flow.
+  #</div>&nbsp;&nbsp;jwtAsAccessToken: &lt;bool><br><br>
+    
+            <div class="comment">  # Audience works only if jwt_as_access_token is true.
+  #</div>&nbsp;&nbsp;audience: &lt;string><br><br>
+    
+
+<h2 id="cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</h2>
+    &nbsp;&nbsp;tokenUrl: &lt;string><br><br>
+    &nbsp;&nbsp;method: &lt;string><br><br>
+    
+            <div class="comment">  # Data to be sent as request body. If there are multiple &#34;data&#34; fields, we combine
+  # their values with a &#39;&amp;&#39; in between. Note: 1) If data appears to be a valid json,
+  # we automatically set the content-type header to &#34;application/json&#34;, 2) If data
+  # appears to be a query string we set content-type to
+  # &#34;application/x-www-form-urlencoded&#34;. Content type header can still be overridden
+  # using the header field below.
+  #</div>&nbsp;&nbsp;data: &lt;string><br><br>
+    
+            <div class="comment">  # HTTP request headers
+  #</div>&nbsp;&nbsp;header: &lt;<a href="oauth.html#cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</a>><br><br>
+    
+
+<h2 id="cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</h2>
+    &nbsp;&nbsp;key: &lt;string><br><br>
+    &nbsp;&nbsp;value: &lt;string><br><br>
+    
+
+</body>
+</html>

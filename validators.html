@@ -1,0 +1,50 @@
+
+<html>
+<head>
+    <title>Cloudprober Configuration</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        .comment {
+            color: #888;
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+
+<h2 id="cloudprober.validators.Validator">cloudprober.validators.Validator</h2>
+    &nbsp;&nbsp;name: &lt;string><br><br>
+    &nbsp;&nbsp;[httpValidator &lt;<a href="validators.html#cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</a>&gt; | integrityValidator &lt;<a href="validators.html#cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</a>&gt; | <br>
+&nbsp;&nbsp;&nbsp;jsonValidator &lt;<a href="validators.html#cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</h2>
+    &nbsp;&nbsp;[successStatusCodes &lt;string&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[failureStatusCodes &lt;string&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[successHeader &lt;<a href="validators.html#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[failureHeader &lt;<a href="validators.html#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</h2>
+    &nbsp;&nbsp;[name &lt;string&gt;]: &lt;oneof><br><br>
+    &nbsp;&nbsp;[valueRegex &lt;string&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</h2>
+    &nbsp;&nbsp;[patternString &lt;string&gt; | patternNumBytes &lt;int32&gt;]: &lt;oneof><br><br>
+    
+
+<h2 id="cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</h2>
+    
+            <div class="comment">  # If jq filter is specified, validator passes only if applying jq_filter to
+  # the probe output, e.g. HTTP API response, results in &#39;true&#39; boolean.
+  # See the following test file for some examples:
+  # https://github.com/cloudprober/cloudprober/blob/master/validators/json/json_test.go
+  #</div>&nbsp;&nbsp;jqFilter: &lt;string><br><br>
+    
+
+</body>
+</html>
