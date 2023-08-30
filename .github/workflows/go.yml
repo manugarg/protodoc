@@ -189,10 +189,7 @@ jobs:
           chmod a+rx protodoc protodoc-*
 
       - name: Build and push release Docker Image (main-ghcr)
-        run: make docker_multiarch DOCKER_IMAGE=ghcr.io/protodoc/protodoc
-
-      - name: Build and push release Docker Image (contrib-ghcr)
-        run: make docker_multiarch DOCKER_IMAGE=ghcr.io/protodoc/protodoc
+        run: make docker_multiarch DOCKER_IMAGE=ghcr.io/manugarg/protodoc
 
   pre-release:
     name: Upload pre-release binaries
