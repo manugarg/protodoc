@@ -1,0 +1,50 @@
+name: Build and deploy gh-pages
+
+on:
+  push:
+    paths:
+      - '**'
+      - '.github/workflows/docgen.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Checkout cloudprober protos
+        uses: actions/checkout@v1
+        with:
+          repository: cloudprober/cloudprober
+          path: cloudprober
+
+      - name: Setup public worktree
+        run: git worktree add docs gh-pages
+
+      - name: Create a branch for pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git push origin --delete gh-pages-github-action || true
+          git checkout -b gh-pages-github-action gh-pages
+
+      - name: Build pages
+        run: |
+          go run ./cmd/protodoc/. --proto_root_dir=cloudprober --out_dir=docs --package_prefix=github.com/cloudprober/cloudprober
+          ls docs
+          cd docs && git status
+
+      - name: Deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git add --all
+          git status
+          git diff-index --quiet HEAD || git commit -m "Update gh-pages" && git push --set-upstream origin gh-pages-github-action
