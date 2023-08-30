@@ -14,10 +14,11 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Checkout cloudprober protos
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
           repository: cloudprober/cloudprober
           path: cloudprober
+          fetch-depth: 1
 
       - name: Setup public worktree
         run: git worktree add docs gh-pages
