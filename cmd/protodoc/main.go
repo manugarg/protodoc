@@ -87,7 +87,7 @@ func main() {
 				panic(err)
 			}
 
-			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(1).WithPrefix("  "))
+			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(1))
 			msgToDoc[string(msgName)] = toks
 			nextLoop = append(nextLoop, next...)
 		}

@@ -35,12 +35,11 @@ var DocTmpl = `
     </style>
 </head>
 <body>
-<pre>
-<code>
 {{- range . -}}
-  {{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
-  {{- range .Tokens -}}
-  {{- if .Comment -}}<div class="comment">{{.Comment}}</div>{{ end }}
+{{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
+<pre><code>
+{{- range .Tokens -}}
+  {{- if .Comment }}<div class="comment">{{.Comment}}</div>{{ end -}}
   {{- if .URL }}
     {{- .Prefix}}{{.TextHTML}}{{.Sep}}<<a href="{{.URL}}">{{- .Kind}}</a>>{{.Suffix}}
   {{- else if .Kind }}
@@ -49,9 +48,8 @@ var DocTmpl = `
     {{- .Prefix}}{{.TextHTML}}{{.Suffix}}
   {{- end }}
   {{- .ExtraLine }}
-{{ end -}}
+{{ end }}
+</code></pre>
 {{- end -}}
-</code>
-</pre>
 </body>
 </html>`
