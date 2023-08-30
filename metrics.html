@@ -8,39 +8,39 @@
         }
         .comment {
             color: #888;
-            font-family: monospace;
-            white-space: pre;
+        }
+        pre {
+            border: 1px solid #ddd;
+            border-left: 4px solid #e6522c;
+            border-radius: 0;
+            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
+<pre>
+<code><h2 id="cloudprober.metrics.Dist">cloudprober.metrics.Dist</h2>  [explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="metrics.html#cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
 
-<h2 id="cloudprober.metrics.Dist">cloudprober.metrics.Dist</h2>
-    &nbsp;&nbsp;[explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="metrics.html#cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof><br><br>
-    
+<h2 id="cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</h2>  scaleFactor: &lt;float>
 
-<h2 id="cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</h2>
-    &nbsp;&nbsp;scaleFactor: &lt;float><br><br>
-    &nbsp;&nbsp;base: &lt;float><br><br>
-    &nbsp;&nbsp;numBuckets: &lt;uint32><br><br>
-    
+  base: &lt;float>
 
-<h2 id="cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</h2>
-    &nbsp;&nbsp;metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum><br><br>
-    
-            <div class="comment">  # Additional labels (comma-separated) to attach to the output metrics, e.g.
+  numBuckets: &lt;uint32>
+
+<h2 id="cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</h2>  metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
+
+<div class="comment">  # Additional labels (comma-separated) to attach to the output metrics, e.g.
   # &#34;region=us-east1,zone=us-east1-d&#34;. ptype=&#34;external&#34; and probe=&#34;&lt;probeName&gt;&#34;
-  # are attached automatically.
-  #</div>&nbsp;&nbsp;additionalLabels: &lt;string><br><br>
-    
-            <div class="comment">  # Whether to aggregate metrics in Cloudprober. If enabled, Cloudprober
+  # are attached automatically.</div>  additionalLabels: &lt;string>
+
+<div class="comment">  # Whether to aggregate metrics in Cloudprober. If enabled, Cloudprober
   # aggregates the metrics returned by the external probe process -- external
   # probe process should return metrics only since the last probe run.
   # Note that this option is mutually exclusive with GAUGE metrics and
-  # cloudprober will fail during initialization if both options are enabled.
-  #</div>&nbsp;&nbsp;aggregateInCloudprober: &lt;bool> | default: false<br><br>
-    
-            <div class="comment">  # Metrics that should be treated as distributions. These metrics are exported
+  # cloudprober will fail during initialization if both options are enabled.</div>  aggregateInCloudprober: &lt;bool> | default: false
+
+<div class="comment">  # Metrics that should be treated as distributions. These metrics are exported
   # by the external probe program as comma-separated list of values, for
   # example: &#34;op_latency 4.7,5.6,5.9,6.1,4.9&#34;. To be able to build distribution
   # from these values, these metrics should be pre-configured in external
@@ -50,14 +50,13 @@
   #   value {
   #     explicit_buckets: &#34;1,2,4,8,16,32,64,128,256&#34;
   #   }
-  # }
-  #</div>&nbsp;&nbsp;distMetric: &lt;<a href="metrics.html#cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>><br><br>
-    
+  # }</div>  distMetric: &lt;<a href="metrics.html#cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
 
-<h2 id="cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</h2>
-    &nbsp;&nbsp;key: &lt;string><br><br>
-    &nbsp;&nbsp;value: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>><br><br>
-    
+<h2 id="cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</h2>  key: &lt;string>
 
+  value: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>>
+
+</code>
+</pre>
 </body>
 </html>

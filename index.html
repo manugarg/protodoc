@@ -8,53 +8,50 @@
         }
         .comment {
             color: #888;
-            font-family: monospace;
-            white-space: pre;
+        }
+        pre {
+            border: 1px solid #ddd;
+            border-left: 4px solid #e6522c;
+            border-radius: 0;
+            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
+<pre>
+<code><div class="comment"># Probes to run.</div>probe &lt;<a href="probes.html#cloudprober.probes.ProbeDef">cloudprober.probes.ProbeDef</a>>:
+  - name: &lt;string>
 
-        <div class="comment"># Probes to run.
-#</div>probe: &lt;<a href="probes.html#cloudprober.probes.ProbeDef">cloudprober.probes.ProbeDef</a>>:<br>
-&nbsp;&nbsp;-&nbsp;name: &lt;string><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|EXTENSION|USER_DEFINED): &lt;enum><br><br>
+    type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|EXTENSION|USER_DEFINED): &lt;enum>
 
-        <div class="comment">    # Which machines this probe should run on. If defined, cloudprober will run
-    # this probe only if machine&#39;s hostname matches this value.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;runOn: &lt;string><br><br>
+<div class="comment">    # Which machines this probe should run on. If defined, cloudprober will run
+    # this probe only if machine&#39;s hostname matches this value.</div>    runOn: &lt;string>
 
-        <div class="comment">    # Interval between two probe runs in milliseconds.
+<div class="comment">    # Interval between two probe runs in milliseconds.
     # Only one of &#34;interval&#34; and &#34;inteval_msec&#34; should be defined.
-    # Default interval is 2s.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;intervalMsec: &lt;int32><br><br>
+    # Default interval is 2s.</div>    intervalMsec: &lt;int32>
 
-        <div class="comment">    # Interval between two probe runs in string format, e.g. 10s.
+<div class="comment">    # Interval between two probe runs in string format, e.g. 10s.
     # Only one of &#34;interval&#34; and &#34;inteval_msec&#34; should be defined.
-    # Default interval is 2s.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;interval: &lt;string><br><br>
+    # Default interval is 2s.</div>    interval: &lt;string>
 
-        <div class="comment">    # Timeout for each probe in milliseconds
+<div class="comment">    # Timeout for each probe in milliseconds
     # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
-    # Default timeout is 1s.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;timeoutMsec: &lt;int32><br><br>
+    # Default timeout is 1s.</div>    timeoutMsec: &lt;int32>
 
-        <div class="comment">    # Timeout for each probe in string format, e.g. 10s.
+<div class="comment">    # Timeout for each probe in string format, e.g. 10s.
     # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
-    # Default timeout is 1s.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;timeout: &lt;string><br><br>
+    # Default timeout is 1s.</div>    timeout: &lt;string>
 
-        <div class="comment">    # Targets for the probe
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>><br><br>
+<div class="comment">    # Targets for the probe</div>    targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>>
 
-        <div class="comment">    # Latency distribution. If specified, latency is stored as a distribution.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;latencyDistribution: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>><br><br>
+<div class="comment">    # Latency distribution. If specified, latency is stored as a distribution.</div>    latencyDistribution: &lt;<a href="metrics.html#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>>
 
-        <div class="comment">    # Latency unit. Any string that&#39;s parseable by time.ParseDuration.
-    # Valid values: &#34;ns&#34;, &#34;us&#34; (or &#34;µs&#34;), &#34;ms&#34;, &#34;s&#34;, &#34;m&#34;, &#34;h&#34;.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;latencyUnit: &lt;string> | default: us<br><br>
+<div class="comment">    # Latency unit. Any string that&#39;s parseable by time.ParseDuration.
+    # Valid values: &#34;ns&#34;, &#34;us&#34; (or &#34;µs&#34;), &#34;ms&#34;, &#34;s&#34;, &#34;m&#34;, &#34;h&#34;.</div>    latencyUnit: &lt;string> | default: us
 
-        <div class="comment">    # Latency metric name. You may want to change the latency metric name, if:
+<div class="comment">    # Latency metric name. You may want to change the latency metric name, if:
     # you&#39;re using latency_distribution for some probes, and regular metric for
     # other probes, and you want to differentiate between the two.
     # For example:
@@ -67,16 +64,16 @@
     #   probe {
     #     name: &#34;app1&#34;
     #     ...
-    #   }
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;latencyMetricName: &lt;string> | default: latency<br><br>
+    #   }</div>    latencyMetricName: &lt;string> | default: latency
 
-        <div class="comment">    # Validators are in experimental phase right now and can change at any time.
-    # NOTE: Only PING, HTTP and DNS probes support validators.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;validator: &lt;<a href="validators.html#cloudprober.validators.Validator">cloudprober.validators.Validator</a>><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[sourceIp &lt;string&gt; | sourceInterface &lt;string&gt;]: &lt;oneof><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum><br><br>
+<div class="comment">    # Validators are in experimental phase right now and can change at any time.
+    # NOTE: Only PING, HTTP and DNS probes support validators.</div>    validator: &lt;<a href="validators.html#cloudprober.validators.Validator">cloudprober.validators.Validator</a>>
 
-        <div class="comment">    # How often to export stats. Probes usually run at a higher frequency (e.g.
+    [sourceIp &lt;string&gt; | sourceInterface &lt;string&gt;]: &lt;oneof>
+
+    ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
+
+<div class="comment">    # How often to export stats. Probes usually run at a higher frequency (e.g.
     # every second); stats from individual probes are aggregated within
     # cloudprober until exported. In most cases, users don&#39;t need to change the
     # default.
@@ -85,10 +82,9 @@
     # For all probes except UDP:
     #   stats_export_interval=max(interval, 10s)
     # For UDP:
-    #   stats_export_interval=max(2*max(interval, timeout), 10s)
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;statsExportIntervalMsec: &lt;int32><br><br>
+    #   stats_export_interval=max(2*max(interval, timeout), 10s)</div>    statsExportIntervalMsec: &lt;int32>
 
-        <div class="comment">    # Additional labels to add to the probe results. Label&#39;s value can either be
+<div class="comment">    # Additional labels to add to the probe results. Label&#39;s value can either be
     # static or can be derived from target&#39;s labels.
     #
     # Example:
@@ -100,25 +96,26 @@
     #     key: &#34;app&#34;
     #     value: &#34;@target.label.app@&#34;
     #   }
-    # (See a more detailed example at: examples/additional_label/cloudprober.cfg)
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;additionalLabel: &lt;<a href="probes.html#cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</a>><br><br>
+    # (See a more detailed example at: examples/additional_label/cloudprober.cfg)</div>    additionalLabel: &lt;<a href="probes.html#cloudprober.probes.AdditionalLabel">cloudprober.probes.AdditionalLabel</a>>
 
-        <div class="comment">    # (Experimental) If set, test is inversed, i.e. we count it as success if
+<div class="comment">    # (Experimental) If set, test is inversed, i.e. we count it as success if
     # target doesn&#39;t respond. This is useful, for example, that your firewall is
     # working as expected.
     #
     # This is currently implemented only by PING and TCP probes.
-    # Note: This field is currently experimental, and may change in future.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;negativeTest: &lt;bool><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;alert: &lt;<a href="probes.html#cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</a>><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[pingProbe &lt;<a href="probes.html#cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</a>&gt; | httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | externalProbe &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;udpProbe &lt;<a href="probes.html#cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</a>&gt; | udpListenerProbe &lt;<a href="probes.html#cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grpcProbe &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</a>&gt; | tcpProbe &lt;<a href="probes.html#cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;userDefinedProbe &lt;string&gt;]: &lt;oneof><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;debugOptions: &lt;<a href="probes.html#cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</a>><br><br>
+    # Note: This field is currently experimental, and may change in future.</div>    negativeTest: &lt;bool>
 
-        <div class="comment"># Surfacers are used to export probe results for further processing.
+    alert: &lt;<a href="probes.html#cloudprober.probes.alerting.AlertConf">cloudprober.probes.alerting.AlertConf</a>>
+
+    [pingProbe &lt;<a href="probes.html#cloudprober.probes.ping.ProbeConf">cloudprober.probes.ping.ProbeConf</a>&gt; | httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | externalProbe &lt;<a href="probes.html#cloudprober.probes.external.ProbeConf">cloudprober.probes.external.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;udpProbe &lt;<a href="probes.html#cloudprober.probes.udp.ProbeConf">cloudprober.probes.udp.ProbeConf</a>&gt; | udpListenerProbe &lt;<a href="probes.html#cloudprober.probes.udplistener.ProbeConf">cloudprober.probes.udplistener.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grpcProbe &lt;<a href="probes.html#cloudprober.probes.grpc.ProbeConf">cloudprober.probes.grpc.ProbeConf</a>&gt; | tcpProbe &lt;<a href="probes.html#cloudprober.probes.tcp.ProbeConf">cloudprober.probes.tcp.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;userDefinedProbe &lt;string&gt;]: &lt;oneof>
+
+    debugOptions: &lt;<a href="probes.html#cloudprober.probes.DebugOptions">cloudprober.probes.DebugOptions</a>>
+
+<div class="comment"># Surfacers are used to export probe results for further processing.
 # If no surfacer is configured, a prometheus and a file surfacer are
 # initialized:
 #  - Prometheus makes probe results available at http://&lt;host&gt;:9313/metrics.
@@ -126,42 +123,37 @@
 #
 # You can disable default surfacers (in case you want no surfacer at all), by
 # adding the following to your config:
-#   surfacer {}
-#</div>surfacer: &lt;<a href="surfacer.html#cloudprober.surfacer.SurfacerDef">cloudprober.surfacer.SurfacerDef</a>>:<br>
-
-        <div class="comment">    # This name is used for logging. If not defined, it&#39;s derived from the type.
+#   surfacer {}</div>surfacer &lt;<a href="surfacer.html#cloudprober.surfacer.SurfacerDef">cloudprober.surfacer.SurfacerDef</a>>:
+<div class="comment">    # This name is used for logging. If not defined, it&#39;s derived from the type.
     # Note that this field is required for the USER_DEFINED surfacer type and
     # should match with the name that you used while registering the user defined
-    # surfacer.
-    #</div>&nbsp;&nbsp;-&nbsp;name: &lt;string><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|USER_DEFINED): &lt;enum><br><br>
+    # surfacer.</div>  - name: &lt;string>
 
-        <div class="comment">    # How many metrics entries (EventMetrics) to buffer. This is the buffer
+    type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|USER_DEFINED): &lt;enum>
+
+<div class="comment">    # How many metrics entries (EventMetrics) to buffer. This is the buffer
     # between incoming metrics and the metrics that are being processed. Default
     # value should work in most cases. You may need to increase it on a busy
     # system, but that&#39;s usually a sign that you metrics processing pipeline is
     # slow for some reason, e.g. slow writes to a remote file.
-    # Note: Only file and pubsub surfacer supports this option right now.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;metricsBufferSize: &lt;int64> | default: 10000<br><br>
+    # Note: Only file and pubsub surfacer supports this option right now.</div>    metricsBufferSize: &lt;int64> | default: 10000
 
-        <div class="comment">    # If specified, only allow metrics that match any of these label filters.
+<div class="comment">    # If specified, only allow metrics that match any of these label filters.
     # Example:
     # allow_metrics_with_label {
     #   key: &#34;probe&#34;,
     #   value: &#34;check_homepage&#34;,
-    # }
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;allowMetricsWithLabel: &lt;<a href="surfacer.html#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>><br><br>
+    # }</div>    allowMetricsWithLabel: &lt;<a href="surfacer.html#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
 
-        <div class="comment">    # Ignore metrics that match any of these label filters. Ignore has precedence
+<div class="comment">    # Ignore metrics that match any of these label filters. Ignore has precedence
     # over allow filters.
     # Example:
     # ignore_metrics_with_label {
     #   key: &#34;probe&#34;,
     #   value: &#34;sysvars&#34;,
-    # }
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;ignoreMetricsWithLabel: &lt;<a href="surfacer.html#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>><br><br>
+    # }</div>    ignoreMetricsWithLabel: &lt;<a href="surfacer.html#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
 
-        <div class="comment">    # Allow and ignore metrics based on their names. You can specify regexes
+<div class="comment">    # Allow and ignore metrics based on their names. You can specify regexes
     # here. Ignore has precendence over allow.
     # Examples:
     #  ignore_metrics_with_name: &#34;validation_failure&#34;
@@ -170,36 +162,35 @@
     # For efficiency reasons, filtering by metric name has to be implemented by
     # individual surfacers (while going through metrics within an EventMetrics).
     # Currently following surfacers implement it:
-    #     CLOUDWATCH, PROMETHEUS, STACKDRIVER
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;allowMetricsWithName: &lt;string><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;ignoreMetricsWithName: &lt;string><br><br>
+    #     CLOUDWATCH, PROMETHEUS, STACKDRIVER</div>    allowMetricsWithName: &lt;string>
 
-        <div class="comment">    # Whether to add failure metric or not. For stackdriver surfacer, we add
-    # failure metric by default.
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;addFailureMetric: &lt;bool><br><br>
+    ignoreMetricsWithName: &lt;string>
 
-        <div class="comment">    # If set to true, cloudprober will export all metrics as gauge metrics. Note
+<div class="comment">    # Whether to add failure metric or not. For stackdriver surfacer, we add
+    # failure metric by default.</div>    addFailureMetric: &lt;bool>
+
+<div class="comment">    # If set to true, cloudprober will export all metrics as gauge metrics. Note
     # that cloudprober inherently generates only cumulative metrics. To create
     # gauge metrics from cumulative metrics, we keep a copy of the old metrics
     # and subtract new metrics from the previous metrics. This transformation in
     # metrics has an increased memory-overhead because extra copies required.
     # However, it should not be noticeable unless you&#39;re producing large number
-    # of metrics (say &gt; 10000 metrics per second).
-    #</div>&nbsp;&nbsp;&nbsp;&nbsp;exportAsGauge: &lt;bool><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[prometheusSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriverSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgresSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pubsubSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatchSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datadogSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigquerySurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof><br><br>
+    # of metrics (say &gt; 10000 metrics per second).</div>    exportAsGauge: &lt;bool>
 
-        <div class="comment"># Servers to run inside cloudprober. These servers can serve as targets for
-# other probes.
-#</div>server: &lt;<a href="servers.html#cloudprober.servers.ServerDef">cloudprober.servers.ServerDef</a>>:<br>
-&nbsp;&nbsp;-&nbsp;type: (HTTP|UDP|GRPC|EXTERNAL): &lt;enum><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;[httpServer &lt;<a href="servers.html#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="servers.html#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grpcServer &lt;<a href="servers.html#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="servers.html#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof><br><br>
+    [prometheusSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriverSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgresSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pubsubSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatchSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datadogSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigquerySurfacer &lt;<a href="surfacer.html#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
 
-        <div class="comment"># Shared targets allow you to re-use the same targets copy across multiple
+<div class="comment"># Servers to run inside cloudprober. These servers can serve as targets for
+# other probes.</div>server &lt;<a href="servers.html#cloudprober.servers.ServerDef">cloudprober.servers.ServerDef</a>>:
+  - type: (HTTP|UDP|GRPC|EXTERNAL): &lt;enum>
+
+    [httpServer &lt;<a href="servers.html#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="servers.html#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grpcServer &lt;<a href="servers.html#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="servers.html#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof>
+
+<div class="comment"># Shared targets allow you to re-use the same targets copy across multiple
 # probes. Example usage:
 #
 # shared_targets {
@@ -225,30 +216,25 @@
 #   targets {
 #     shared_targets: &#34;internal-vms&#34;
 #   }
-# }
-#</div>sharedTargets: &lt;cloudprober.SharedTargets>:<br>
-&nbsp;&nbsp;-&nbsp;name: &lt;string><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>><br><br>
+# }</div>sharedTargets &lt;cloudprober.SharedTargets>:
+  - name: &lt;string>
 
-        <div class="comment"># Resource discovery server
-#</div>rdsServer: &lt;<a href="rds.html#cloudprober.rds.ServerConf">cloudprober.rds.ServerConf</a>>:<br>
+    targets: &lt;<a href="targets.html#cloudprober.targets.TargetsDef">cloudprober.targets.TargetsDef</a>>
 
-        <div class="comment">  # List of providers that server supports.
-  #</div>&nbsp;&nbsp;provider: &lt;<a href="rds.html#cloudprober.rds.Provider">cloudprober.rds.Provider</a>><br><br>
+<div class="comment"># Resource discovery server</div>rdsServer &lt;<a href="rds.html#cloudprober.rds.ServerConf">cloudprober.rds.ServerConf</a>>:
+<div class="comment">  # List of providers that server supports.</div>  provider: &lt;<a href="rds.html#cloudprober.rds.Provider">cloudprober.rds.Provider</a>>
 
-        <div class="comment"># Port for the default HTTP server. This port is also used for prometheus
+<div class="comment"># Port for the default HTTP server. This port is also used for prometheus
 # exporter (URL /metrics). Default port is 9313. If not specified in the
 # config, default port can be overridden by the environment variable
-# CLOUDPROBER_PORT.
-#</div>port: &lt;int32><br><br>
+# CLOUDPROBER_PORT.</div>port: &lt;int32>
 
-        <div class="comment"># Port to run the default gRPC server on. If not specified, and if
+<div class="comment"># Port to run the default gRPC server on. If not specified, and if
 # environment variable CLOUDPROBER_GRPC_PORT is set, CLOUDPROBER_GRPC_PORT is
 # used for the default gRPC server. If CLOUDPROBER_GRPC_PORT is not set as
-# well, default gRPC server is not started.
-#</div>grpcPort: &lt;int32><br><br>
+# well, default gRPC server is not started.</div>grpcPort: &lt;int32>
 
-        <div class="comment"># TLS config, it can be used to:
+<div class="comment"># TLS config, it can be used to:
 # - Specify client&#39;s CA cert for client cert verification:
 #     tls_config {
 #       ca_cert_file: &#34;....&#34;
@@ -258,80 +244,63 @@
 #     tls_config {
 #       tls_cert_file: &#34;...&#34;
 #       tls_key_file: &#34;...&#34;
-#     }
-#</div>grpcTlsConfig: &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>:<br>
+#     }</div>grpcTlsConfig &lt;<a href="tlsconfig.html#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>:
+<div class="comment">  # CA certificate file to verify certificates provided by the other party.</div>  caCertFile: &lt;string>
 
-        <div class="comment">  # CA certificate file to verify certificates provided by the other party.
-  #</div>&nbsp;&nbsp;caCertFile: &lt;string><br><br>
+<div class="comment">  # Local certificate file.</div>  tlsCertFile: &lt;string>
 
-        <div class="comment">  # Local certificate file.
-  #</div>&nbsp;&nbsp;tlsCertFile: &lt;string><br><br>
+<div class="comment">  # Private key file corresponding to the certificate above.</div>  tlsKeyFile: &lt;string>
 
-        <div class="comment">  # Private key file corresponding to the certificate above.
-  #</div>&nbsp;&nbsp;tlsKeyFile: &lt;string><br><br>
+<div class="comment">  # Whether to ignore the cert validation.</div>  disableCertValidation: &lt;bool>
 
-        <div class="comment">  # Whether to ignore the cert validation.
-  #</div>&nbsp;&nbsp;disableCertValidation: &lt;bool><br><br>
+<div class="comment">  # ServerName override</div>  serverName: &lt;string>
 
-        <div class="comment">  # ServerName override
-  #</div>&nbsp;&nbsp;serverName: &lt;string><br><br>
-
-        <div class="comment">  # Certificate reload interval in seconds. If configured, the TLS cert will
+<div class="comment">  # Certificate reload interval in seconds. If configured, the TLS cert will
   # be reloaded every reload_interval_sec seconds. This is useful when
-  # certificates are generated and refreshed dynamically.
-  #</div>&nbsp;&nbsp;reloadIntervalSec: &lt;int32><br><br>
+  # certificates are generated and refreshed dynamically.</div>  reloadIntervalSec: &lt;int32>
 
-        <div class="comment"># Host for the default HTTP server. Default listens on all addresses. If not
+<div class="comment"># Host for the default HTTP server. Default listens on all addresses. If not
 # specified in the config, default port can be overridden by the environment
-# variable CLOUDPROBER_HOST.
-#</div>host: &lt;string><br><br>
+# variable CLOUDPROBER_HOST.</div>host: &lt;string>
 
-        <div class="comment"># Probes are staggered across time to avoid executing all of them at the
+<div class="comment"># Probes are staggered across time to avoid executing all of them at the
 # same time. This behavior can be disabled by setting the following option
-# to true.
-#</div>disableJitter: &lt;bool> | default: false<br><br>
+# to true.</div>disableJitter: &lt;bool> | default: false
 
-        <div class="comment"># How often to export system variables. To learn more about system variables:
-# http://godoc.org/github.com/cloudprober/cloudprober/sysvars.
-#</div>sysvarsIntervalMsec: &lt;int32> | default: 10000<br><br>
+<div class="comment"># How often to export system variables. To learn more about system variables:
+# http://godoc.org/github.com/cloudprober/cloudprober/sysvars.</div>sysvarsIntervalMsec: &lt;int32> | default: 10000
 
-        <div class="comment"># Variables specified in this environment variable are exported as it is.
+<div class="comment"># Variables specified in this environment variable are exported as it is.
 # This is specifically useful to export information about system environment,
 # for example, docker image tag/digest-id, OS version etc. See
 # tools/cloudprober_startup.sh in the cloudprober directory for an example on
-# how to use these variables.
-#</div>sysvarsEnvVar: &lt;string> | default: SYSVARS<br><br>
+# how to use these variables.</div>sysvarsEnvVar: &lt;string> | default: SYSVARS
 
-        <div class="comment"># Time between triggering cancelation of various goroutines and exiting the
+<div class="comment"># Time between triggering cancelation of various goroutines and exiting the
 # process. If --stop_time flag is also configured, that gets priority.
 # You may want to set it to 0 if cloudprober is running as a backend for
-# the probes and you don&#39;t want time lost in stop and start.
-#</div>stopTimeSec: &lt;int32> | default: 5<br><br>
+# the probes and you don&#39;t want time lost in stop and start.</div>stopTimeSec: &lt;int32> | default: 5
 
-        <div class="comment"># Global targets options. Per-probe options are specified within the probe
-# stanza.
-#</div>globalTargetsOptions: &lt;<a href="targets.html#cloudprober.targets.GlobalTargetsOptions">cloudprober.targets.GlobalTargetsOptions</a>>:<br>
-
-        <div class="comment">  # RDS server address
+<div class="comment"># Global targets options. Per-probe options are specified within the probe
+# stanza.</div>globalTargetsOptions &lt;<a href="targets.html#cloudprober.targets.GlobalTargetsOptions">cloudprober.targets.GlobalTargetsOptions</a>>:
+<div class="comment">  # RDS server address
   # Deprecated: This option is now deprecated, please use rds_server_options
-  # instead.
-  #</div>&nbsp;&nbsp;rdsServerAddress: &lt;string><br><br>
+  # instead.</div>  rdsServerAddress: &lt;string>
 
-        <div class="comment">  # RDS server options, for example:
+<div class="comment">  # RDS server options, for example:
   # rds_server_options {
   #   server_address: &#34;rds-server.xyz:9314&#34;
   #   oauth_config: {
   #     ...
   #   }
-  # }
-  #</div>&nbsp;&nbsp;rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>><br><br>
+  # }</div>  rdsServerOptions: &lt;<a href="rds.html#cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</a>>
 
-        <div class="comment">  # GCE targets options.
-  #</div>&nbsp;&nbsp;globalGceTargetsOptions: &lt;<a href="targets.html#cloudprober.targets.gce.GlobalOptions">cloudprober.targets.gce.GlobalOptions</a>><br><br>
+<div class="comment">  # GCE targets options.</div>  globalGceTargetsOptions: &lt;<a href="targets.html#cloudprober.targets.gce.GlobalOptions">cloudprober.targets.gce.GlobalOptions</a>>
 
-        <div class="comment">  # Lame duck options. If provided, targets module checks for the lame duck
-  # targets and removes them from the targets list.
-  #</div>&nbsp;&nbsp;lameDuckOptions: &lt;<a href="targets.html#cloudprober.targets.lameduck.Options">cloudprober.targets.lameduck.Options</a>><br><br>
+<div class="comment">  # Lame duck options. If provided, targets module checks for the lame duck
+  # targets and removes them from the targets list.</div>  lameDuckOptions: &lt;<a href="targets.html#cloudprober.targets.lameduck.Options">cloudprober.targets.lameduck.Options</a>>
 
+</code>
+</pre>
 </body>
 </html>
