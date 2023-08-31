@@ -3,19 +3,19 @@
 .comment {
     color: #888;
 }
-pre {
+.protodoc {
     border: 1px solid #ddd;
     border-left: 4px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
 </style><h2 id="cloudprober.metrics.Dist">cloudprober.metrics.Dist</h2>
-<pre>
+<pre class="protodoc">
 
 [explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="../metrics#cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</h2>
-<pre>
+<pre class="protodoc">
 
 scaleFactor: &lt;float>
 
@@ -24,7 +24,7 @@ base: &lt;float>
 numBuckets: &lt;uint32>
 
 </pre><h2 id="cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</h2>
-<pre>
+<pre class="protodoc">
 
 metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 
@@ -51,7 +51,7 @@ metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 # }</div>distMetric: &lt;<a href="../metrics#cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
 
 </pre><h2 id="cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</h2>
-<pre>
+<pre class="protodoc">
 
 key: &lt;string>
 

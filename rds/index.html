@@ -3,14 +3,14 @@
 .comment {
     color: #888;
 }
-pre {
+.protodoc {
     border: 1px solid #ddd;
     border-left: 4px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
 </style><h2 id="cloudprober.rds.ClientConf.ServerOptions">cloudprober.rds.ClientConf.ServerOptions</h2>
-<pre>
+<pre class="protodoc">
 
 serverAddress: &lt;string>
 
@@ -29,14 +29,14 @@ serverAddress: &lt;string>
 #     }</div>tlsConfig: &lt;<a href="../tlsconfig#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
 
 </pre><h2 id="cloudprober.rds.Filter">cloudprober.rds.Filter</h2>
-<pre>
+<pre class="protodoc">
 
 key: &lt;string>
 
 value: &lt;string>
 
 </pre><h2 id="cloudprober.rds.IPConfig">cloudprober.rds.IPConfig</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># NIC index</div>nicIndex: &lt;int32> | default: 0
 
@@ -45,7 +45,7 @@ ipType: (DEFAULT|PUBLIC|ALIAS): &lt;enum>
 ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 
 </pre><h2 id="cloudprober.rds.Provider">cloudprober.rds.Provider</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Provider identifier, e.g. &#34;gcp&#34;. Server routes incoming requests to various
 # providers based on this id.</div>id: &lt;string>
@@ -54,12 +54,12 @@ ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 &nbsp;kubernetesConfig &lt;<a href="../rds#cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</a>&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.rds.ServerConf">cloudprober.rds.ServerConf</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># List of providers that server supports.</div>provider: &lt;<a href="../rds#cloudprober.rds.Provider">cloudprober.rds.Provider</a>>
 
 </pre><h2 id="cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># File that contains resources in either textproto or json format.
 # Example in textproto format:
@@ -88,7 +88,7 @@ format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum>
 # Note that mod-time check doesn&#39;t work for GCS.</div>disableModifiedTimeCheck: &lt;bool>
 
 </pre><h2 id="cloudprober.rds.gcp.ForwardingRules">cloudprober.rds.gcp.ForwardingRules</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Optionl region filter regex to limit discovery to specific regions, e.g.
 # &#34;region_filter:europe-*&#34;</div>regionFilter: &lt;string>
@@ -96,7 +96,7 @@ format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum>
 <div class="comment"># How often resources should be refreshed.</div>reEvalSec: &lt;int32> | default: 300
 
 </pre><h2 id="cloudprober.rds.gcp.GCEInstances">cloudprober.rds.gcp.GCEInstances</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Optional zone filter regex to limit discovery to the specific zones
 # For example, zone_filter: &#34;us-east1-*&#34; will limit instances discovery to
@@ -105,7 +105,7 @@ format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum>
 <div class="comment"># How often resources should be refreshed.</div>reEvalSec: &lt;int32> | default: 300
 
 </pre><h2 id="cloudprober.rds.gcp.ProviderConfig">cloudprober.rds.gcp.ProviderConfig</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># GCP projects. If running on GCE, it defaults to the local project.</div>project: &lt;string>
 
@@ -123,14 +123,14 @@ format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum>
 <div class="comment"># Compute API version.</div>apiVersion: &lt;string> | default: v1
 
 </pre><h2 id="cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</h2>
-<pre>
+<pre class="protodoc">
 
 subscription: &lt;<a href="../rds#cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</a>>
 
 <div class="comment"># Only for testing.</div>apiEndpoint: &lt;string>
 
 </pre><h2 id="cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Subscription name. If it doesn&#39;t exist already, we try to create one.</div>name: &lt;string>
 
@@ -141,28 +141,28 @@ subscription: &lt;<a href="../rds#cloudprober.rds.gcp.PubSubMessages.Subscriptio
 # Note that duplicate data is fine as we filter by publish time.</div>seekBackDurationSec: &lt;int32> | default: 3600
 
 </pre><h2 id="cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</h2>
-<pre>
+<pre class="protodoc">
 
 rtcConfig: &lt;<a href="../rds#cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</a>>
 
 </pre><h2 id="cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</h2>
-<pre>
+<pre class="protodoc">
 
 name: &lt;string>
 
 <div class="comment"># How often RTC variables should be evaluated/expanded.</div>reEvalSec: &lt;int32> | default: 10
 
 </pre><h2 id="cloudprober.rds.kubernetes.Endpoints">cloudprober.rds.kubernetes.Endpoints</h2>
-<pre>
+<pre class="protodoc">
 
 </pre><h2 id="cloudprober.rds.kubernetes.Ingresses">cloudprober.rds.kubernetes.Ingresses</h2>
-<pre>
+<pre class="protodoc">
 
 </pre><h2 id="cloudprober.rds.kubernetes.Pods">cloudprober.rds.kubernetes.Pods</h2>
-<pre>
+<pre class="protodoc">
 
 </pre><h2 id="cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Namespace to list resources for. If not specified, we default to all
 # namespaces.</div>namespace: &lt;string>
@@ -191,6 +191,6 @@ name: &lt;string>
 <div class="comment"># How often resources should be evaluated/expanded.</div>reEvalSec: &lt;int32> | default: 60
 
 </pre><h2 id="cloudprober.rds.kubernetes.Services">cloudprober.rds.kubernetes.Services</h2>
-<pre>
+<pre class="protodoc">
 
 </pre>

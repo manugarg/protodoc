@@ -3,14 +3,14 @@
 .comment {
     color: #888;
 }
-pre {
+.protodoc {
     border: 1px solid #ddd;
     border-left: 4px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
 </style><h2 id="cloudprober.validators.Validator">cloudprober.validators.Validator</h2>
-<pre>
+<pre class="protodoc">
 
 name: &lt;string>
 
@@ -18,7 +18,7 @@ name: &lt;string>
 &nbsp;jsonValidator &lt;<a href="../validators#cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Comma-separated list of success status codes and code ranges.
 # Example: success_stauts_codes: 200-299,301,302</div>successStatusCodes: &lt;string>
@@ -42,19 +42,19 @@ name: &lt;string>
 #   If HTTP response headers match failure_header, validation fails.</div>failureHeader: &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>>
 
 </pre><h2 id="cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># Header name to look for</div>name: &lt;string>
 
 <div class="comment"># Header value to match. If omited - check for header existence</div>valueRegex: &lt;string>
 
 </pre><h2 id="cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</h2>
-<pre>
+<pre class="protodoc">
 
 [patternString &lt;string&gt; | patternNumBytes &lt;int32&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</h2>
-<pre>
+<pre class="protodoc">
 
 <div class="comment"># If jq filter is specified, validator passes only if applying jq_filter to
 # the probe output, e.g. HTTP API response, results in &#39;true&#39; boolean.

@@ -3,14 +3,14 @@
 .comment {
     color: #888;
 }
-pre {
+.protodoc {
     border: 1px solid #ddd;
     border-left: 4px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
 </style><h2 id="cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</h2>
-<pre>
+<pre class="protodoc">
 
 [file &lt;string&gt; | cmd &lt;string&gt; | 
 &nbsp;gceServiceAccount &lt;string&gt; | k8sLocalToken &lt;bool&gt;]: &lt;oneof>
@@ -22,7 +22,7 @@ pre {
 # zero.</div>refreshIntervalSec: &lt;float>
 
 </pre><h2 id="cloudprober.oauth.Config">cloudprober.oauth.Config</h2>
-<pre>
+<pre class="protodoc">
 
 [httpRequest &lt;<a href="../oauth#cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="../oauth#cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
 &nbsp;googleCredentials &lt;<a href="../oauth#cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
@@ -33,7 +33,7 @@ pre {
 # TODO(manugarg): Consider setting default based on probe interval.</div>refreshExpiryBufferSec: &lt;int32>
 
 </pre><h2 id="cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</h2>
-<pre>
+<pre class="protodoc">
 
 jsonFile: &lt;string>
 
@@ -45,7 +45,7 @@ scope: &lt;string>
 <div class="comment"># Audience works only if jwt_as_access_token is true.</div>audience: &lt;string>
 
 </pre><h2 id="cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</h2>
-<pre>
+<pre class="protodoc">
 
 tokenUrl: &lt;string>
 
@@ -61,7 +61,7 @@ method: &lt;string>
 <div class="comment"># HTTP request headers</div>header: &lt;<a href="../oauth#cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</a>>
 
 </pre><h2 id="cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</h2>
-<pre>
+<pre class="protodoc">
 
 key: &lt;string>
 
