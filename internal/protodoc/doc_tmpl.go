@@ -19,7 +19,7 @@ var DocTmpl = `
 .comment {
     color: #888;
 }
-pre {
+.protodoc {
     border: 1px solid #ddd;
     border-left: 4px solid #e6522c;
     border-radius: 0;
@@ -28,7 +28,7 @@ pre {
 </style>
 {{- range . -}}
 {{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
-<pre>
+<pre class="protodoc">
 
 {{ range .Tokens -}}
   {{- if .Comment }}<div class="comment">{{.Comment}}</div>{{ end -}}
