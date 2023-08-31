@@ -85,7 +85,10 @@ func main() {
 	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml")
 
 	toks, nextMessageNames := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(2))
-	mTokens := &msgTokens{Name: "", Tokens: protodoc.ProcessTokensForHTML(toks)}
+
+	// Package level documentation
+	f = f.WithDepth(1).WithRelPath("..")
+	mTokens := &msgTokens{Name: "", Tokens: protodoc.ProcessTokensForHTML(toks, f)}
 	writeDoc("index", []*msgTokens{mTokens}, l)
 
 	msgToDoc := map[string][]*protodoc.Token{}
@@ -98,7 +101,7 @@ func main() {
 				panic(err)
 			}
 
-			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(1))
+			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f)
 			msgToDoc[string(msgName)] = toks
 			nextLoop = append(nextLoop, next...)
 		}
@@ -116,7 +119,7 @@ func main() {
 		sort.Strings(msgs)
 		mtoks := []*msgTokens{}
 		for _, msg := range msgs {
-			mtoks = append(mtoks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg])})
+			mtoks = append(mtoks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg], f)})
 		}
 		writeDoc(pkg, mtoks, l)
 	}

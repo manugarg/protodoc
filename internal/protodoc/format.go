@@ -18,6 +18,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"path"
 	"strings"
 
 	"github.com/jhump/protoreflect/desc"
@@ -58,7 +59,7 @@ func formatOneOf(ood protoreflect.OneofDescriptor, f Formatter) *Token {
 		tok := finalToken(oof.Get(i), f, true)
 		s := fmt.Sprintf("%s &lt;%s&gt;", tok.Text, tok.Kind)
 		if strings.HasPrefix(tok.Kind, "cloudprober.") {
-			s = fmt.Sprintf("%s &lt;<a href=\"%s\">%s</a>&gt;", tok.Text, kindToURL(tok.Kind), tok.Kind)
+			s = fmt.Sprintf("%s &lt;<a href=\"%s\">%s</a>&gt;", tok.Text, kindToURL(tok.Kind, f), tok.Kind)
 		}
 		oneofFields = append(oneofFields, s)
 	}
@@ -115,9 +116,9 @@ func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[strin
 	return finalToken(fld, f, false)
 }
 
-func ProcessTokensForHTML(toks []*Token) []*Token {
+func ProcessTokensForHTML(toks []*Token, f Formatter) []*Token {
 	for _, tok := range toks {
-		tok.URL = kindToURL(tok.Kind)
+		tok.URL = kindToURL(tok.Kind, f)
 
 		if tok.MessageHeader {
 			tok.Suffix = " {"
@@ -144,13 +145,13 @@ func ProcessTokensForHTML(toks []*Token) []*Token {
 	return toks
 }
 
-func kindToURL(kind string) string {
+func kindToURL(kind string, f Formatter) string {
 	if !strings.HasPrefix(kind, "cloudprober.") {
 		return ""
 	}
 	parts := strings.SplitN(kind, ".", 3)
 	if len(parts) > 2 {
-		return *homeURL + parts[1] + "#" + kind
+		return path.Join(*homeURL, f.relPath, parts[1]+"#"+kind)
 	}
 	return ""
 }

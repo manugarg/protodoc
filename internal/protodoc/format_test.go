@@ -196,6 +196,7 @@ func TestProcessTokensForHTML(t *testing.T) {
 	tests := []struct {
 		name string
 		in   *Token
+		f    Formatter
 		want *Token
 	}{
 		{
@@ -218,6 +219,18 @@ func TestProcessTokensForHTML(t *testing.T) {
 			want: &Token{
 				Kind:      "cloudprober.probes.ProbeDef",
 				URL:       "probes#cloudprober.probes.ProbeDef",
+				ExtraLine: "\n",
+			},
+		},
+		{
+			name: "with-url-with-relpath",
+			f:    Formatter{}.WithRelPath(".."),
+			in: &Token{
+				Kind: "cloudprober.probes.ProbeDef",
+			},
+			want: &Token{
+				Kind:      "cloudprober.probes.ProbeDef",
+				URL:       "../probes#cloudprober.probes.ProbeDef",
 				ExtraLine: "\n",
 			},
 		},
@@ -272,19 +285,25 @@ func TestProcessTokensForHTML(t *testing.T) {
 			if tt.want.Sep == "" {
 				tt.want.Sep = ": "
 			}
-			assert.Equal(t, []*Token{tt.want}, ProcessTokensForHTML([]*Token{tt.in}))
+			assert.Equal(t, []*Token{tt.want}, ProcessTokensForHTML([]*Token{tt.in}, tt.f))
 		})
 	}
 }
 
 func TestKindToURL(t *testing.T) {
 	tests := []struct {
+		f    Formatter
 		kind string
 		want string
 	}{
 		{
 			kind: "cloudprober.probes.ProbeDef.interval_msec",
 			want: "probes#cloudprober.probes.ProbeDef.interval_msec",
+		},
+		{
+			kind: "cloudprober.probes.ProbeDef.interval_msec",
+			want: "../probes#cloudprober.probes.ProbeDef.interval_msec",
+			f:    Formatter{}.WithRelPath(".."),
 		},
 		{
 			kind: "cloudprober.interval_msec",
@@ -297,7 +316,7 @@ func TestKindToURL(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.kind, func(t *testing.T) {
-			assert.Equal(t, tt.want, kindToURL(tt.kind))
+			assert.Equal(t, tt.want, kindToURL(tt.kind, tt.f))
 		})
 	}
 }

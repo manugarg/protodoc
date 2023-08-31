@@ -45,9 +45,10 @@ type Token struct {
 }
 
 type Formatter struct {
-	yaml   bool
-	depth  int
-	prefix string
+	yaml    bool
+	depth   int
+	prefix  string
+	relPath string
 }
 
 func (f Formatter) WithYAML(yaml bool) Formatter {
@@ -65,6 +66,12 @@ func (f Formatter) WithDepth(depth int) Formatter {
 func (f Formatter) WithPrefix(prefix string) Formatter {
 	f2 := f
 	f2.prefix = prefix
+	return f2
+}
+
+func (f Formatter) WithRelPath(relPath string) Formatter {
+	f2 := f
+	f2.relPath = relPath
 	return f2
 }
 
