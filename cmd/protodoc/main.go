@@ -16,6 +16,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -27,11 +28,16 @@ import (
 )
 
 var (
+	versionFlag   = flag.Bool("version", false, "Print version and exit")
 	outFmt        = flag.String("format", "yaml", "textpb or yaml")
 	outDir        = flag.String("out_dir", "proto_docs", "Output directory for the documentation.")
 	protoRootDir  = flag.String("proto_root_dir", ".", "Root directory for the proto files.")
 	packagePrefix = flag.String("package_prefix", "", "Package prefix to resolve import paths")
 )
+
+// These variables get overwritten by using -ldflags="-X main.<var>=<value?" at
+// the build time.
+var version string
 
 type msgTokens struct {
 	Name   string
@@ -101,6 +107,11 @@ func packagesDocs(msgs []protoreflect.FullName, f protodoc.Formatter, l *logger.
 
 func main() {
 	flag.Parse()
+
+	if *versionFlag {
+		fmt.Println(version)
+		return
+	}
 
 	if err := os.MkdirAll(*outDir, 0755); err != nil {
 		if !os.IsExist(err) {
