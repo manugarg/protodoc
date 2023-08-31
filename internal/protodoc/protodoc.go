@@ -16,7 +16,9 @@ package protodoc
 
 import (
 	"html/template"
+	"strings"
 
+	"github.com/cloudprober/cloudprober/logger"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
 )
@@ -154,4 +156,21 @@ func DumpMessage(md protoreflect.MessageDescriptor, f Formatter) ([]*Token, []pr
 	}
 
 	return lines, nextMessageName
+}
+
+func ArrangeIntoPackages(paths []string, l *logger.Logger) map[string][]string {
+	packages := make(map[string][]string)
+	for _, path := range paths {
+		parts := strings.SplitN(path, ".", 3)
+		if len(parts) < 3 {
+			l.Warningf("Skipping %s, not enough parts in package", path)
+			continue
+		}
+		if parts[0] != "cloudprober" {
+			l.Warningf("Skipping %s, not a cloudprober package", path)
+			continue
+		}
+		packages[parts[1]] = append(packages[parts[1]], path)
+	}
+	return packages
 }

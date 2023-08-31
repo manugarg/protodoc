@@ -15,6 +15,7 @@
 package protodoc
 
 import (
+	"flag"
 	"fmt"
 	"html/template"
 	"strings"
@@ -22,6 +23,8 @@ import (
 	"github.com/jhump/protoreflect/desc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
+
+var homeURL = flag.String("home_url", "", "Home URL for the documentation.")
 
 func formatComment(fld protoreflect.FieldDescriptor, f Formatter) string {
 	ff, err := Files.FindDescriptorByName(fld.FullName())
@@ -139,4 +142,15 @@ func ProcessTokensForHTML(toks []*Token) []*Token {
 		}
 	}
 	return toks
+}
+
+func kindToURL(kind string) string {
+	if !strings.HasPrefix(kind, "cloudprober.") {
+		return ""
+	}
+	parts := strings.SplitN(kind, ".", 3)
+	if len(parts) > 2 {
+		return *homeURL + parts[1] + "#" + kind
+	}
+	return ""
 }

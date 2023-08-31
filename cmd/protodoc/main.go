@@ -41,7 +41,18 @@ type msgTokens struct {
 var docTmpl = template.Must(template.New("index").Parse(protodoc.DocTmpl))
 
 func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
-	outF, err := os.OpenFile(filepath.Join(*outDir, pkg+".html"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	pkgDir := *outDir
+	if pkg != "index" {
+		pkgDir = filepath.Join(*outDir, pkg)
+
+		if err := os.MkdirAll(pkgDir, 0755); err != nil {
+			if !os.IsExist(err) {
+				panic(err)
+			}
+		}
+	}
+
+	outF, err := os.OpenFile(filepath.Join(pkgDir, "index.html"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		l.Criticalf("Error opening output file: %v", err)
 	}

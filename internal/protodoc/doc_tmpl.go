@@ -15,30 +15,22 @@
 package protodoc
 
 var DocTmpl = `
-<html>
-<head>
-    <title>Cloudprober Configuration</title>
-    <style>
-        body {
-            font-family: monospace;
-        }
-        .comment {
-            color: #888;
-        }
-        pre {
-            border: 1px solid #ddd;
-            border-left: 4px solid #e6522c;
-            border-radius: 0;
-            font-family: "Courier New", Monaco, Menlo, Consolas, monospace;
-            padding-left: 10px;
-        }
-    </style>
-</head>
-<body>
+<style>
+.comment {
+    color: #888;
+}
+pre {
+    border: 1px solid #ddd;
+    border-left: 4px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style>
 {{- range . -}}
 {{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
-<pre><code>
-{{- range .Tokens -}}
+<pre>
+
+{{ range .Tokens -}}
   {{- if .Comment }}<div class="comment">{{.Comment}}</div>{{ end -}}
   {{- if .URL }}
     {{- .Prefix}}{{.TextHTML}}{{.Sep}}<<a href="{{.URL}}">{{- .Kind}}</a>>{{.Suffix}}
@@ -48,8 +40,7 @@ var DocTmpl = `
     {{- .Prefix}}{{.TextHTML}}{{.Suffix}}
   {{- end }}
   {{- .ExtraLine }}
-{{ end }}
-</code></pre>
+{{ end -}}
+</pre>
 {{- end -}}
-</body>
-</html>`
+`

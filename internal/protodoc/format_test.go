@@ -276,3 +276,28 @@ func TestProcessTokensForHTML(t *testing.T) {
 		})
 	}
 }
+
+func TestKindToURL(t *testing.T) {
+	tests := []struct {
+		kind string
+		want string
+	}{
+		{
+			kind: "cloudprober.probes.ProbeDef.interval_msec",
+			want: "probes.html#cloudprober.probes.ProbeDef.interval_msec",
+		},
+		{
+			kind: "cloudprober.interval_msec",
+			want: "",
+		},
+		{
+			kind: "probes.ProbeDef.interval_msec",
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.kind, func(t *testing.T) {
+			assert.Equal(t, tt.want, kindToURL(tt.kind))
+		})
+	}
+}
