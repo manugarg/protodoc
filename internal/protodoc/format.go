@@ -106,6 +106,10 @@ func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[strin
 
 	oo := fld.ContainingOneof()
 	if oo != nil {
+		// In proto3, optional fields have an oneof container.
+		if oo.Fields().Len() == 1 {
+			return finalToken(fld, f, false)
+		}
 		if (*done)[string(oo.Name())] {
 			return nil
 		}
