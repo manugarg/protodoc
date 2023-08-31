@@ -14,8 +14,8 @@ pre {
 
 type: (HTTP|UDP|GRPC|EXTERNAL): &lt;enum>
 
-[httpServer &lt;<a href="servers#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="servers#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | 
-&nbsp;grpcServer &lt;<a href="servers#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="servers#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof>
+[httpServer &lt;<a href="../servers#cloudprober.servers.http.ServerConf">cloudprober.servers.http.ServerConf</a>&gt; | udpServer &lt;<a href="../servers#cloudprober.servers.udp.ServerConf">cloudprober.servers.udp.ServerConf</a>&gt; | 
+&nbsp;grpcServer &lt;<a href="../servers#cloudprober.servers.grpc.ServerConf">cloudprober.servers.grpc.ServerConf</a>&gt; | externalServer &lt;<a href="../servers#cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</a>&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.servers.external.ServerConf">cloudprober.servers.external.ServerConf</h2>
 <pre>
@@ -55,7 +55,7 @@ protocol: (HTTP|HTTPS): &lt;enum>
 <div class="comment"># Disable HTTP/2 for HTTPS servers.</div>disableHttp2: &lt;bool>
 
 <div class="comment"># Pattern data handler returns pattern data at the url /data_&lt;size_in_bytes&gt;,
-# e.g. &#34;/data_2048&#34;.</div>patternDataHandler: &lt;<a href="servers#cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</a>>
+# e.g. &#34;/data_2048&#34;.</div>patternDataHandler: &lt;<a href="../servers#cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</a>>
 
 </pre><h2 id="cloudprober.servers.http.ServerConf.PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</h2>
 <pre>

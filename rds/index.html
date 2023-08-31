@@ -14,7 +14,7 @@ pre {
 
 serverAddress: &lt;string>
 
-<div class="comment"># Optional oauth config for authentication.</div>oauthConfig: &lt;<a href="oauth#cloudprober.oauth.Config">cloudprober.oauth.Config</a>>
+<div class="comment"># Optional oauth config for authentication.</div>oauthConfig: &lt;<a href="../oauth#cloudprober.oauth.Config">cloudprober.oauth.Config</a>>
 
 <div class="comment"># TLS config, it can be used to:
 # - Specify a CA cert for server cert verification:
@@ -26,7 +26,7 @@ serverAddress: &lt;string>
 #     tls_config {
 #       tls_cert_file: &#34;...&#34;
 #       tls_key_file: &#34;...&#34;
-#     }</div>tlsConfig: &lt;<a href="tlsconfig#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+#     }</div>tlsConfig: &lt;<a href="../tlsconfig#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
 
 </pre><h2 id="cloudprober.rds.Filter">cloudprober.rds.Filter</h2>
 <pre>
@@ -50,13 +50,13 @@ ipVersion: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 <div class="comment"># Provider identifier, e.g. &#34;gcp&#34;. Server routes incoming requests to various
 # providers based on this id.</div>id: &lt;string>
 
-[fileConfig &lt;<a href="rds#cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</a>&gt; | gcpConfig &lt;<a href="rds#cloudprober.rds.gcp.ProviderConfig">cloudprober.rds.gcp.ProviderConfig</a>&gt; | 
-&nbsp;kubernetesConfig &lt;<a href="rds#cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</a>&gt;]: &lt;oneof>
+[fileConfig &lt;<a href="../rds#cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</a>&gt; | gcpConfig &lt;<a href="../rds#cloudprober.rds.gcp.ProviderConfig">cloudprober.rds.gcp.ProviderConfig</a>&gt; | 
+&nbsp;kubernetesConfig &lt;<a href="../rds#cloudprober.rds.kubernetes.ProviderConfig">cloudprober.rds.kubernetes.ProviderConfig</a>&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.rds.ServerConf">cloudprober.rds.ServerConf</h2>
 <pre>
 
-<div class="comment"># List of providers that server supports.</div>provider: &lt;<a href="rds#cloudprober.rds.Provider">cloudprober.rds.Provider</a>>
+<div class="comment"># List of providers that server supports.</div>provider: &lt;<a href="../rds#cloudprober.rds.Provider">cloudprober.rds.Provider</a>>
 
 </pre><h2 id="cloudprober.rds.file.ProviderConfig">cloudprober.rds.file.ProviderConfig</h2>
 <pre>
@@ -110,22 +110,22 @@ format: (UNSPECIFIED|TEXTPB|JSON): &lt;enum>
 <div class="comment"># GCP projects. If running on GCE, it defaults to the local project.</div>project: &lt;string>
 
 <div class="comment"># GCE instances discovery options. This field should be declared for the GCE
-# instances discovery to be enabled.</div>gceInstances: &lt;<a href="rds#cloudprober.rds.gcp.GCEInstances">cloudprober.rds.gcp.GCEInstances</a>>
+# instances discovery to be enabled.</div>gceInstances: &lt;<a href="../rds#cloudprober.rds.gcp.GCEInstances">cloudprober.rds.gcp.GCEInstances</a>>
 
 <div class="comment"># Forwarding rules discovery options. This field should be declared for the
 # forwarding rules discovery to be enabled.
-# Note that RDS supports only regional forwarding rules.</div>forwardingRules: &lt;<a href="rds#cloudprober.rds.gcp.ForwardingRules">cloudprober.rds.gcp.ForwardingRules</a>>
+# Note that RDS supports only regional forwarding rules.</div>forwardingRules: &lt;<a href="../rds#cloudprober.rds.gcp.ForwardingRules">cloudprober.rds.gcp.ForwardingRules</a>>
 
-<div class="comment"># RTC variables discovery options.</div>rtcVariables: &lt;<a href="rds#cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</a>>
+<div class="comment"># RTC variables discovery options.</div>rtcVariables: &lt;<a href="../rds#cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</a>>
 
-<div class="comment"># PubSub messages discovery options.</div>pubsubMessages: &lt;<a href="rds#cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</a>>
+<div class="comment"># PubSub messages discovery options.</div>pubsubMessages: &lt;<a href="../rds#cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</a>>
 
 <div class="comment"># Compute API version.</div>apiVersion: &lt;string> | default: v1
 
 </pre><h2 id="cloudprober.rds.gcp.PubSubMessages">cloudprober.rds.gcp.PubSubMessages</h2>
 <pre>
 
-subscription: &lt;<a href="rds#cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</a>>
+subscription: &lt;<a href="../rds#cloudprober.rds.gcp.PubSubMessages.Subscription">cloudprober.rds.gcp.PubSubMessages.Subscription</a>>
 
 <div class="comment"># Only for testing.</div>apiEndpoint: &lt;string>
 
@@ -143,7 +143,7 @@ subscription: &lt;<a href="rds#cloudprober.rds.gcp.PubSubMessages.Subscription">
 </pre><h2 id="cloudprober.rds.gcp.RTCVariables">cloudprober.rds.gcp.RTCVariables</h2>
 <pre>
 
-rtcConfig: &lt;<a href="rds#cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</a>>
+rtcConfig: &lt;<a href="../rds#cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</a>>
 
 </pre><h2 id="cloudprober.rds.gcp.RTCVariables.RTCConfig">cloudprober.rds.gcp.RTCVariables.RTCConfig</h2>
 <pre>
@@ -168,17 +168,17 @@ name: &lt;string>
 # namespaces.</div>namespace: &lt;string>
 
 <div class="comment"># Pods discovery options. This field should be declared for the pods
-# discovery to be enabled.</div>pods: &lt;<a href="rds#cloudprober.rds.kubernetes.Pods">cloudprober.rds.kubernetes.Pods</a>>
+# discovery to be enabled.</div>pods: &lt;<a href="../rds#cloudprober.rds.kubernetes.Pods">cloudprober.rds.kubernetes.Pods</a>>
 
 <div class="comment"># Endpoints discovery options. This field should be declared for the
-# endpoints discovery to be enabled.</div>endpoints: &lt;<a href="rds#cloudprober.rds.kubernetes.Endpoints">cloudprober.rds.kubernetes.Endpoints</a>>
+# endpoints discovery to be enabled.</div>endpoints: &lt;<a href="../rds#cloudprober.rds.kubernetes.Endpoints">cloudprober.rds.kubernetes.Endpoints</a>>
 
 <div class="comment"># Services discovery options. This field should be declared for the
-# services discovery to be enabled.</div>services: &lt;<a href="rds#cloudprober.rds.kubernetes.Services">cloudprober.rds.kubernetes.Services</a>>
+# services discovery to be enabled.</div>services: &lt;<a href="../rds#cloudprober.rds.kubernetes.Services">cloudprober.rds.kubernetes.Services</a>>
 
 <div class="comment"># Ingresses discovery options. This field should be declared for the
 # ingresses discovery to be enabled.
-# Note: Ingress support is experimental and may change in future.</div>ingresses: &lt;<a href="rds#cloudprober.rds.kubernetes.Ingresses">cloudprober.rds.kubernetes.Ingresses</a>>
+# Note: Ingress support is experimental and may change in future.</div>ingresses: &lt;<a href="../rds#cloudprober.rds.kubernetes.Ingresses">cloudprober.rds.kubernetes.Ingresses</a>>
 
 <div class="comment"># Label selectors to filter resources. This is useful for large clusters.
 # label_selector: [&#34;app=cloudprober&#34;, &#34;env!=dev&#34;]</div>labelSelector: &lt;string>
@@ -186,7 +186,7 @@ name: &lt;string>
 <div class="comment"># Kubernetes API server address. If not specified, we assume in-cluster mode
 # and get it from the local environment variables.</div>apiServerAddress: &lt;string>
 
-<div class="comment"># TLS config to authenticate communication with the API server.</div>tlsConfig: &lt;<a href="tlsconfig#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+<div class="comment"># TLS config to authenticate communication with the API server.</div>tlsConfig: &lt;<a href="../tlsconfig#cloudprober.tlsconfig.TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
 
 <div class="comment"># How often resources should be evaluated/expanded.</div>reEvalSec: &lt;int32> | default: 60
 

@@ -38,7 +38,7 @@ type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBE
 # allow_metrics_with_label {
 #   key: &#34;probe&#34;,
 #   value: &#34;check_homepage&#34;,
-# }</div>allowMetricsWithLabel: &lt;<a href="surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
+# }</div>allowMetricsWithLabel: &lt;<a href="../surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
 
 <div class="comment"># Ignore metrics that match any of these label filters. Ignore has precedence
 # over allow filters.
@@ -46,7 +46,7 @@ type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBE
 # ignore_metrics_with_label {
 #   key: &#34;probe&#34;,
 #   value: &#34;sysvars&#34;,
-# }</div>ignoreMetricsWithLabel: &lt;<a href="surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
+# }</div>ignoreMetricsWithLabel: &lt;<a href="../surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
 
 <div class="comment"># Allow and ignore metrics based on their names. You can specify regexes
 # here. Ignore has precendence over allow.
@@ -72,11 +72,11 @@ ignoreMetricsWithName: &lt;string>
 # However, it should not be noticeable unless you&#39;re producing large number
 # of metrics (say &gt; 10000 metrics per second).</div>exportAsGauge: &lt;bool>
 
-[prometheusSurfacer &lt;<a href="surfacer#cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriverSurfacer &lt;<a href="surfacer#cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
-&nbsp;fileSurfacer &lt;<a href="surfacer#cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgresSurfacer &lt;<a href="surfacer#cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
-&nbsp;pubsubSurfacer &lt;<a href="surfacer#cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatchSurfacer &lt;<a href="surfacer#cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
-&nbsp;datadogSurfacer &lt;<a href="surfacer#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="surfacer#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
-&nbsp;bigquerySurfacer &lt;<a href="surfacer#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
+[prometheusSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriverSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
+&nbsp;fileSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgresSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
+&nbsp;pubsubSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatchSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
+&nbsp;datadogSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
+&nbsp;bigquerySurfacer &lt;<a href="../surfacer#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
 
 </pre><h2 id="cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</h2>
 <pre>
@@ -101,7 +101,7 @@ bigqueryTable: &lt;string>
 #    label: &#34;id&#34;,
 #    column_name: &#34;id&#34;,
 #    column_type: &#34;string&#34;,
-#  }</div>bigqueryColumns: &lt;<a href="surfacer#cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</a>>
+#  }</div>bigqueryColumns: &lt;<a href="../surfacer#cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</a>>
 
 <div class="comment"># It represents bigquery client timeout in seconds. So, if bigquery insertion
 # is not completed within this time period then the request will fail and the
@@ -199,7 +199,7 @@ connectionString: &lt;string>
 
 metricsTableName: &lt;string>
 
-labelToColumn: &lt;<a href="surfacer#cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</a>>
+labelToColumn: &lt;<a href="../surfacer#cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</a>>
 
 metricsBufferSize: &lt;int64> | default: 10000
 
