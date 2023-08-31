@@ -63,6 +63,42 @@ func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
 	}
 }
 
+func packagesDocs(msgs []protoreflect.FullName, f protodoc.Formatter, l *logger.Logger) {
+	f = f.WithDepth(1).WithRelPath("..")
+	msgToDoc := map[string][]*protodoc.Token{}
+
+	for len(msgs) > 0 {
+		var nextLoop []protoreflect.FullName
+		for _, msgName := range msgs {
+			m, err := protodoc.Files.FindDescriptorByName(protoreflect.FullName(msgName))
+			if err != nil {
+				panic(err)
+			}
+
+			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f)
+			msgToDoc[string(msgName)] = toks
+			nextLoop = append(nextLoop, next...)
+		}
+		msgs = nextLoop
+	}
+
+	var msgNames []string
+	for key := range msgToDoc {
+		msgNames = append(msgNames, key)
+	}
+
+	packages := protodoc.ArrangeIntoPackages(msgNames, l)
+
+	for pkg, msgs := range packages {
+		sort.Strings(msgs)
+		mtoks := []*msgTokens{}
+		for _, msg := range msgs {
+			mtoks = append(mtoks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg], f)})
+		}
+		writeDoc(pkg, mtoks, l)
+	}
+}
+
 func main() {
 	flag.Parse()
 
@@ -86,43 +122,11 @@ func main() {
 
 	toks, nextMessageNames := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(2))
 
-	// Package level documentation
-	f = f.WithDepth(1).WithRelPath("..")
 	mTokens := &msgTokens{Name: "", Tokens: protodoc.ProcessTokensForHTML(toks, f)}
 	writeDoc("index", []*msgTokens{mTokens}, l)
 
-	msgToDoc := map[string][]*protodoc.Token{}
-
-	for len(nextMessageNames) > 0 {
-		var nextLoop []protoreflect.FullName
-		for _, msgName := range nextMessageNames {
-			m, err := protodoc.Files.FindDescriptorByName(protoreflect.FullName(msgName))
-			if err != nil {
-				panic(err)
-			}
-
-			toks, next := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f)
-			msgToDoc[string(msgName)] = toks
-			nextLoop = append(nextLoop, next...)
-		}
-		nextMessageNames = nextLoop
-	}
-
-	var msgs []string
-	for key := range msgToDoc {
-		msgs = append(msgs, key)
-	}
-
-	packages := protodoc.ArrangeIntoPackages(msgs, l)
-
-	for pkg, msgs := range packages {
-		sort.Strings(msgs)
-		mtoks := []*msgTokens{}
-		for _, msg := range msgs {
-			mtoks = append(mtoks, &msgTokens{Name: msg, Tokens: protodoc.ProcessTokensForHTML(msgToDoc[msg], f)})
-		}
-		writeDoc(pkg, mtoks, l)
-	}
+	// Package level documentation
+	packagesDocs(nextMessageNames, f, l)
 
 	l.Infof("Documentation generated in %s", *outDir)
 }
