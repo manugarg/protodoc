@@ -47,14 +47,14 @@ type msgTokens struct {
 var docTmpl = template.Must(template.New("index").Parse(protodoc.DocTmpl))
 
 func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
-	pkgDir := *outDir
-	if pkg != "index" {
-		pkgDir = filepath.Join(*outDir, pkg)
+	if pkg == "index" {
+		pkg = "overview"
+	}
 
-		if err := os.MkdirAll(pkgDir, 0755); err != nil {
-			if !os.IsExist(err) {
-				panic(err)
-			}
+	pkgDir := filepath.Join(*outDir, pkg)
+	if err := os.MkdirAll(pkgDir, 0755); err != nil {
+		if !os.IsExist(err) {
+			panic(err)
 		}
 	}
 
@@ -70,7 +70,7 @@ func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
 }
 
 func packagesDocs(msgs []protoreflect.FullName, f protodoc.Formatter, l *logger.Logger) {
-	f = f.WithDepth(1).WithRelPath("..")
+	f = f.WithDepth(1)
 	msgToDoc := map[string][]*protodoc.Token{}
 
 	for len(msgs) > 0 {
@@ -129,7 +129,7 @@ func main() {
 		panic(err)
 	}
 
-	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml")
+	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml").WithRelPath("..")
 
 	toks, nextMessageNames := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(2))
 
