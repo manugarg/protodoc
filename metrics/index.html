@@ -1,0 +1,60 @@
+
+<style>
+.comment {
+    color: #888;
+}
+pre {
+    border: 1px solid #ddd;
+    border-left: 4px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style><h2 id="cloudprober.metrics.Dist">cloudprober.metrics.Dist</h2>
+<pre>
+
+[explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="metrics#cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</h2>
+<pre>
+
+scaleFactor: &lt;float>
+
+base: &lt;float>
+
+numBuckets: &lt;uint32>
+
+</pre><h2 id="cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</h2>
+<pre>
+
+metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
+
+<div class="comment"># Additional labels (comma-separated) to attach to the output metrics, e.g.
+# &#34;region=us-east1,zone=us-east1-d&#34;. ptype=&#34;external&#34; and probe=&#34;&lt;probeName&gt;&#34;
+# are attached automatically.</div>additionalLabels: &lt;string>
+
+<div class="comment"># Whether to aggregate metrics in Cloudprober. If enabled, Cloudprober
+# aggregates the metrics returned by the external probe process -- external
+# probe process should return metrics only since the last probe run.
+# Note that this option is mutually exclusive with GAUGE metrics and
+# cloudprober will fail during initialization if both options are enabled.</div>aggregateInCloudprober: &lt;bool> | default: false
+
+<div class="comment"># Metrics that should be treated as distributions. These metrics are exported
+# by the external probe program as comma-separated list of values, for
+# example: &#34;op_latency 4.7,5.6,5.9,6.1,4.9&#34;. To be able to build distribution
+# from these values, these metrics should be pre-configured in external
+# probe:
+# dist_metric {
+#   key: &#34;op_latency&#34;
+#   value {
+#     explicit_buckets: &#34;1,2,4,8,16,32,64,128,256&#34;
+#   }
+# }</div>distMetric: &lt;<a href="metrics#cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
+
+</pre><h2 id="cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</h2>
+<pre>
+
+key: &lt;string>
+
+value: &lt;<a href="metrics#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>>
+
+</pre>

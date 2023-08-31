@@ -1,0 +1,63 @@
+
+<style>
+.comment {
+    color: #888;
+}
+pre {
+    border: 1px solid #ddd;
+    border-left: 4px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style><h2 id="cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</h2>
+<pre>
+
+[file &lt;string&gt; | cmd &lt;string&gt; | 
+&nbsp;gceServiceAccount &lt;string&gt; | k8sLocalToken &lt;bool&gt;]: &lt;oneof>
+
+[refreshIntervalSec &lt;float&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.oauth.Config">cloudprober.oauth.Config</h2>
+<pre>
+
+[httpRequest &lt;<a href="oauth#cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="oauth#cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
+&nbsp;googleCredentials &lt;<a href="oauth#cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
+
+[refreshExpiryBufferSec &lt;int32&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</h2>
+<pre>
+
+jsonFile: &lt;string>
+
+scope: &lt;string>
+
+<div class="comment"># Use encoded JWT directly as access token, instead of implementing the whole
+# OAuth2.0 flow.</div>jwtAsAccessToken: &lt;bool>
+
+<div class="comment"># Audience works only if jwt_as_access_token is true.</div>audience: &lt;string>
+
+</pre><h2 id="cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</h2>
+<pre>
+
+tokenUrl: &lt;string>
+
+method: &lt;string>
+
+<div class="comment"># Data to be sent as request body. If there are multiple &#34;data&#34; fields, we combine
+# their values with a &#39;&amp;&#39; in between. Note: 1) If data appears to be a valid json,
+# we automatically set the content-type header to &#34;application/json&#34;, 2) If data
+# appears to be a query string we set content-type to
+# &#34;application/x-www-form-urlencoded&#34;. Content type header can still be overridden
+# using the header field below.</div>data: &lt;string>
+
+<div class="comment"># HTTP request headers</div>header: &lt;<a href="oauth#cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</a>>
+
+</pre><h2 id="cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</h2>
+<pre>
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre>

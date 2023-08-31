@@ -1,0 +1,51 @@
+
+<style>
+.comment {
+    color: #888;
+}
+pre {
+    border: 1px solid #ddd;
+    border-left: 4px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style><h2 id="cloudprober.validators.Validator">cloudprober.validators.Validator</h2>
+<pre>
+
+name: &lt;string>
+
+[httpValidator &lt;<a href="validators#cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</a>&gt; | integrityValidator &lt;<a href="validators#cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</a>&gt; | 
+&nbsp;jsonValidator &lt;<a href="validators#cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</h2>
+<pre>
+
+[successStatusCodes &lt;string&gt;]: &lt;oneof>
+
+[failureStatusCodes &lt;string&gt;]: &lt;oneof>
+
+[successHeader &lt;<a href="validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof>
+
+[failureHeader &lt;<a href="validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</h2>
+<pre>
+
+[name &lt;string&gt;]: &lt;oneof>
+
+[valueRegex &lt;string&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</h2>
+<pre>
+
+[patternString &lt;string&gt; | patternNumBytes &lt;int32&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</h2>
+<pre>
+
+<div class="comment"># If jq filter is specified, validator passes only if applying jq_filter to
+# the probe output, e.g. HTTP API response, results in &#39;true&#39; boolean.
+# See the following test file for some examples:
+# https://github.com/cloudprober/cloudprober/blob/master/validators/json/json_test.go</div>jqFilter: &lt;string>
+
+</pre>

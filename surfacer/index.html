@@ -1,0 +1,284 @@
+
+<style>
+.comment {
+    color: #888;
+}
+pre {
+    border: 1px solid #ddd;
+    border-left: 4px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style><h2 id="cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</h2>
+<pre>
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre><h2 id="cloudprober.surfacer.SurfacerDef">cloudprober.surfacer.SurfacerDef</h2>
+<pre>
+
+<div class="comment"># This name is used for logging. If not defined, it&#39;s derived from the type.
+# Note that this field is required for the USER_DEFINED surfacer type and
+# should match with the name that you used while registering the user defined
+# surfacer.</div>name: &lt;string>
+
+type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|USER_DEFINED): &lt;enum>
+
+<div class="comment"># How many metrics entries (EventMetrics) to buffer. This is the buffer
+# between incoming metrics and the metrics that are being processed. Default
+# value should work in most cases. You may need to increase it on a busy
+# system, but that&#39;s usually a sign that you metrics processing pipeline is
+# slow for some reason, e.g. slow writes to a remote file.
+# Note: Only file and pubsub surfacer supports this option right now.</div>metricsBufferSize: &lt;int64> | default: 10000
+
+<div class="comment"># If specified, only allow metrics that match any of these label filters.
+# Example:
+# allow_metrics_with_label {
+#   key: &#34;probe&#34;,
+#   value: &#34;check_homepage&#34;,
+# }</div>allowMetricsWithLabel: &lt;<a href="surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
+
+<div class="comment"># Ignore metrics that match any of these label filters. Ignore has precedence
+# over allow filters.
+# Example:
+# ignore_metrics_with_label {
+#   key: &#34;probe&#34;,
+#   value: &#34;sysvars&#34;,
+# }</div>ignoreMetricsWithLabel: &lt;<a href="surfacer#cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</a>>
+
+<div class="comment"># Allow and ignore metrics based on their names. You can specify regexes
+# here. Ignore has precendence over allow.
+# Examples:
+#  ignore_metrics_with_name: &#34;validation_failure&#34;
+#  allow_metrics_with_name: &#34;(total|success|latency)&#34;
+#
+# For efficiency reasons, filtering by metric name has to be implemented by
+# individual surfacers (while going through metrics within an EventMetrics).
+# Currently following surfacers implement it:
+#     CLOUDWATCH, PROMETHEUS, STACKDRIVER</div>allowMetricsWithName: &lt;string>
+
+ignoreMetricsWithName: &lt;string>
+
+<div class="comment"># Whether to add failure metric or not. For stackdriver surfacer, we add
+# failure metric by default.</div>addFailureMetric: &lt;bool>
+
+<div class="comment"># If set to true, cloudprober will export all metrics as gauge metrics. Note
+# that cloudprober inherently generates only cumulative metrics. To create
+# gauge metrics from cumulative metrics, we keep a copy of the old metrics
+# and subtract new metrics from the previous metrics. This transformation in
+# metrics has an increased memory-overhead because extra copies required.
+# However, it should not be noticeable unless you&#39;re producing large number
+# of metrics (say &gt; 10000 metrics per second).</div>exportAsGauge: &lt;bool>
+
+[prometheusSurfacer &lt;<a href="surfacer#cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriverSurfacer &lt;<a href="surfacer#cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
+&nbsp;fileSurfacer &lt;<a href="surfacer#cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgresSurfacer &lt;<a href="surfacer#cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
+&nbsp;pubsubSurfacer &lt;<a href="surfacer#cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatchSurfacer &lt;<a href="surfacer#cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
+&nbsp;datadogSurfacer &lt;<a href="surfacer#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="surfacer#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
+&nbsp;bigquerySurfacer &lt;<a href="surfacer#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
+
+</pre><h2 id="cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</h2>
+<pre>
+
+label: &lt;string>
+
+columnName: &lt;string>
+
+columnType: &lt;string>
+
+</pre><h2 id="cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</h2>
+<pre>
+
+projectName: &lt;string>
+
+bigqueryDataset: &lt;string>
+
+bigqueryTable: &lt;string>
+
+<div class="comment"># It represents the bigquery table columns.
+#  bigquery_columns {
+#    label: &#34;id&#34;,
+#    column_name: &#34;id&#34;,
+#    column_type: &#34;string&#34;,
+#  }</div>bigqueryColumns: &lt;<a href="surfacer#cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</a>>
+
+<div class="comment"># It represents bigquery client timeout in seconds. So, if bigquery insertion
+# is not completed within this time period then the request will fail and the
+# failed rows will be retried later.</div>bigqueryTimeoutSec: &lt;int64> | default: 30
+
+metricsBufferSize: &lt;int64> | default: 100000
+
+<div class="comment"># This denotes the time interval after which data will be inserted in
+# bigquery. Default is 10 seconds. So after every 10 seconds all the em in
+# current will be inserted in bigquery in a default batch size of 1000</div>batchTimerSec: &lt;int64> | default: 10
+
+metricsBatchSize: &lt;int64> | default: 1000
+
+<div class="comment"># Column name for metrics name, value and timestamp</div>metricTimeColName: &lt;string> | default: metric_time
+
+metricNameColName: &lt;string> | default: metric_name
+
+metricValueColName: &lt;string> | default: metric_value
+
+</pre><h2 id="cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># The cloudwatch metric namespace</div>namespace: &lt;string> | default: cloudprober
+
+<div class="comment"># The cloudwatch resolution value, lowering this below 60 will incur
+# additional charges as the metrics will be charged at a high resolution
+# rate.</div>resolution: &lt;int32> | default: 60
+
+<div class="comment"># The AWS Region, used to create a CloudWatch session.
+# The order of fallback for evaluating the AWS Region:
+# 1. This config value.
+# 2. EC2 metadata endpoint, via cloudprober sysvars.
+# 3. AWS_REGION environment value.
+# 4. AWS_DEFAULT_REGION environment value, if AWS_SDK_LOAD_CONFIG is set.
+# https://aws.github.io/aws-sdk-go-v2/docs/configuring-sdk/</div>region: &lt;string>
+
+<div class="comment"># The maximum number of metrics that will be published at one
+# time. Metrics will be stored locally in a cache until this 
+# limit is reached. 1000 is the maximum number of metrics
+# supported by the Cloudwatch PutMetricData API.
+# Metrics will be published when the timer expires, or the buffer is
+# full, whichever happens first.</div>metricsBatchSize: &lt;int32> | default: 1000
+
+<div class="comment"># The maximum amount of time to hold metrics in the buffer (above).
+# Metrics will be published when the timer expires, or the buffer is
+# full, whichever happens first. </div>batchTimerSec: &lt;int32> | default: 30
+
+</pre><h2 id="cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># Prefix to add to all metrics.</div>prefix: &lt;string> | default: cloudprober
+
+<div class="comment"># Datadog API key. If not set, DD_API_KEY env variable is used.</div>apiKey: &lt;string>
+
+<div class="comment"># Datadog APP key. If not set, DD_APP_KEY env variable is used.</div>appKey: &lt;string>
+
+<div class="comment"># Datadog server, default: &#34;api.datadoghq.com&#34;</div>server: &lt;string>
+
+<div class="comment"># The maximum number of metrics that will be published at one
+# time. Metrics will be stored locally in a cache until this 
+# limit is reached. Datadog&#39;s SubmitMetric API has a maximum payload 
+# size of 500 kilobytes (512000 bytes). Compressed payloads must have a 
+# decompressed size of less than 5 megabytes (5242880 bytes).
+# Metrics will be published when the timer expires, or the buffer is
+# full, whichever happens first.</div>metricsBatchSize: &lt;int32> | default: 1000
+
+<div class="comment"># The maximum amount of time to hold metrics in the buffer (above).
+# Metrics will be published when the timer expires, or the buffer is
+# full, whichever happens first. </div>batchTimerSec: &lt;int32> | default: 30
+
+<div class="comment"># Disable gzip compression of metric payload, when sending metrics to Datadog.
+# Compression is enabled by default.</div>disableCompression: &lt;bool>
+
+</pre><h2 id="cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># Where to write the results. If left unset, file surfacer writes to the
+# standard output.</div>filePath: &lt;string>
+
+prefix: &lt;string> | default: cloudprober
+
+<div class="comment"># Compress data before writing to the file.</div>compressionEnabled: &lt;bool> | default: false
+
+</pre><h2 id="cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</h2>
+<pre>
+
+label: &lt;string>
+
+column: &lt;string>
+
+</pre><h2 id="cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</h2>
+<pre>
+
+connectionString: &lt;string>
+
+metricsTableName: &lt;string>
+
+labelToColumn: &lt;<a href="surfacer#cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</a>>
+
+metricsBufferSize: &lt;int64> | default: 10000
+
+</pre><h2 id="cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># default 60s</div>resolutionSec: &lt;int32> | default: 60
+
+<div class="comment"># Number of points in each timeseries. This field dictates how far back
+# can you go up to (resolution_sec * timeseries_size). Note that higher
+# this number, more memory you&#39;ll use.</div>timeseriesSize: &lt;int32> | default: 4320
+
+<div class="comment"># Max targets per probe.</div>maxTargetsPerProbe: &lt;int32> | default: 20
+
+<div class="comment"># ProbeStatus URL
+# Note that older default URL /probestatus forwards to this URL to avoid
+# breaking older default setups.</div>url: &lt;string> | default: /status
+
+<div class="comment"># Page cache time</div>cacheTimeSec: &lt;int32> | default: 2
+
+<div class="comment"># Probestatus surfacer is enabled by default. To disable it, set this
+# option.</div>disable: &lt;bool>
+
+</pre><h2 id="cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># How many metrics entries (EventMetrics) to buffer. Incoming metrics
+# processing is paused while serving data to prometheus. This buffer is to
+# make writes to prometheus surfacer non-blocking.
+# NOTE: This field is confusing for users and will be removed from the config
+# after v0.10.3.</div>metricsBufferSize: &lt;int64> | default: 10000
+
+<div class="comment"># Whether to include timestamps in metrics. If enabled (default) each metric
+# string includes the metric timestamp as recorded in the EventMetric.
+# Prometheus associates the scraped values with this timestamp. If disabled,
+# i.e. timestamps are not exported, prometheus associates scraped values with
+# scrape timestamp.</div>includeTimestamp: &lt;bool> | default: true
+
+<div class="comment"># URL that prometheus scrapes metrics from.</div>metricsUrl: &lt;string> | default: /metrics
+
+<div class="comment"># Prefix to add to all metric names. For example setting this field to
+# &#34;cloudprober_&#34; will result in metrics with names:
+# cloudprober_total, cloudprober_success, cloudprober_latency, ..</div>metricsPrefix: &lt;string>
+
+</pre><h2 id="cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># GCP project name for pubsub. If not specified and running on GCP,
+# project is used.</div>project: &lt;string>
+
+<div class="comment"># Pubsub topic name.
+# Default is cloudprober-{hostname}</div>topicName: &lt;string>
+
+<div class="comment"># Compress data before writing to pubsub.</div>compressionEnabled: &lt;bool> | default: false
+
+</pre><h2 id="cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</h2>
+<pre>
+
+<div class="comment"># GCP project name for stackdriver. If not specified and running on GCP,
+# project is used.</div>project: &lt;string>
+
+<div class="comment"># How often to export metrics to stackdriver.</div>batchTimerSec: &lt;uint64> | default: 10
+
+<div class="comment"># If allowed_metrics_regex is specified, only metrics matching the given
+# regular expression will be exported to stackdriver. Since probe type and
+# probe name are part of the metric name, you can use this field to restrict
+# stackdriver metrics to a particular probe.
+# Example:
+# allowed_metrics_regex: &#34;.*(http|ping).*(success|validation_failure).*&#34;</div>allowedMetricsRegex: &lt;string>
+
+<div class="comment"># Monitoring URL base. Full metric URL looks like the following:
+# &lt;monitoring_url&gt;/&lt;ptype&gt;/&lt;probe&gt;/&lt;metric&gt;
+# Example:
+# custom.googleapis.com/cloudprober/http/google-homepage/latency</div>monitoringUrl: &lt;string> | default: custom.googleapis.com/cloudprober/
+
+<div class="comment"># How many metrics entries to buffer. Incoming metrics
+# processing is paused while serving data to Stackdriver. This buffer is to
+# make writes to Stackdriver surfacer non-blocking.</div>metricsBufferSize: &lt;int64> | default: 10000
+
+metricsPrefix: (NONE|PROBE|PTYPE_PROBE): &lt;enum>
+
+</pre>
