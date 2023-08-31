@@ -99,7 +99,7 @@ func TestFormatOneOf(t *testing.T) {
 			name: "default",
 			want: &Token{
 				Kind: "oneof",
-				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
+				TextHTML: `[http_probe &lt;<a href="probes#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;user_defined_probe &lt;string&gt;]`,
 			},
 		},
@@ -110,7 +110,7 @@ func TestFormatOneOf(t *testing.T) {
 			},
 			want: &Token{
 				Kind: "oneof",
-				TextHTML: `[httpProbe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
+				TextHTML: `[httpProbe &lt;<a href="probes#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;userDefinedProbe &lt;string&gt;]`,
 			},
 		},
@@ -122,7 +122,7 @@ func TestFormatOneOf(t *testing.T) {
 			want: &Token{
 				Kind:   "oneof",
 				Prefix: "  ",
-				TextHTML: `[http_probe &lt;<a href="probes.html#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes.html#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
+				TextHTML: `[http_probe &lt;<a href="probes#cloudprober.probes.http.ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober.probes.dns.ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;user_defined_probe &lt;string&gt;]`,
 			},
 		},
@@ -217,7 +217,7 @@ func TestProcessTokensForHTML(t *testing.T) {
 			},
 			want: &Token{
 				Kind:      "cloudprober.probes.ProbeDef",
-				URL:       "probes.html#cloudprober.probes.ProbeDef",
+				URL:       "probes#cloudprober.probes.ProbeDef",
 				ExtraLine: "\n",
 			},
 		},
@@ -284,7 +284,7 @@ func TestKindToURL(t *testing.T) {
 	}{
 		{
 			kind: "cloudprober.probes.ProbeDef.interval_msec",
-			want: "probes.html#cloudprober.probes.ProbeDef.interval_msec",
+			want: "probes#cloudprober.probes.ProbeDef.interval_msec",
 		},
 		{
 			kind: "cloudprober.interval_msec",
