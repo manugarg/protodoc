@@ -125,7 +125,13 @@ debugOptions: &lt;<a href="../probes#cloudprober.probes.DebugOptions">cloudprobe
 
 <div class="comment"># Name of the alert. Default is to use the probe name.</div>name: &lt;string>
 
-[condition &lt;<a href="../probes#cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</a>&gt;]: &lt;oneof>
+<div class="comment"># Condition for the alert. Default is to alert on any failure.
+# Example:
+# # Alert if 6 out of 10 probes fail.
+# condition {
+#   failures: 6
+#   total: 10
+# }</div>condition: &lt;<a href="../probes#cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</a>>
 
 <div class="comment"># How to notify in case of alert.</div>notify: &lt;<a href="../probes#cloudprober.probes.alerting.NotifyConfig">cloudprober.probes.alerting.NotifyConfig</a>>
 
@@ -145,7 +151,8 @@ playbookUrlTemplate: &lt;string>
 # Playbook: @playbook_url@
 # Condition ID: @condition_id@</div>detailsTemplate: &lt;string>
 
-[repeatIntervalSec &lt;int32&gt;]: &lt;oneof>
+<div class="comment"># How often to repeat notification for the same alert. Default is 1hr.
+# To disable any kind of notification throttling, set this to 0.</div>repeatIntervalSec: &lt;int32>
 
 </pre><h2 id="cloudprober.probes.alerting.Condition">cloudprober.probes.alerting.Condition</h2>
 <pre>

@@ -20,20 +20,33 @@ name: &lt;string>
 </pre><h2 id="cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</h2>
 <pre>
 
-[successStatusCodes &lt;string&gt;]: &lt;oneof>
+<div class="comment"># Comma-separated list of success status codes and code ranges.
+# Example: success_stauts_codes: 200-299,301,302</div>successStatusCodes: &lt;string>
 
-[failureStatusCodes &lt;string&gt;]: &lt;oneof>
+<div class="comment"># Comma-separated list of failure status codes and code ranges. If HTTP
+# status code matches failure_status_codes, validator fails.</div>failureStatusCodes: &lt;string>
 
-[successHeader &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof>
+<div class="comment"># Header based validations.
+# TODO(manugarg): Add support for specifying multiple success and failure
+# headers.
+#
+# Success Header:
+#   If specified, HTTP response headers should match the success_header for
+#   validation to succeed. Example:
+#     success_header: {
+#       name: &#34;Strict-Transport-Security&#34;
+#       value_regex: &#34;max-age=31536000&#34;
+#     }</div>successHeader: &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>>
 
-[failureHeader &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>&gt;]: &lt;oneof>
+<div class="comment"># Failure Header:
+#   If HTTP response headers match failure_header, validation fails.</div>failureHeader: &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>>
 
 </pre><h2 id="cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</h2>
 <pre>
 
-[name &lt;string&gt;]: &lt;oneof>
+<div class="comment"># Header name to look for</div>name: &lt;string>
 
-[valueRegex &lt;string&gt;]: &lt;oneof>
+<div class="comment"># Header value to match. If omited - check for header existence</div>valueRegex: &lt;string>
 
 </pre><h2 id="cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</h2>
 <pre>

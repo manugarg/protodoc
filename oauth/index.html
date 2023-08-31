@@ -15,7 +15,11 @@ pre {
 [file &lt;string&gt; | cmd &lt;string&gt; | 
 &nbsp;gceServiceAccount &lt;string&gt; | k8sLocalToken &lt;bool&gt;]: &lt;oneof>
 
-[refreshIntervalSec &lt;float&gt;]: &lt;oneof>
+<div class="comment"># If above sources return JSON tokens with an expiry, we use that info to
+# determine when to refresh tokens and refresh_interval_sec is completely
+# ignored. If above sources return a string, we refresh from the source
+# every 30s by default. To disable this behavior set refresh_interval_sec to
+# zero.</div>refreshIntervalSec: &lt;float>
 
 </pre><h2 id="cloudprober.oauth.Config">cloudprober.oauth.Config</h2>
 <pre>
@@ -23,7 +27,10 @@ pre {
 [httpRequest &lt;<a href="../oauth#cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="../oauth#cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
 &nbsp;googleCredentials &lt;<a href="../oauth#cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
 
-[refreshExpiryBufferSec &lt;int32&gt;]: &lt;oneof>
+<div class="comment"># How long before the expiry do we refresh. Default is 60 (1m). This applies
+# only to http_request and bearer_token types, and only if token presents
+# expiry in some way.
+# TODO(manugarg): Consider setting default based on probe interval.</div>refreshExpiryBufferSec: &lt;int32>
 
 </pre><h2 id="cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</h2>
 <pre>
