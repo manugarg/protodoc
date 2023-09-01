@@ -9,14 +9,14 @@
     border-radius: 0;
     padding-left: 10px;
 }
-</style><h2 id="cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</h2>
+</style><h3 id="cloudprober.surfacer.LabelFilter">cloudprober.surfacer.LabelFilter</h3>
 <pre class="protodoc">
 
 key: &lt;string>
 
 value: &lt;string>
 
-</pre><h2 id="cloudprober.surfacer.SurfacerDef">cloudprober.surfacer.SurfacerDef</h2>
+</pre><h3 id="cloudprober.surfacer.SurfacerDef">cloudprober.surfacer.SurfacerDef</h3>
 <pre class="protodoc">
 
 <div class="comment"># This name is used for logging. If not defined, it&#39;s derived from the type.
@@ -78,7 +78,7 @@ ignoreMetricsWithName: &lt;string>
 &nbsp;datadogSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatusSurfacer &lt;<a href="../surfacer#cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
 &nbsp;bigquerySurfacer &lt;<a href="../surfacer#cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
 
-</pre><h2 id="cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</h2>
+</pre><h3 id="cloudprober.surfacer.bigquery.BQColumn">cloudprober.surfacer.bigquery.BQColumn</h3>
 <pre class="protodoc">
 
 label: &lt;string>
@@ -87,7 +87,7 @@ columnName: &lt;string>
 
 columnType: &lt;string>
 
-</pre><h2 id="cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.bigquery.SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</h3>
 <pre class="protodoc">
 
 projectName: &lt;string>
@@ -121,7 +121,7 @@ metricNameColName: &lt;string> | default: metric_name
 
 metricValueColName: &lt;string> | default: metric_value
 
-</pre><h2 id="cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.cloudwatch.SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># The cloudwatch metric namespace</div>namespace: &lt;string> | default: cloudprober
@@ -149,7 +149,7 @@ metricValueColName: &lt;string> | default: metric_value
 # Metrics will be published when the timer expires, or the buffer is
 # full, whichever happens first. </div>batchTimerSec: &lt;int32> | default: 30
 
-</pre><h2 id="cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.datadog.SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># Prefix to add to all metrics.</div>prefix: &lt;string> | default: cloudprober
@@ -175,7 +175,7 @@ metricValueColName: &lt;string> | default: metric_value
 <div class="comment"># Disable gzip compression of metric payload, when sending metrics to Datadog.
 # Compression is enabled by default.</div>disableCompression: &lt;bool>
 
-</pre><h2 id="cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.file.SurfacerConf">cloudprober.surfacer.file.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># Where to write the results. If left unset, file surfacer writes to the
@@ -185,14 +185,14 @@ prefix: &lt;string> | default: cloudprober
 
 <div class="comment"># Compress data before writing to the file.</div>compressionEnabled: &lt;bool> | default: false
 
-</pre><h2 id="cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</h2>
+</pre><h3 id="cloudprober.surfacer.postgres.LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</h3>
 <pre class="protodoc">
 
 label: &lt;string>
 
 column: &lt;string>
 
-</pre><h2 id="cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.postgres.SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</h3>
 <pre class="protodoc">
 
 connectionString: &lt;string>
@@ -203,7 +203,7 @@ labelToColumn: &lt;<a href="../surfacer#cloudprober.surfacer.postgres.LabelToCol
 
 metricsBufferSize: &lt;int64> | default: 10000
 
-</pre><h2 id="cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.probestatus.SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># default 60s</div>resolutionSec: &lt;int32> | default: 60
@@ -223,7 +223,7 @@ metricsBufferSize: &lt;int64> | default: 10000
 <div class="comment"># Probestatus surfacer is enabled by default. To disable it, set this
 # option.</div>disable: &lt;bool>
 
-</pre><h2 id="cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.prometheus.SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># How many metrics entries (EventMetrics) to buffer. Incoming metrics
@@ -244,7 +244,7 @@ metricsBufferSize: &lt;int64> | default: 10000
 # &#34;cloudprober_&#34; will result in metrics with names:
 # cloudprober_total, cloudprober_success, cloudprober_latency, ..</div>metricsPrefix: &lt;string>
 
-</pre><h2 id="cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.pubsub.SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># GCP project name for pubsub. If not specified and running on GCP,
@@ -255,7 +255,7 @@ metricsBufferSize: &lt;int64> | default: 10000
 
 <div class="comment"># Compress data before writing to pubsub.</div>compressionEnabled: &lt;bool> | default: false
 
-</pre><h2 id="cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</h2>
+</pre><h3 id="cloudprober.surfacer.stackdriver.SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</h3>
 <pre class="protodoc">
 
 <div class="comment"># GCP project name for stackdriver. If not specified and running on GCP,
