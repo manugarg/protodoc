@@ -27,7 +27,7 @@ var DocTmpl = `
 }
 </style>
 {{- range . -}}
-{{- if .Name -}}<h2 id="{{ .Name }}">{{ .Name }}</h2>{{- end }}
+{{- if .Name -}}<h3 id="{{ .Name }}">{{ .Name }}</h3>{{- end }}
 <pre class="protodoc">
 
 {{ range .Tokens -}}
