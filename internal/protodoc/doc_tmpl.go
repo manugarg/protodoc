@@ -21,13 +21,13 @@ var DocTmpl = `
 }
 .protodoc {
     border: 1px solid #ddd;
-    border-left: 4px solid #e6522c;
+    border-left: 3px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
 </style>
 {{- range . -}}
-{{- if .Name -}}<h3 id="{{ .Name }}">{{ .Name }}</h3>{{- end }}
+{{- if .Name -}}<h3 id="{{ .Name | replace "." "_" }}">{{ .Name }} <a class="anchor" href="#{{ .Name | replace "." "_" }}">#</a></h3>{{- end }}
 <pre class="protodoc">
 
 {{ range .Tokens -}}

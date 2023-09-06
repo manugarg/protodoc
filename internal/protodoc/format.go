@@ -155,7 +155,8 @@ func kindToURL(kind string, f Formatter) string {
 	}
 	parts := strings.SplitN(kind, ".", 3)
 	if len(parts) > 2 {
-		return path.Join(*homeURL, f.relPath, parts[1]+"#"+kind)
+		kindForURL := strings.ReplaceAll(kind, ".", "_")
+		return path.Join(*homeURL, f.relPath, parts[1]+"#"+kindForURL)
 	}
 	return ""
 }
