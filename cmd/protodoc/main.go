@@ -22,6 +22,7 @@ import (
 	"path/filepath"
 	"sort"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/cloudprober/cloudprober/logger"
 	"github.com/manugarg/protodoc/internal/protodoc"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -44,7 +45,7 @@ type msgTokens struct {
 	Tokens []*protodoc.Token
 }
 
-var docTmpl = template.Must(template.New("index").Parse(protodoc.DocTmpl))
+var docTmpl = template.Must(template.New("index").Funcs(sprig.TxtFuncMap()).Parse(protodoc.DocTmpl))
 
 func writeDoc(pkg string, mTokens []*msgTokens, l *logger.Logger) {
 	if pkg == "index" {
