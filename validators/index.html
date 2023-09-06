@@ -5,19 +5,19 @@
 }
 .protodoc {
     border: 1px solid #ddd;
-    border-left: 4px solid #e6522c;
+    border-left: 3px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
-</style><h3 id="cloudprober.validators.Validator">cloudprober.validators.Validator</h3>
+</style><h3 id="cloudprober_validators_Validator">cloudprober.validators.Validator <a class="anchor" href="#cloudprober_validators_Validator">#</a></h3>
 <pre class="protodoc">
 
 name: &lt;string>
 
-[httpValidator &lt;<a href="../validators#cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</a>&gt; | integrityValidator &lt;<a href="../validators#cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</a>&gt; | 
-&nbsp;jsonValidator &lt;<a href="../validators#cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
+[httpValidator &lt;<a href="../validators#cloudprober_validators_http_Validator">cloudprober.validators.http.Validator</a>&gt; | integrityValidator &lt;<a href="../validators#cloudprober_validators_integrity_Validator">cloudprober.validators.integrity.Validator</a>&gt; | 
+&nbsp;jsonValidator &lt;<a href="../validators#cloudprober_validators_json_Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
 
-</pre><h3 id="cloudprober.validators.http.Validator">cloudprober.validators.http.Validator</h3>
+</pre><h3 id="cloudprober_validators_http_Validator">cloudprober.validators.http.Validator <a class="anchor" href="#cloudprober_validators_http_Validator">#</a></h3>
 <pre class="protodoc">
 
 <div class="comment"># Comma-separated list of success status codes and code ranges.
@@ -36,24 +36,24 @@ name: &lt;string>
 #     success_header: {
 #       name: &#34;Strict-Transport-Security&#34;
 #       value_regex: &#34;max-age=31536000&#34;
-#     }</div>successHeader: &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>>
+#     }</div>successHeader: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
 
 <div class="comment"># Failure Header:
-#   If HTTP response headers match failure_header, validation fails.</div>failureHeader: &lt;<a href="../validators#cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</a>>
+#   If HTTP response headers match failure_header, validation fails.</div>failureHeader: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
 
-</pre><h3 id="cloudprober.validators.http.Validator.Header">cloudprober.validators.http.Validator.Header</h3>
+</pre><h3 id="cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header <a class="anchor" href="#cloudprober_validators_http_Validator_Header">#</a></h3>
 <pre class="protodoc">
 
 <div class="comment"># Header name to look for</div>name: &lt;string>
 
 <div class="comment"># Header value to match. If omited - check for header existence</div>valueRegex: &lt;string>
 
-</pre><h3 id="cloudprober.validators.integrity.Validator">cloudprober.validators.integrity.Validator</h3>
+</pre><h3 id="cloudprober_validators_integrity_Validator">cloudprober.validators.integrity.Validator <a class="anchor" href="#cloudprober_validators_integrity_Validator">#</a></h3>
 <pre class="protodoc">
 
 [patternString &lt;string&gt; | patternNumBytes &lt;int32&gt;]: &lt;oneof>
 
-</pre><h3 id="cloudprober.validators.json.Validator">cloudprober.validators.json.Validator</h3>
+</pre><h3 id="cloudprober_validators_json_Validator">cloudprober.validators.json.Validator <a class="anchor" href="#cloudprober_validators_json_Validator">#</a></h3>
 <pre class="protodoc">
 
 <div class="comment"># If jq filter is specified, validator passes only if applying jq_filter to
