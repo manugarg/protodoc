@@ -5,11 +5,11 @@
 }
 .protodoc {
     border: 1px solid #ddd;
-    border-left: 4px solid #e6522c;
+    border-left: 3px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
-</style><h3 id="cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</h3>
+</style><h3 id="cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken <a class="anchor" href="#cloudprober_oauth_BearerToken">#</a></h3>
 <pre class="protodoc">
 
 [file &lt;string&gt; | cmd &lt;string&gt; | 
@@ -21,18 +21,18 @@
 # every 30s by default. To disable this behavior set refresh_interval_sec to
 # zero.</div>refreshIntervalSec: &lt;float>
 
-</pre><h3 id="cloudprober.oauth.Config">cloudprober.oauth.Config</h3>
+</pre><h3 id="cloudprober_oauth_Config">cloudprober.oauth.Config <a class="anchor" href="#cloudprober_oauth_Config">#</a></h3>
 <pre class="protodoc">
 
-[httpRequest &lt;<a href="../oauth#cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="../oauth#cloudprober.oauth.BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
-&nbsp;googleCredentials &lt;<a href="../oauth#cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
+[httpRequest &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="../oauth#cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
+&nbsp;googleCredentials &lt;<a href="../oauth#cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
 
 <div class="comment"># How long before the expiry do we refresh. Default is 60 (1m). This applies
 # only to http_request and bearer_token types, and only if token presents
 # expiry in some way.
 # TODO(manugarg): Consider setting default based on probe interval.</div>refreshExpiryBufferSec: &lt;int32>
 
-</pre><h3 id="cloudprober.oauth.GoogleCredentials">cloudprober.oauth.GoogleCredentials</h3>
+</pre><h3 id="cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials <a class="anchor" href="#cloudprober_oauth_GoogleCredentials">#</a></h3>
 <pre class="protodoc">
 
 jsonFile: &lt;string>
@@ -44,7 +44,7 @@ scope: &lt;string>
 
 <div class="comment"># Audience works only if jwt_as_access_token is true.</div>audience: &lt;string>
 
-</pre><h3 id="cloudprober.oauth.HTTPRequest">cloudprober.oauth.HTTPRequest</h3>
+</pre><h3 id="cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest <a class="anchor" href="#cloudprober_oauth_HTTPRequest">#</a></h3>
 <pre class="protodoc">
 
 tokenUrl: &lt;string>
@@ -58,9 +58,9 @@ method: &lt;string>
 # &#34;application/x-www-form-urlencoded&#34;. Content type header can still be overridden
 # using the header field below.</div>data: &lt;string>
 
-<div class="comment"># HTTP request headers</div>header: &lt;<a href="../oauth#cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</a>>
+<div class="comment"># HTTP request headers</div>header: &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest_HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</a>>
 
-</pre><h3 id="cloudprober.oauth.HTTPRequest.HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry</h3>
+</pre><h3 id="cloudprober_oauth_HTTPRequest_HeaderEntry">cloudprober.oauth.HTTPRequest.HeaderEntry <a class="anchor" href="#cloudprober_oauth_HTTPRequest_HeaderEntry">#</a></h3>
 <pre class="protodoc">
 
 key: &lt;string>

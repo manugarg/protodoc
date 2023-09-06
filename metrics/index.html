@@ -5,16 +5,16 @@
 }
 .protodoc {
     border: 1px solid #ddd;
-    border-left: 4px solid #e6522c;
+    border-left: 3px solid #e6522c;
     border-radius: 0;
     padding-left: 10px;
 }
-</style><h3 id="cloudprober.metrics.Dist">cloudprober.metrics.Dist</h3>
+</style><h3 id="cloudprober_metrics_Dist">cloudprober.metrics.Dist <a class="anchor" href="#cloudprober_metrics_Dist">#</a></h3>
 <pre class="protodoc">
 
-[explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="../metrics#cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
+[explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="../metrics#cloudprober_metrics_ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
 
-</pre><h3 id="cloudprober.metrics.ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</h3>
+</pre><h3 id="cloudprober_metrics_ExponentialBuckets">cloudprober.metrics.ExponentialBuckets <a class="anchor" href="#cloudprober_metrics_ExponentialBuckets">#</a></h3>
 <pre class="protodoc">
 
 scaleFactor: &lt;float>
@@ -23,7 +23,7 @@ base: &lt;float>
 
 numBuckets: &lt;uint32>
 
-</pre><h3 id="cloudprober.metrics.payload.OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</h3>
+</pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions">#</a></h3>
 <pre class="protodoc">
 
 metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
@@ -48,13 +48,13 @@ metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 #   value {
 #     explicit_buckets: &#34;1,2,4,8,16,32,64,128,256&#34;
 #   }
-# }</div>distMetric: &lt;<a href="../metrics#cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
+# }</div>distMetric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
 
-</pre><h3 id="cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</h3>
+</pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">#</a></h3>
 <pre class="protodoc">
 
 key: &lt;string>
 
-value: &lt;<a href="../metrics#cloudprober.metrics.Dist">cloudprober.metrics.Dist</a>>
+value: &lt;<a href="../metrics#cloudprober_metrics_Dist">cloudprober.metrics.Dist</a>>
 
 </pre>
