@@ -31,6 +31,7 @@ import (
 var (
 	versionFlag   = flag.Bool("version", false, "Print version and exit")
 	outFmt        = flag.String("format", "yaml", "textpb or yaml")
+	jsonNames     = flag.Bool("json_names", false, "Use JSON names for YAML output.")
 	outDir        = flag.String("out_dir", "proto_docs", "Output directory for the documentation.")
 	protoRootDir  = flag.String("proto_root_dir", ".", "Root directory for the proto files.")
 	packagePrefix = flag.String("package_prefix", "", "Package prefix to resolve import paths")
@@ -130,7 +131,7 @@ func main() {
 		panic(err)
 	}
 
-	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml").WithRelPath("..")
+	f := protodoc.Formatter{}.WithYAML(*outFmt == "yaml", *jsonNames).WithRelPath("..")
 
 	toks, nextMessageNames := protodoc.DumpMessage(m.(protoreflect.MessageDescriptor), f.WithDepth(2))
 

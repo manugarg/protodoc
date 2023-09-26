@@ -50,8 +50,19 @@ func TestFinalToToken(t *testing.T) {
 			},
 		},
 		{
-			name:      "yaml",
-			f:         Formatter{}.WithYAML(true),
+			name:      "yaml default",
+			f:         Formatter{}.WithYAML(true, false),
+			nocomment: false,
+			want: &Token{
+				yaml:    true,
+				Kind:    "int32",
+				Comment: "# Interval between two probe runs in milliseconds.\n# Only one of \"interval\" and \"inteval_msec\" should be defined.\n# Default interval is 2s.",
+				Text:    "interval_msec",
+			},
+		},
+		{
+			name:      "yaml with json names",
+			f:         Formatter{}.WithYAML(true, true),
 			nocomment: false,
 			want: &Token{
 				yaml:    true,
@@ -62,7 +73,7 @@ func TestFinalToToken(t *testing.T) {
 		},
 		{
 			name:      "yaml with prefix",
-			f:         Formatter{}.WithYAML(true).WithPrefix("  "),
+			f:         Formatter{}.WithYAML(true, true).WithPrefix("  "),
 			nocomment: false,
 			want: &Token{
 				yaml:    true,
@@ -107,6 +118,18 @@ func TestFormatOneOf(t *testing.T) {
 			name: "yaml",
 			f: Formatter{
 				yaml: true,
+			},
+			want: &Token{
+				Kind: "oneof",
+				TextHTML: `[http_probe &lt;<a href="probes#cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
+&nbsp;user_defined_probe &lt;string&gt;]`,
+			},
+		},
+		{
+			name: "yaml with json",
+			f: Formatter{
+				yaml:             true,
+				jsonNamesForYAML: true,
 			},
 			want: &Token{
 				Kind: "oneof",

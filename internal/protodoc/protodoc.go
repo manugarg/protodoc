@@ -49,11 +49,15 @@ type Formatter struct {
 	depth   int
 	prefix  string
 	relPath string
+
+	// Whether to use JSON names for YAML output.
+	jsonNamesForYAML bool
 }
 
-func (f Formatter) WithYAML(yaml bool) Formatter {
+func (f Formatter) WithYAML(yaml bool, jsonNames bool) Formatter {
 	f2 := f
 	f2.yaml = yaml
+	f2.jsonNamesForYAML = jsonNames
 	return f2
 }
 
@@ -98,7 +102,7 @@ func finalToken(fld protoreflect.FieldDescriptor, f Formatter, nocomment bool) *
 		tok.Default = fld.Default().String()
 	}
 
-	if f.yaml {
+	if f.yaml && f.jsonNamesForYAML {
 		tok.Text = fld.JSONName()
 	}
 

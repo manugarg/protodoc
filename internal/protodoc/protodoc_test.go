@@ -72,7 +72,7 @@ func TestDumpMessage(t *testing.T) {
 		},
 		{
 			name: "yaml,depth=2",
-			f:    Formatter{}.WithDepth(2).WithYAML(true),
+			f:    Formatter{}.WithDepth(2).WithYAML(true, true),
 			wantToks: []*Token{
 				{
 					Kind:          "cloudprober.probes.http.Header",
