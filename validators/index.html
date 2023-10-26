@@ -14,17 +14,17 @@
 
 name: &lt;string>
 
-[httpValidator &lt;<a href="../validators#cloudprober_validators_http_Validator">cloudprober.validators.http.Validator</a>&gt; | integrityValidator &lt;<a href="../validators#cloudprober_validators_integrity_Validator">cloudprober.validators.integrity.Validator</a>&gt; | 
-&nbsp;jsonValidator &lt;<a href="../validators#cloudprober_validators_json_Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
+[http_validator &lt;<a href="../validators#cloudprober_validators_http_Validator">cloudprober.validators.http.Validator</a>&gt; | integrity_validator &lt;<a href="../validators#cloudprober_validators_integrity_Validator">cloudprober.validators.integrity.Validator</a>&gt; | 
+&nbsp;json_validator &lt;<a href="../validators#cloudprober_validators_json_Validator">cloudprober.validators.json.Validator</a>&gt; | regex &lt;string&gt;]: &lt;oneof>
 
 </pre><h3 id="cloudprober_validators_http_Validator">cloudprober.validators.http.Validator <a class="anchor" href="#cloudprober_validators_http_Validator">#</a></h3>
 <pre class="protodoc">
 
 <div class="comment"># Comma-separated list of success status codes and code ranges.
-# Example: success_stauts_codes: 200-299,301,302</div>successStatusCodes: &lt;string>
+# Example: success_stauts_codes: 200-299,301,302</div>success_status_codes: &lt;string>
 
 <div class="comment"># Comma-separated list of failure status codes and code ranges. If HTTP
-# status code matches failure_status_codes, validator fails.</div>failureStatusCodes: &lt;string>
+# status code matches failure_status_codes, validator fails.</div>failure_status_codes: &lt;string>
 
 <div class="comment"># Header based validations.
 # TODO(manugarg): Add support for specifying multiple success and failure
@@ -36,22 +36,28 @@ name: &lt;string>
 #     success_header: {
 #       name: &#34;Strict-Transport-Security&#34;
 #       value_regex: &#34;max-age=31536000&#34;
-#     }</div>successHeader: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
+#     }</div>success_header: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
 
 <div class="comment"># Failure Header:
-#   If HTTP response headers match failure_header, validation fails.</div>failureHeader: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
+#   If HTTP response headers match failure_header, validation fails.</div>failure_header: &lt;<a href="../validators#cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header</a>>
+
+<div class="comment"># Last Modified Difference:
+#   If specified, HTTP response&#39;s Last-Modified header is checked to be
+#   within the specified time difference from the current time. Example:
+#     max_last_modified_diff_sec: 3600
+#   This will check that the Last-Modified header is within the last hour.</div>max_last_modified_diff_sec: &lt;uint64>
 
 </pre><h3 id="cloudprober_validators_http_Validator_Header">cloudprober.validators.http.Validator.Header <a class="anchor" href="#cloudprober_validators_http_Validator_Header">#</a></h3>
 <pre class="protodoc">
 
 <div class="comment"># Header name to look for</div>name: &lt;string>
 
-<div class="comment"># Header value to match. If omited - check for header existence</div>valueRegex: &lt;string>
+<div class="comment"># Header value to match. If omited - check for header existence</div>value_regex: &lt;string>
 
 </pre><h3 id="cloudprober_validators_integrity_Validator">cloudprober.validators.integrity.Validator <a class="anchor" href="#cloudprober_validators_integrity_Validator">#</a></h3>
 <pre class="protodoc">
 
-[patternString &lt;string&gt; | patternNumBytes &lt;int32&gt;]: &lt;oneof>
+[pattern_string &lt;string&gt; | pattern_num_bytes &lt;int32&gt;]: &lt;oneof>
 
 </pre><h3 id="cloudprober_validators_json_Validator">cloudprober.validators.json.Validator <a class="anchor" href="#cloudprober_validators_json_Validator">#</a></h3>
 <pre class="protodoc">
@@ -59,6 +65,6 @@ name: &lt;string>
 <div class="comment"># If jq filter is specified, validator passes only if applying jq_filter to
 # the probe output, e.g. HTTP API response, results in &#39;true&#39; boolean.
 # See the following test file for some examples:
-# https://github.com/cloudprober/cloudprober/blob/master/validators/json/json_test.go</div>jqFilter: &lt;string>
+# https://github.com/cloudprober/cloudprober/blob/master/validators/json/json_test.go</div>jq_filter: &lt;string>
 
 </pre>

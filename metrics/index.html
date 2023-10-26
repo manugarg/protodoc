@@ -12,31 +12,31 @@
 </style><h3 id="cloudprober_metrics_Dist">cloudprober.metrics.Dist <a class="anchor" href="#cloudprober_metrics_Dist">#</a></h3>
 <pre class="protodoc">
 
-[explicitBuckets &lt;string&gt; | exponentialBuckets &lt;<a href="../metrics#cloudprober_metrics_ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
+[explicit_buckets &lt;string&gt; | exponential_buckets &lt;<a href="../metrics#cloudprober_metrics_ExponentialBuckets">cloudprober.metrics.ExponentialBuckets</a>&gt;]: &lt;oneof>
 
 </pre><h3 id="cloudprober_metrics_ExponentialBuckets">cloudprober.metrics.ExponentialBuckets <a class="anchor" href="#cloudprober_metrics_ExponentialBuckets">#</a></h3>
 <pre class="protodoc">
 
-scaleFactor: &lt;float>
+scale_factor: &lt;float>
 
 base: &lt;float>
 
-numBuckets: &lt;uint32>
+num_buckets: &lt;uint32>
 
 </pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions">#</a></h3>
 <pre class="protodoc">
 
-metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
+metrics_kind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 
 <div class="comment"># Additional labels (comma-separated) to attach to the output metrics, e.g.
 # &#34;region=us-east1,zone=us-east1-d&#34;. ptype=&#34;external&#34; and probe=&#34;&lt;probeName&gt;&#34;
-# are attached automatically.</div>additionalLabels: &lt;string>
+# are attached automatically.</div>additional_labels: &lt;string>
 
 <div class="comment"># Whether to aggregate metrics in Cloudprober. If enabled, Cloudprober
 # aggregates the metrics returned by the external probe process -- external
 # probe process should return metrics only since the last probe run.
 # Note that this option is mutually exclusive with GAUGE metrics and
-# cloudprober will fail during initialization if both options are enabled.</div>aggregateInCloudprober: &lt;bool> | default: false
+# cloudprober will fail during initialization if both options are enabled.</div>aggregate_in_cloudprober: &lt;bool> | default: false
 
 <div class="comment"># Metrics that should be treated as distributions. These metrics are exported
 # by the external probe program as comma-separated list of values, for
@@ -48,7 +48,7 @@ metricsKind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 #   value {
 #     explicit_buckets: &#34;1,2,4,8,16,32,64,128,256&#34;
 #   }
-# }</div>distMetric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
+# }</div>dist_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
 
 </pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">#</a></h3>
 <pre class="protodoc">
