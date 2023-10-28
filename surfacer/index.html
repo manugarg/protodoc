@@ -72,7 +72,8 @@ ignore_metrics_with_name: &lt;string>
 # However, it should not be noticeable unless you&#39;re producing large number
 # of metrics (say &gt; 10000 metrics per second).</div>export_as_gauge: &lt;bool>
 
-[prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
+<div class="comment"># Matching surfacer specific configuration (one for each type in the above
+# enum)</div>[prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
 &nbsp;file_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_file_SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgres_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_postgres_SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
 &nbsp;pubsub_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatch_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_cloudwatch_SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
 &nbsp;datadog_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_datadog_SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_probestatus_SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
@@ -258,8 +259,8 @@ metrics_buffer_size: &lt;int64> | default: 10000
 </pre><h3 id="cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf <a class="anchor" href="#cloudprober_surfacer_pubsub_SurfacerConf">#</a></h3>
 <pre class="protodoc">
 
-<div class="comment"># GCP project name for pubsub. If not specified and running on GCP,
-# project is used.</div>project: &lt;string>
+<div class="comment"># GCP project name for pubsub. It&#39;s required if not running on GCP,
+# otherwise it&#39;s retrieved from the metadata.</div>project: &lt;string>
 
 <div class="comment"># Pubsub topic name.
 # Default is cloudprober-{hostname}</div>topic_name: &lt;string>
