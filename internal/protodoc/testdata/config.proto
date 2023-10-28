@@ -25,6 +25,7 @@ message ProbeDef {
     // mechanism.
     USER_DEFINED = 99;
   }
+  // Select probe type
   required Type type = 2;
 
   // Interval between two probe runs in milliseconds.
@@ -62,12 +63,17 @@ message ProbeDef {
   // (See a more detailed example at: examples/additional_label/cloudprober.cfg)
   repeated AdditionalLabel additional_label = 14;
 
+    
+  enum UserDefinedProbe {
+    NO_CONFIG = 0;
+    CUSTOM_CONFIG = 1;
+  }
+
+  // Define one probe type
   oneof probe {
     http.ProbeConf http_probe = 20;
     dns.ProbeConf dns_probe = 21;
-    // This field's contents are passed on to the user defined probe, registered
-    // for this probe's name through probes.RegisterUserDefined().
-    string user_defined_probe = 99;
+    UserDefinedProbe user_defined_probe = 22;
   }
 
   // Extensions allow users to to add new probe types (for example, a probe type

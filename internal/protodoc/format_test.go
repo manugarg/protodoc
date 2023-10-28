@@ -109,9 +109,10 @@ func TestFormatOneOf(t *testing.T) {
 		{
 			name: "default",
 			want: &Token{
-				Kind: "oneof",
+				Kind:    "oneof",
+				Comment: "# Define one probe type",
 				TextHTML: `[http_probe &lt;<a href="probes#cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
-&nbsp;user_defined_probe &lt;string&gt;]`,
+&nbsp;user_defined_probe: (NO_CONFIG|CUSTOM_CONFIG)]`,
 			},
 		},
 		{
@@ -120,9 +121,10 @@ func TestFormatOneOf(t *testing.T) {
 				yaml: true,
 			},
 			want: &Token{
-				Kind: "oneof",
+				Kind:    "oneof",
+				Comment: "# Define one probe type",
 				TextHTML: `[http_probe &lt;<a href="probes#cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
-&nbsp;user_defined_probe &lt;string&gt;]`,
+&nbsp;user_defined_probe: (NO_CONFIG|CUSTOM_CONFIG)]`,
 			},
 		},
 		{
@@ -132,9 +134,10 @@ func TestFormatOneOf(t *testing.T) {
 				jsonNamesForYAML: true,
 			},
 			want: &Token{
-				Kind: "oneof",
+				Kind:    "oneof",
+				Comment: "# Define one probe type",
 				TextHTML: `[httpProbe &lt;<a href="probes#cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dnsProbe &lt;<a href="probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
-&nbsp;userDefinedProbe &lt;string&gt;]`,
+&nbsp;userDefinedProbe: (NO_CONFIG|CUSTOM_CONFIG)]`,
 			},
 		},
 		{
@@ -143,10 +146,11 @@ func TestFormatOneOf(t *testing.T) {
 				prefix: "  ",
 			},
 			want: &Token{
-				Kind:   "oneof",
-				Prefix: "  ",
+				Kind:    "oneof",
+				Comment: "  # Define one probe type",
+				Prefix:  "  ",
 				TextHTML: `[http_probe &lt;<a href="probes#cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf</a>&gt; | dns_probe &lt;<a href="probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | 
-&nbsp;&nbsp;&nbsp;user_defined_probe &lt;string&gt;]`,
+&nbsp;&nbsp;&nbsp;user_defined_probe: (NO_CONFIG|CUSTOM_CONFIG)]`,
 			},
 		},
 	}
@@ -181,8 +185,9 @@ func TestFormatEnum(t *testing.T) {
 		{
 			name: "default",
 			want: &Token{
-				Kind: "enum",
-				Text: "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
+				Comment: "# Select probe type",
+				Kind:    "enum",
+				Text:    "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
 			},
 		},
 		{
@@ -191,9 +196,10 @@ func TestFormatEnum(t *testing.T) {
 				prefix: "  ",
 			},
 			want: &Token{
-				Kind:   "enum",
-				Prefix: "  ",
-				Text:   "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
+				Comment: "  # Select probe type",
+				Kind:    "enum",
+				Prefix:  "  ",
+				Text:    "type: (HTTP|TCP|EXTENSION|USER_DEFINED)",
 			},
 		},
 	}
@@ -205,9 +211,10 @@ func TestFormatEnum(t *testing.T) {
 			fld := desc.(protoreflect.FieldDescriptor)
 
 			done := map[string]bool{}
-			assert.Equal(t, tt.want, fieldToToken(fld, tt.f, &done))
-
-			assert.Equal(t, tt.want, formatEnum(fld.Enum(), "type", tt.f))
+			assert.Equal(t, tt.want, fieldToToken(fld, tt.f, &done), "fieldToToken")
+			wantEnumToken := *tt.want
+			wantEnumToken.Comment = ""
+			assert.Equal(t, &wantEnumToken, formatEnum(fld.Enum(), "type", tt.f))
 		})
 	}
 }
