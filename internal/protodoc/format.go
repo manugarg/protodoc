@@ -27,7 +27,7 @@ import (
 
 var homeURL = flag.String("home_url", "", "Home URL for the documentation.")
 
-func formatComment(fld protoreflect.FieldDescriptor, f Formatter) string {
+func formatComment(fld protoreflect.Descriptor, f Formatter) string {
 	ff, err := Files.FindDescriptorByName(fld.FullName())
 	if err != nil {
 		panic(err)
@@ -55,7 +55,17 @@ func formatComment(fld protoreflect.FieldDescriptor, f Formatter) string {
 func formatOneOf(ood protoreflect.OneofDescriptor, f Formatter) *Token {
 	oof := ood.Fields()
 	oneofFields := []string{}
+
 	for i := 0; i < oof.Len(); i++ {
+		fld := oof.Get(i)
+
+		if fldEnum := fld.Enum(); fldEnum != nil {
+			// We get token text from finalToken and kind string from enum
+			tok := finalToken(fld, f, true)
+			oneofFields = append(oneofFields, formatEnum(fldEnum, tok.Text, f).Text)
+			continue
+		}
+
 		tok := finalToken(oof.Get(i), f, true)
 		s := fmt.Sprintf("%s &lt;%s&gt;", tok.Text, tok.Kind)
 		if strings.HasPrefix(tok.Kind, "cloudprober.") {
@@ -76,6 +86,7 @@ func formatOneOf(ood protoreflect.OneofDescriptor, f Formatter) *Token {
 		text += tok + " | "
 	}
 	return &Token{
+		Comment:  formatComment(ood, f),
 		Kind:     "oneof",
 		Prefix:   f.prefix,
 		TextHTML: template.HTML(text),
@@ -88,24 +99,15 @@ func formatEnum(ed protoreflect.EnumDescriptor, name string, f Formatter) *Token
 		enumVals = append(enumVals, string(ed.Values().Get(i).Name()))
 	}
 	return &Token{
-		Kind:   "enum",
-		Prefix: f.prefix,
-		Text:   fmt.Sprintf("%s: (%s)", name, strings.Join(enumVals, "|")),
+		Comment: formatComment(ed, f),
+		Kind:    "enum",
+		Prefix:  f.prefix,
+		Text:    fmt.Sprintf("%s: (%s)", name, strings.Join(enumVals, "|")),
 	}
 }
 
 func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[string]bool) *Token {
-	ed := fld.Enum()
-	if ed != nil {
-		name := string(fld.Name())
-		if f.yaml && f.jsonNamesForYAML {
-			name = fld.JSONName()
-		}
-		return formatEnum(ed, name, f)
-	}
-
-	oo := fld.ContainingOneof()
-	if oo != nil {
+	if oo := fld.ContainingOneof(); oo != nil {
 		// In proto3, optional fields have an oneof container.
 		if oo.Fields().Len() == 1 {
 			return finalToken(fld, f, false)
@@ -115,6 +117,16 @@ func fieldToToken(fld protoreflect.FieldDescriptor, f Formatter, done *map[strin
 		}
 		(*done)[string(oo.Name())] = true
 		return formatOneOf(oo, f)
+	}
+
+	if ed := fld.Enum(); ed != nil {
+		name := string(fld.Name())
+		if f.yaml && f.jsonNamesForYAML {
+			name = fld.JSONName()
+		}
+		tok := formatEnum(ed, name, f)
+		tok.Comment = formatComment(fld, f)
+		return tok
 	}
 
 	return finalToken(fld, f, false)
