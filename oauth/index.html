@@ -13,41 +13,41 @@
 <pre class="protodoc">
 
 [file &lt;string&gt; | cmd &lt;string&gt; | 
-&nbsp;gceServiceAccount &lt;string&gt; | k8sLocalToken &lt;bool&gt;]: &lt;oneof>
+&nbsp;gce_service_account &lt;string&gt; | k8s_local_token &lt;bool&gt;]: &lt;oneof>
 
 <div class="comment"># If above sources return JSON tokens with an expiry, we use that info to
 # determine when to refresh tokens and refresh_interval_sec is completely
 # ignored. If above sources return a string, we refresh from the source
 # every 30s by default. To disable this behavior set refresh_interval_sec to
-# zero.</div>refreshIntervalSec: &lt;float>
+# zero.</div>refresh_interval_sec: &lt;float>
 
 </pre><h3 id="cloudprober_oauth_Config">cloudprober.oauth.Config <a class="anchor" href="#cloudprober_oauth_Config">#</a></h3>
 <pre class="protodoc">
 
-[httpRequest &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearerToken &lt;<a href="../oauth#cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
-&nbsp;googleCredentials &lt;<a href="../oauth#cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
+[http_request &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearer_token &lt;<a href="../oauth#cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
+&nbsp;google_credentials &lt;<a href="../oauth#cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
 
 <div class="comment"># How long before the expiry do we refresh. Default is 60 (1m). This applies
 # only to http_request and bearer_token types, and only if token presents
 # expiry in some way.
-# TODO(manugarg): Consider setting default based on probe interval.</div>refreshExpiryBufferSec: &lt;int32>
+# TODO(manugarg): Consider setting default based on probe interval.</div>refresh_expiry_buffer_sec: &lt;int32>
 
 </pre><h3 id="cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials <a class="anchor" href="#cloudprober_oauth_GoogleCredentials">#</a></h3>
 <pre class="protodoc">
 
-jsonFile: &lt;string>
+json_file: &lt;string>
 
 scope: &lt;string>
 
 <div class="comment"># Use encoded JWT directly as access token, instead of implementing the whole
-# OAuth2.0 flow.</div>jwtAsAccessToken: &lt;bool>
+# OAuth2.0 flow.</div>jwt_as_access_token: &lt;bool>
 
 <div class="comment"># Audience works only if jwt_as_access_token is true.</div>audience: &lt;string>
 
 </pre><h3 id="cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest <a class="anchor" href="#cloudprober_oauth_HTTPRequest">#</a></h3>
 <pre class="protodoc">
 
-tokenUrl: &lt;string>
+token_url: &lt;string>
 
 method: &lt;string>
 

@@ -1,0 +1,186 @@
+
+<style>
+.comment {
+    color: #888;
+}
+.protodoc {
+    border: 1px solid #ddd;
+    border-left: 3px solid #e6522c;
+    border-radius: 0;
+    padding-left: 10px;
+}
+</style><h3 id="cloudprober_alerting_AlertConf">cloudprober.alerting.AlertConf <a class="anchor" href="#cloudprober_alerting_AlertConf">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># Name of the alert. Default is to use the probe name. If you have multiple
+# alerts for the same probe, you must specify a name for each alert.</div>name: &lt;string>
+
+<div class="comment"># Condition for the alert. Default is to alert on any failure.
+# Example:
+# # Alert if 6 out of 10 probes fail.
+# condition {
+#   failures: 6
+#   total: 10
+# }</div>condition: &lt;<a href="../alerting#cloudprober_alerting_Condition">cloudprober.alerting.Condition</a>>
+
+<div class="comment"># How to notify in case of alert.</div>notify: &lt;<a href="../alerting#cloudprober_alerting_NotifyConfig">cloudprober.alerting.NotifyConfig</a>>
+
+<div class="comment"># Dashboard URL template.
+# Default: http://localhost:9313/status?probe=@probe@</div>dashboard_url_template: &lt;string>
+
+playbook_url_template: &lt;string>
+
+<div class="comment"># Default: Cloudprober alert &#34;@alert@&#34; for &#34;@target@&#34;</div>summary_template: &lt;string>
+
+<div class="comment"># Default:
+# Cloudprober alert &#34;@alert@&#34; for &#34;@target@&#34;:
+# Failures: @failures@ out of @total@ probes
+# Failing since: @since@
+# Probe: @probe@
+# Dashboard: @dashboard_url@
+# Playbook: @playbook_url@</div>details_template: &lt;string>
+
+<div class="comment"># Key values to be included in the alert. These fields are expanded
+# using the same template expansion rules as summary_template and
+# details_template (see above).</div>other_info: &lt;<a href="../alerting#cloudprober_alerting_AlertConf_OtherInfoEntry">cloudprober.alerting.AlertConf.OtherInfoEntry</a>>
+
+severity: (UNKNOWN_SEVERITY|CRITICAL|ERROR|WARNING|INFO): &lt;enum>
+
+<div class="comment"># How often to repeat notification for the same alert. Default is 1hr.
+# To disable any kind of notification throttling, set this to 0.</div>repeat_interval_sec: &lt;int32>
+
+</pre><h3 id="cloudprober_alerting_AlertConf_OtherInfoEntry">cloudprober.alerting.AlertConf.OtherInfoEntry <a class="anchor" href="#cloudprober_alerting_AlertConf_OtherInfoEntry">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre><h3 id="cloudprober_alerting_Condition">cloudprober.alerting.Condition <a class="anchor" href="#cloudprober_alerting_Condition">#</a></h3>
+<pre class="protodoc">
+
+failures: &lt;int32>
+
+total: &lt;int32>
+
+</pre><h3 id="cloudprober_alerting_Email">cloudprober.alerting.Email <a class="anchor" href="#cloudprober_alerting_Email">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># Email addresses to send the alert to.</div>to: &lt;string>
+
+<div class="comment"># From address in the alert email.
+# If not set, defaults to the value of smtp_user if smtp_user is set,
+# otherwise defaults to cloudprober-alert@&lt;hostname&gt;.</div>from: &lt;string>
+
+<div class="comment"># Default: Environment variable SMTP_SERVER </div>smtp_server: &lt;string>
+
+<div class="comment"># Default: Environment variable SMTP_USERNAME</div>smtp_username: &lt;string>
+
+<div class="comment"># Default: Environment variable SMTP_PASSWORD</div>smtp_password: &lt;string>
+
+</pre><h3 id="cloudprober_alerting_NotifyConfig">cloudprober.alerting.NotifyConfig <a class="anchor" href="#cloudprober_alerting_NotifyConfig">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># Command to run when alert is fired. You can use this command to do
+# various things, e.g.:
+#  - Send a notification using a method not supported by Cloudprober.
+#  - Collect more information, e.g. send mtr report on ping failures.
+#  - Attempt fix the issue, e.g. restart a pod or clear cache.
+#
+# In the command line following fields are substituted:
+#  @alert@: Alert name
+#  @probe@: Probe name
+#  @target@: Target name, or target and port if port is specified.
+#  @target.label.&lt;label&gt;@: Label &lt;label&gt; value, e.g. target.label.role.
+#  @failures@: Count of failures.
+#  @total@: Out of.
+#  @since@: Time since the alert condition started.
+#  @json@: JSON representation of the alert fields.
+#
+# For example, if you want to send an email when an alert is fired, you can
+# use the following command:
+# command: &#34;/usr/bin/mail -s &#39;Alert @alert@ fired for @target@&#39; manu@a.b&#34;</div>command: &lt;string>
+
+<div class="comment"># Email notification configuration.</div>email: &lt;<a href="../alerting#cloudprober_alerting_Email">cloudprober.alerting.Email</a>>
+
+<div class="comment"># PagerDuty configuration.</div>pager_duty: &lt;<a href="../alerting#cloudprober_alerting_PagerDuty">cloudprober.alerting.PagerDuty</a>>
+
+<div class="comment"># Slack configuration.</div>slack: &lt;<a href="../alerting#cloudprober_alerting_Slack">cloudprober.alerting.Slack</a>>
+
+<div class="comment"># Opsgenie configuration.</div>opsgenie: &lt;<a href="../alerting#cloudprober_alerting_Opsgenie">cloudprober.alerting.Opsgenie</a>>
+
+<div class="comment"># Notify using an HTTP request. HTTP request fields are expanded using the
+# same template expansion rules as &#34;command&#34; above:
+# For example, to send a notification using rest API:
+#  http_notify {
+#    url: &#34;http://localhost:8080/alert&#34;
+#    method: POST
+#    header {
+#      key: &#34;Authorization&#34;
+#      value: &#34;Bearer {{env &#39;AUTH_TOKEN&#39;}}&#34;
+#    }
+#    data: &#34;{\&#34;message\&#34;: \&#34;@alert@ fired for @target@\&#34;, \&#34;details\&#34;: \&#34;name\&#34;}&#34;
+#  }</div>http_notify: &lt;<a href="../utils#cloudprober_utils_httpreq_HTTPRequest">cloudprober.utils.httpreq.HTTPRequest</a>>
+
+</pre><h3 id="cloudprober_alerting_Opsgenie">cloudprober.alerting.Opsgenie <a class="anchor" href="#cloudprober_alerting_Opsgenie">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># API key to access Opsgenie. It&#39;s usually tied to a team and is
+# obtained by creating a new API integration or using an existing one.</div>api_key: &lt;string>
+
+<div class="comment"># Environment variable name Default: OPSGENIE_API_KEY</div>api_key_env_var: &lt;string>
+
+<div class="comment"># Opsgenie responders. Opsgenie uses the responders to route the alerts if
+# API key doesn&#39;t belong to a team integration.
+# Example:
+#  responders {
+#    id: &#34;4513b7ea-3b91-438f-b7e4-e3e54af9147c&#34;
+#    type: TEAM
+#  }</div>responders: &lt;<a href="../alerting#cloudprober_alerting_Opsgenie_Responder">cloudprober.alerting.Opsgenie.Responder</a>>
+
+<div class="comment"># Opsgenie API URL.
+# Default: https://api.opsgenie.com/v2/alerts</div>api_url: &lt;string>
+
+<div class="comment"># Whether to send resolve notifications or not. Default is to send resolve
+# notifications.</div>disable_send_resolved: &lt;bool>
+
+</pre><h3 id="cloudprober_alerting_Opsgenie_Responder">cloudprober.alerting.Opsgenie.Responder <a class="anchor" href="#cloudprober_alerting_Opsgenie_Responder">#</a></h3>
+<pre class="protodoc">
+
+[id &lt;string&gt; | name &lt;string&gt;]: &lt;oneof>
+
+type: (UNKNOWN_RESPONDER|USER|TEAM|ESCALATION|SCHEDULE): &lt;enum>
+
+</pre><h3 id="cloudprober_alerting_PagerDuty">cloudprober.alerting.PagerDuty <a class="anchor" href="#cloudprober_alerting_PagerDuty">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># PagerDuty Routing Key.
+# The routing key is used to authenticate to PagerDuty and is tied to a
+# service. You can obtain the routing key from the service page, under the
+# integrations tab.
+# Note: set either routing_key or routing_key_env_var. routing_key
+# takes precedence over routing_key_env_var.</div>routing_key: &lt;string>
+
+<div class="comment"># The environment variable containing the pagerduty routing key.
+# Default: PAGERDUTY_ROUTING_KEY;</div>routing_key_env_var: &lt;string>
+
+<div class="comment"># PagerDuty API URL.
+# Used to overwrite the default PagerDuty API URL.</div>api_url: &lt;string>
+
+<div class="comment"># Whether to send resolve notifications or not. Default is to send resolve
+# notifications.</div>disable_send_resolved: &lt;bool>
+
+</pre><h3 id="cloudprober_alerting_Slack">cloudprober.alerting.Slack <a class="anchor" href="#cloudprober_alerting_Slack">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># Webhook URL
+# The Slack notifications use a webhook URL to send the notifications to
+# a Slack channel. The webhook URL can be found in the Slack console under
+# the &#34;Incoming Webhooks&#34; section.
+# https://api.slack.com/messaging/webhooks
+# Note: set either webhook_url or webhook_url_env_var. webhook_url
+# takes precedence over webhook_url_env_var.</div>webhook_url: &lt;string>
+
+<div class="comment"># The environment variable that is used to contain the slack webhook URL.</div>webhook_url_env_var: &lt;string>
+
+</pre>
