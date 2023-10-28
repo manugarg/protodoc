@@ -99,10 +99,9 @@ func formatEnum(ed protoreflect.EnumDescriptor, name string, f Formatter) *Token
 		enumVals = append(enumVals, string(ed.Values().Get(i).Name()))
 	}
 	return &Token{
-		Comment: formatComment(ed, f),
-		Kind:    "enum",
-		Prefix:  f.prefix,
-		Text:    fmt.Sprintf("%s: (%s)", name, strings.Join(enumVals, "|")),
+		Kind:   "enum",
+		Prefix: f.prefix,
+		Text:   fmt.Sprintf("%s: (%s)", name, strings.Join(enumVals, "|")),
 	}
 }
 
