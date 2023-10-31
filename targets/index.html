@@ -44,7 +44,11 @@
 #   labelSelector: &#34;role=frontend&#34; # label role=frontend
 #   labelSelector: &#34;!canary&#34;       # canary label doesn&#39;t exist</div>labelSelector: &lt;string>
 
-[services &lt;string&gt; | endpoints &lt;string&gt; | 
+<div class="comment"># Which resources to target. If value is not empty (&#34;&#34;), we use it as a
+# regex for resource names.
+# Example:
+#   services: &#34;&#34;             // All services.
+#   endpoints: &#34;.*-service&#34;  // Endpoints ending with &#34;service&#34;.</div>[services &lt;string&gt; | endpoints &lt;string&gt; | 
 &nbsp;ingresses &lt;string&gt; | pods &lt;string&gt;]: &lt;oneof>
 
 <div class="comment"># portFilter can be used to filter resources by port name. This is useful

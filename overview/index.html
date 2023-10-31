@@ -58,7 +58,8 @@
 <div class="comment">    # Validators for this probe. Validators are run on the data returned by the
     # probe. See https://cloudprober.org/docs/how-to/validators/ for more info.</div>    validator: &lt;<a href="../validators#cloudprober_validators_Validator">cloudprober.validators.Validator</a>>
 
-    [source_ip &lt;string&gt; | source_interface &lt;string&gt;]: &lt;oneof>
+<div class="comment">    # Set the source IP to send packets from, either by providing an IP address
+    # directly, or a network interface.</div>    [source_ip &lt;string&gt; | source_interface &lt;string&gt;]: &lt;oneof>
 
     ip_version: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 
@@ -180,7 +181,8 @@
     # However, it should not be noticeable unless you&#39;re producing large number
     # of metrics (say &gt; 10000 metrics per second).</div>    export_as_gauge: &lt;bool>
 
-    [prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
+<div class="comment">    # Matching surfacer specific configuration (one for each type in the above
+    # enum)</div>    [prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_file_SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgres_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_postgres_SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pubsub_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatch_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_cloudwatch_SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datadog_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_datadog_SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_probestatus_SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
