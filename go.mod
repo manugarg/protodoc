@@ -7,7 +7,7 @@ require (
 	github.com/cloudprober/cloudprober v0.12.8
 	github.com/jhump/protoreflect v1.15.2
 	github.com/stretchr/testify v1.8.4
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
