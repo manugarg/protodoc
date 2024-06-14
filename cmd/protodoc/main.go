@@ -142,10 +142,8 @@ func main() {
 	writeDoc("index", []*msgTokens{mTokens}, l)
 
 	// Package level documentation
-	if *extraMsgs != "" {
-		for _, msg := range strings.Split(*extraMsgs, ",") {
-			nextMessageNames = append(nextMessageNames, protoreflect.FullName(msg))
-		}
+	for _, msg := range strings.Split(*extraMsgs, ",") {
+		nextMessageNames = append(nextMessageNames, protoreflect.FullName(msg))
 	}
 	packagesDocs(nextMessageNames, f, l)
 
