@@ -46,7 +46,8 @@ type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|EXTENSION|USER_DEFINED):
 # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
 # Default timeout is 1s.</div>timeout: &lt;string>
 
-<div class="comment"># Targets for the probe</div>targets: &lt;<a href="../targets#cloudprober_targets_TargetsDef">cloudprober.targets.TargetsDef</a>>
+<div class="comment"># Targets for the probe. Targets are required for all probes except
+# for external, user_defined, and extension probe types.</div>targets: &lt;<a href="../targets#cloudprober_targets_TargetsDef">cloudprober.targets.TargetsDef</a>>
 
 <div class="comment"># Latency distribution. If specified, latency is stored as a distribution.</div>latency_distribution: &lt;<a href="../metrics#cloudprober_metrics_Dist">cloudprober.metrics.Dist</a>>
 
@@ -130,7 +131,50 @@ ip_version: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 # for large deployments, where you may want to use the same prober config
 # everywhere but run this probe only on a subset of machines.</div>run_on: &lt;string>
 
+<div class="comment"># Schedule for the probe. You can use a schedule to specify when a probe
+# should or should not run. This is useful for running probes only during
+# business hours.
+#
+# You can specify multiple schedules. Probe will not run if any of the 
+# &#34;DISABLE&#34; schedules are active. If both &#34;ENABLE&#34; and &#34;DISABLE&#34; schedules
+# overlap, &#34;DISABLE&#34; takes precedence.
+#
+# For example, to disable a probe during weekends and on Tuesday between 7pm
+# and 8pm, e.g. for rollouts:
+#   schdule {
+#     type: DISABLE
+#     start_weekday: FRIDAY
+#     start_time: &#34;20:00&#34;
+#     end_weekday: SUNDAY
+#     end_time: &#34;17:00&#34; 
+#     timezone: &#34;America/New_York&#34;
+#   }
+#   schdule {
+#     type: DISABLE
+#     start_weekday: TUESDAY
+#     start_time: &#34;19:00&#34;
+#     end_weekday: TUESDAY
+#     end_time: &#34;20:00&#34; 
+#     timezone: &#34;America/New_York&#34;
+#   }</div>schedule: &lt;<a href="../probes#cloudprober_probes_Schedule">cloudprober.probes.Schedule</a>>
+
 <div class="comment"># Debug options. Currently only used to enable logging metrics.</div>debug_options: &lt;<a href="../probes#cloudprober_probes_DebugOptions">cloudprober.probes.DebugOptions</a>>
+
+</pre><h3 id="cloudprober_probes_Schedule">cloudprober.probes.Schedule <a class="anchor" href="#cloudprober_probes_Schedule">#</a></h3>
+<pre class="protodoc">
+
+type: (ScheduleType_UNSPECIFIED|ENABLE|DISABLE): &lt;enum>
+
+<div class="comment"># Period start weekday. If not specified, it defaults to EVERYDAY.</div>start_weekday: (EVERYDAY|SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY): &lt;enum>
+
+<div class="comment"># Start time in 24 hour HH:MM format.</div>start_time: &lt;string> | default: 00:00
+
+<div class="comment"># Period end weekday. If not specified, it defaults to EVERYDAY.</div>end_weekday: (EVERYDAY|SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY): &lt;enum>
+
+<div class="comment"># End time in 24 hour HH:MM format.</div>end_time: &lt;string> | default: 23:59
+
+<div class="comment"># Timezone in which the probe should run. If not specified, it defaults to
+# UTC. Example: &#34;America/New_York&#34;</div>timezone: &lt;string> | default: UTC
 
 </pre><h3 id="cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf <a class="anchor" href="#cloudprober_probes_dns_ProbeConf">#</a></h3>
 <pre class="protodoc">
@@ -147,6 +191,22 @@ ip_version: (IP_VERSION_UNSPECIFIED|IPV4|IPV6): &lt;enum>
 # client. Otherwise, we resolve the target first to an IP address.  By
 # default we resolve first if it&#39;s a discovered resource, e.g., a k8s
 # endpoint.</div>resolve_first: &lt;bool>
+
+<div class="comment"># Which DNS protocol is used for resolution.</div>dns_proto: (UDP|TCP|TCP_TLS): &lt;enum>
+
+<div class="comment"># Requests per probe.
+# Number of DNS requests per probe. Requests are executed concurrently and
+# each DNS request contributes to probe results. For example, if you run two
+# requests per probe, &#34;total&#34; counter will be incremented by 2.</div>requests_per_probe: &lt;int32> | default: 1
+
+<div class="comment"># How long to wait between two requests to the same target. Only relevant
+# if requests_per_probe is also configured.
+#
+# This value should be less than (interval - timeout) / requests_per_probe.
+# This is to ensure that all requests are executed within one probe interval
+# and all of them get sufficient time. For example, if probe interval is 2s,
+# timeout is 1s, and requests_per_probe is 10,  requests_interval_msec
+# should be less than 10ms.</div>requests_interval_msec: &lt;int32> | default: 0
 
 </pre><h3 id="cloudprober_probes_external_ProbeConf">cloudprober.probes.external.ProbeConf <a class="anchor" href="#cloudprober_probes_external_ProbeConf">#</a></h3>
 <pre class="protodoc">
@@ -174,6 +234,12 @@ options: &lt;<a href="../probes#cloudprober_probes_external_ProbeConf_Option">cl
 # var1 value1 (for example: total_errors 589)</div>output_as_metrics: &lt;bool> | default: true
 
 output_metrics_options: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</a>>
+
+<div class="comment"># (Only applicable to ONCE mode). Disable streaming output metrics. By
+# default, external probe will export output metrics as they are available
+# on the stdout. If this option is set to true, output metrics will be
+# exported only after the probe has completed.
+# New in version 0.13.4. This was true by default in previous versions. </div>disable_streaming_output_metrics: &lt;bool> | default: false
 
 </pre><h3 id="cloudprober_probes_external_ProbeConf_EnvVarEntry">cloudprober.probes.external.ProbeConf.EnvVarEntry <a class="anchor" href="#cloudprober_probes_external_ProbeConf_EnvVarEntry">#</a></h3>
 <pre class="protodoc">
@@ -229,9 +295,9 @@ method: (ECHO|READ|WRITE|HEALTH_CHECK|GENERIC): &lt;enum>
 
 <div class="comment"># Request definition for the GENERIC method.</div>request: &lt;<a href="../probes#cloudprober_probes_grpc_GenericRequest">cloudprober.probes.grpc.GenericRequest</a>>
 
-num_conns: &lt;int32> | default: 2
-
-keep_alive: &lt;bool> | default: true
+<div class="comment"># Number of connections to use. Default is 2 for ECHO, READ and WRITE
+# methods for backward compatibility. For HEALTH_CHECK and GENERIC, default
+# is 1.</div>num_conns: &lt;int32>
 
 <div class="comment"># If connect_timeout is not specified, reuse probe timeout.</div>connect_timeout_msec: &lt;int32>
 
@@ -260,22 +326,29 @@ value: &lt;string>
 </pre><h3 id="cloudprober_probes_http_ProbeConf">cloudprober.probes.http.ProbeConf <a class="anchor" href="#cloudprober_probes_http_ProbeConf">#</a></h3>
 <pre class="protodoc">
 
-<div class="comment"># HTTP request scheme. protocol is deprecated, use scheme instead.</div>[protocol: (HTTP|HTTPS) | scheme: (HTTP|HTTPS)]: &lt;oneof>
+<div class="comment"># HTTP request scheme (Corresponding target label: &#34;scheme&#34;). If not set, we
+# use taget&#39;s &#39;scheme&#39; label if present.
+# Note: protocol is deprecated, use scheme instead.</div>[protocol: (HTTP|HTTPS) | scheme: (HTTP|HTTPS)]: &lt;oneof>
 
-<div class="comment"># Relative URL (to append to all targets). Must begin with &#39;/&#39;</div>relative_url: &lt;string>
+<div class="comment"># Relative URL (Corresponding target label: &#34;path&#34;). We construct the final
+# URL like this:
+# &lt;scheme&gt;://&lt;host&gt;:&lt;port&gt;/&lt;relative_url&gt;.
+#
+# Note that the relative_url should start with a &#39;/&#39;.</div>relative_url: &lt;string>
 
-<div class="comment"># Port for HTTP requests. If not specfied, port is selected in the following
-# order:
-#  - If port is provided by the targets (e.g. kubernetes endpoint or
-#    service), that port is used.
-#  - 80 for HTTP and 443 for HTTPS.</div>port: &lt;int32>
+<div class="comment"># Port for HTTP requests (Corresponding target field: port)
+# Default is to use the scheme specific port, but if this field is not
+# set and discovered target has a port (e.g., k8s services, ingresses),
+# we use target&#39;s port.</div>port: &lt;int32>
 
-<div class="comment"># Whether to resolve the target before making the request. If set to false,
-# we hand over the target and relative_url directly to the golang&#39;s HTTP
-# module, Otherwise, we resolve the target first to an IP address and
-# make a request using that while passing target name as Host header.
-# By default we resolve first if it&#39;s a discovered resource, e.g., a k8s
-# endpoint.</div>resolve_first: &lt;bool>
+<div class="comment"># Whether to resolve the target before making the request. If set to true,
+# we resolve the target first to an IP address and make a request using
+# that while passing target name (or &#39;host&#39; label if present) as Host
+# header.
+#
+# This behavior is automatic for discovered targets if they have an IP
+# address associated with them. Usually you don&#39;t need to worry about this
+# field and you can left it unspecified. We&#39;ll ty to do the right thing.</div>resolve_first: &lt;bool>
 
 <div class="comment"># Export response (body) count as a metric</div>export_response_as_metrics: &lt;bool> | default: false
 
@@ -326,12 +399,25 @@ header: &lt;<a href="../probes#cloudprober_probes_http_ProbeConf_HeaderEntry">cl
 
 <div class="comment"># Proxy URL, e.g. http://myproxy:3128</div>proxy_url: &lt;string>
 
+<div class="comment"># HTTP proxy connect headers. These headers are passed on to the CONNECT
+# requests to the HTTP proxies. Note that CONNECT method is used to fetch
+# HTTPS URLs via HTTP proxies.</div>proxy_connect_header: &lt;<a href="../probes#cloudprober_probes_http_ProbeConf_ProxyConnectHeaderEntry">cloudprober.probes.http.ProbeConf.ProxyConnectHeaderEntry</a>>
+
 <div class="comment"># User agent. Default user agent is Go&#39;s default user agent.</div>user_agent: &lt;string>
 
 <div class="comment"># Maximum idle connections to keep alive</div>max_idle_conns: &lt;int32> | default: 256
 
 <div class="comment"># The maximum amount of redirects the HTTP client will follow.
 # To disable redirects, use max_redirects: 0.</div>max_redirects: &lt;int32>
+
+<div class="comment"># Add latency breakdown to probe results. This will add latency breakdown
+# by various stages of the request processing, e.g., DNS resolution, TCP
+# connection, TLS handshake, etc. You can select stages individually or
+# specify &#34;ALL_STAGES&#34; to get breakdown for all stages.
+#
+# Example:
+#   latency_breakdown: [ ALL_STAGES ]
+#   latency_breakdown: [ DNS_LATENCY, CONNECT_LATENCY, TLS_HANDSHAKE_LATENCY ]</div>latency_breakdown: (NO_BREAKDOWN|ALL_STAGES|DNS_LATENCY|CONNECT_LATENCY|TLS_HANDSHAKE_LATENCY|REQ_WRITE_LATENCY|FIRST_BYTE_LATENCY): &lt;enum>
 
 <div class="comment"># Interval between targets.</div>interval_between_targets_msec: &lt;int32> | default: 10
 
@@ -357,6 +443,13 @@ name: &lt;string>
 value: &lt;string>
 
 </pre><h3 id="cloudprober_probes_http_ProbeConf_HeaderEntry">cloudprober.probes.http.ProbeConf.HeaderEntry <a class="anchor" href="#cloudprober_probes_http_ProbeConf_HeaderEntry">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre><h3 id="cloudprober_probes_http_ProbeConf_ProxyConnectHeaderEntry">cloudprober.probes.http.ProbeConf.ProxyConnectHeaderEntry <a class="anchor" href="#cloudprober_probes_http_ProbeConf_ProxyConnectHeaderEntry">#</a></h3>
 <pre class="protodoc">
 
 key: &lt;string>

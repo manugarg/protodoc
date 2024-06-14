@@ -24,7 +24,7 @@ value: &lt;string>
 # should match with the name that you used while registering the user defined
 # surfacer.</div>name: &lt;string>
 
-type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|USER_DEFINED): &lt;enum>
+type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|OTEL|USER_DEFINED): &lt;enum>
 
 <div class="comment"># How many metrics entries (EventMetrics) to buffer. This is the buffer
 # between incoming metrics and the metrics that are being processed. Default
@@ -56,13 +56,13 @@ type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBE
 #
 # For efficiency reasons, filtering by metric name has to be implemented by
 # individual surfacers (while going through metrics within an EventMetrics).
-# Currently following surfacers implement it:
-#     CLOUDWATCH, PROMETHEUS, STACKDRIVER</div>allow_metrics_with_name: &lt;string>
+# As FILE and PUBSUB surfacers export eventmetrics as is, they don&#39;t support
+# this option.</div>allow_metrics_with_name: &lt;string>
 
 ignore_metrics_with_name: &lt;string>
 
-<div class="comment"># Whether to add failure metric or not. For stackdriver surfacer, we add
-# failure metric by default.</div>add_failure_metric: &lt;bool>
+<div class="comment"># Whether to add failure metric or not. This option is enabled by default
+# for all surfacers except FILE and PUBSUB.</div>add_failure_metric: &lt;bool>
 
 <div class="comment"># If set to true, cloudprober will export all metrics as gauge metrics. Note
 # that cloudprober inherently generates only cumulative metrics. To create
@@ -72,12 +72,22 @@ ignore_metrics_with_name: &lt;string>
 # However, it should not be noticeable unless you&#39;re producing large number
 # of metrics (say &gt; 10000 metrics per second).</div>export_as_gauge: &lt;bool>
 
+<div class="comment"># Latency metric name pattern, used to identify latency metrics, and add
+# EventMetric&#39;s LatencyUnit to it.</div>latency_metric_pattern: &lt;string> | default: ^(.+_|)latency$
+
+<div class="comment"># Environment variable containing additional labels to be added to all
+# metrics exported by this surfacer.
+# e.g. &#34;CLOUDPROBER_ADDITIONAL_LABELS=env=prod,app=identity-service&#34;
+# You can disable this feature by setting this field to an empty string.
+# Note: These additional labels have no effect if metrics already have the
+# same label.</div>additional_labels_env_var: &lt;string> | default: CLOUDPROBER_ADDITIONAL_LABELS
+
 <div class="comment"># Matching surfacer specific configuration (one for each type in the above
 # enum)</div>[prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
 &nbsp;file_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_file_SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgres_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_postgres_SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
 &nbsp;pubsub_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatch_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_cloudwatch_SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
 &nbsp;datadog_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_datadog_SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_probestatus_SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
-&nbsp;bigquery_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_bigquery_SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
+&nbsp;bigquery_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_bigquery_SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt; | otel_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_otel_SurfacerConf">cloudprober.surfacer.otel.SurfacerConf</a>&gt;]: &lt;oneof>
 
 </pre><h3 id="cloudprober_surfacer_bigquery_BQColumn">cloudprober.surfacer.bigquery.BQColumn <a class="anchor" href="#cloudprober_surfacer_bigquery_BQColumn">#</a></h3>
 <pre class="protodoc">
@@ -186,6 +196,68 @@ prefix: &lt;string> | default: cloudprober
 
 <div class="comment"># Compress data before writing to the file.</div>compression_enabled: &lt;bool> | default: false
 
+</pre><h3 id="cloudprober_surfacer_otel_GRPCExporter">cloudprober.surfacer.otel.GRPCExporter <a class="anchor" href="#cloudprober_surfacer_otel_GRPCExporter">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># If no URL is provided, OpenTelemetry SDK will use the environment variable
+# OTEL_EXPORTER_OTLP_METRICS_ENDPOINT or OTEL_EXPORTER_OTLP_ENDPOINT in that
+# preference order.</div>endpoint: &lt;string>
+
+tls_config: &lt;<a href="../tlsconfig#cloudprober_tlsconfig_TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+
+<div class="comment"># HTTP request headers. These can also be set using environment variables.</div>http_header: &lt;<a href="../surfacer#cloudprober_surfacer_otel_GRPCExporter_HttpHeaderEntry">cloudprober.surfacer.otel.GRPCExporter.HttpHeaderEntry</a>>
+
+<div class="comment"># Compression algorithm to use for gRPC requests.</div>compression: (NONE|GZIP): &lt;enum>
+
+<div class="comment"># Whether to use insecure gRPC connection.</div>insecure: &lt;bool>
+
+</pre><h3 id="cloudprober_surfacer_otel_GRPCExporter_HttpHeaderEntry">cloudprober.surfacer.otel.GRPCExporter.HttpHeaderEntry <a class="anchor" href="#cloudprober_surfacer_otel_GRPCExporter_HttpHeaderEntry">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre><h3 id="cloudprober_surfacer_otel_HTTPExporter">cloudprober.surfacer.otel.HTTPExporter <a class="anchor" href="#cloudprober_surfacer_otel_HTTPExporter">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># If no URL is provided, OpenTelemetry SDK will use the environment variable
+# OTEL_EXPORTER_OTLP_METRICS_ENDPOINT or OTEL_EXPORTER_OTLP_ENDPOINT in that
+# preference order.</div>endpoint_url: &lt;string>
+
+tls_config: &lt;<a href="../tlsconfig#cloudprober_tlsconfig_TLSConfig">cloudprober.tlsconfig.TLSConfig</a>>
+
+<div class="comment"># HTTP request headers. These can also be set using environment variables.</div>http_header: &lt;<a href="../surfacer#cloudprober_surfacer_otel_HTTPExporter_HttpHeaderEntry">cloudprober.surfacer.otel.HTTPExporter.HttpHeaderEntry</a>>
+
+<div class="comment"># Compression algorithm to use for HTTP requests.</div>compression: (NONE|GZIP): &lt;enum>
+
+</pre><h3 id="cloudprober_surfacer_otel_HTTPExporter_HttpHeaderEntry">cloudprober.surfacer.otel.HTTPExporter.HttpHeaderEntry <a class="anchor" href="#cloudprober_surfacer_otel_HTTPExporter_HttpHeaderEntry">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
+
+</pre><h3 id="cloudprober_surfacer_otel_SurfacerConf">cloudprober.surfacer.otel.SurfacerConf <a class="anchor" href="#cloudprober_surfacer_otel_SurfacerConf">#</a></h3>
+<pre class="protodoc">
+
+[otlp_http_exporter &lt;<a href="../surfacer#cloudprober_surfacer_otel_HTTPExporter">cloudprober.surfacer.otel.HTTPExporter</a>&gt; | otlp_grpc_exporter &lt;<a href="../surfacer#cloudprober_surfacer_otel_GRPCExporter">cloudprober.surfacer.otel.GRPCExporter</a>&gt;]: &lt;oneof>
+
+<div class="comment"># How often metrics will be exported. Note that metrics are accumulated
+# internally and exported at this interval. Increasing this value will
+# increase the memory usage.</div>export_interval_sec: &lt;int32> | default: 10
+
+<div class="comment"># Prefix to use for metrics. Defaults to &#34;cloudprober_&#34;.</div>metrics_prefix: &lt;string> | default: cloudprober_
+
+resource_attribute: &lt;<a href="../surfacer#cloudprober_surfacer_otel_SurfacerConf_Attribute">cloudprober.surfacer.otel.SurfacerConf.Attribute</a>>
+
+</pre><h3 id="cloudprober_surfacer_otel_SurfacerConf_Attribute">cloudprober.surfacer.otel.SurfacerConf.Attribute <a class="anchor" href="#cloudprober_surfacer_otel_SurfacerConf_Attribute">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
+
 </pre><h3 id="cloudprober_surfacer_postgres_LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn <a class="anchor" href="#cloudprober_surfacer_postgres_LabelToColumn">#</a></h3>
 <pre class="protodoc">
 
@@ -214,6 +286,15 @@ prefix: &lt;string> | default: cloudprober
 # don&#39;t have a mapping will be dropped.</div>label_to_column: &lt;<a href="../surfacer#cloudprober_surfacer_postgres_LabelToColumn">cloudprober.surfacer.postgres.LabelToColumn</a>>
 
 metrics_buffer_size: &lt;int64> | default: 10000
+
+<div class="comment"># The maximum number of metric events will be commited in one transaction at one
+# time. Metrics will be stored locally until this limit is reached. Metrics will
+# be commited  to postgres when the timer expires, or the buffer is full, whichever
+# happens first.</div>metrics_batch_size: &lt;int32> | default: 1
+
+<div class="comment"># The maximum amount of time to hold metrics in the buffer (above).
+# Metrics will be commited  to postgres when the timer expires, or the buffer is full,
+# whichever happens first.</div>batch_timer_sec: &lt;int32> | default: 1
 
 </pre><h3 id="cloudprober_surfacer_probestatus_SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf <a class="anchor" href="#cloudprober_surfacer_probestatus_SurfacerConf">#</a></h3>
 <pre class="protodoc">
@@ -254,7 +335,10 @@ metrics_buffer_size: &lt;int64> | default: 10000
 
 <div class="comment"># Prefix to add to all metric names. For example setting this field to
 # &#34;cloudprober_&#34; will result in metrics with names:
-# cloudprober_total, cloudprober_success, cloudprober_latency, ..</div>metrics_prefix: &lt;string>
+# cloudprober_total, cloudprober_success, cloudprober_latency, ..
+#
+# As it&#39;s typically useful to set this across the deployment, this field can
+# also be set through the command line flag --prometheus_metrics_prefix.</div>metrics_prefix: &lt;string>
 
 </pre><h3 id="cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf <a class="anchor" href="#cloudprober_surfacer_pubsub_SurfacerConf">#</a></h3>
 <pre class="protodoc">
@@ -294,6 +378,7 @@ metrics_buffer_size: &lt;int64> | default: 10000
 # processing is paused while serving data to Stackdriver. This buffer is to
 # make writes to Stackdriver surfacer non-blocking.</div>metrics_buffer_size: &lt;int64> | default: 10000
 
-metrics_prefix: (NONE|PROBE|PTYPE_PROBE): &lt;enum>
+<div class="comment"># Metric prefix to use for stackdriver metrics. If not specified, default
+# is PTYPE_PROBE.</div>metrics_prefix: (NONE|PROBE|PTYPE_PROBE): &lt;enum>
 
 </pre>

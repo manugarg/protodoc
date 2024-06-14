@@ -33,7 +33,8 @@
     # Only one of &#34;timeout&#34; and &#34;timeout_msec&#34; should be defined.
     # Default timeout is 1s.</div>    timeout: &lt;string>
 
-<div class="comment">    # Targets for the probe</div>    targets: &lt;<a href="../targets#cloudprober_targets_TargetsDef">cloudprober.targets.TargetsDef</a>>
+<div class="comment">    # Targets for the probe. Targets are required for all probes except
+    # for external, user_defined, and extension probe types.</div>    targets: &lt;<a href="../targets#cloudprober_targets_TargetsDef">cloudprober.targets.TargetsDef</a>>
 
 <div class="comment">    # Latency distribution. If specified, latency is stored as a distribution.</div>    latency_distribution: &lt;<a href="../metrics#cloudprober_metrics_Dist">cloudprober.metrics.Dist</a>>
 
@@ -117,6 +118,33 @@
     # for large deployments, where you may want to use the same prober config
     # everywhere but run this probe only on a subset of machines.</div>    run_on: &lt;string>
 
+<div class="comment">    # Schedule for the probe. You can use a schedule to specify when a probe
+    # should or should not run. This is useful for running probes only during
+    # business hours.
+    #
+    # You can specify multiple schedules. Probe will not run if any of the 
+    # &#34;DISABLE&#34; schedules are active. If both &#34;ENABLE&#34; and &#34;DISABLE&#34; schedules
+    # overlap, &#34;DISABLE&#34; takes precedence.
+    #
+    # For example, to disable a probe during weekends and on Tuesday between 7pm
+    # and 8pm, e.g. for rollouts:
+    #   schdule {
+    #     type: DISABLE
+    #     start_weekday: FRIDAY
+    #     start_time: &#34;20:00&#34;
+    #     end_weekday: SUNDAY
+    #     end_time: &#34;17:00&#34; 
+    #     timezone: &#34;America/New_York&#34;
+    #   }
+    #   schdule {
+    #     type: DISABLE
+    #     start_weekday: TUESDAY
+    #     start_time: &#34;19:00&#34;
+    #     end_weekday: TUESDAY
+    #     end_time: &#34;20:00&#34; 
+    #     timezone: &#34;America/New_York&#34;
+    #   }</div>    schedule: &lt;<a href="../probes#cloudprober_probes_Schedule">cloudprober.probes.Schedule</a>>
+
 <div class="comment">    # Debug options. Currently only used to enable logging metrics.</div>    debug_options: &lt;<a href="../probes#cloudprober_probes_DebugOptions">cloudprober.probes.DebugOptions</a>>
 
 <div class="comment"># Surfacers are used to export probe results for further processing.
@@ -133,7 +161,7 @@
     # should match with the name that you used while registering the user defined
     # surfacer.</div>  - name: &lt;string>
 
-    type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|USER_DEFINED): &lt;enum>
+    type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|OTEL|USER_DEFINED): &lt;enum>
 
 <div class="comment">    # How many metrics entries (EventMetrics) to buffer. This is the buffer
     # between incoming metrics and the metrics that are being processed. Default
@@ -165,13 +193,13 @@
     #
     # For efficiency reasons, filtering by metric name has to be implemented by
     # individual surfacers (while going through metrics within an EventMetrics).
-    # Currently following surfacers implement it:
-    #     CLOUDWATCH, PROMETHEUS, STACKDRIVER</div>    allow_metrics_with_name: &lt;string>
+    # As FILE and PUBSUB surfacers export eventmetrics as is, they don&#39;t support
+    # this option.</div>    allow_metrics_with_name: &lt;string>
 
     ignore_metrics_with_name: &lt;string>
 
-<div class="comment">    # Whether to add failure metric or not. For stackdriver surfacer, we add
-    # failure metric by default.</div>    add_failure_metric: &lt;bool>
+<div class="comment">    # Whether to add failure metric or not. This option is enabled by default
+    # for all surfacers except FILE and PUBSUB.</div>    add_failure_metric: &lt;bool>
 
 <div class="comment">    # If set to true, cloudprober will export all metrics as gauge metrics. Note
     # that cloudprober inherently generates only cumulative metrics. To create
@@ -181,12 +209,22 @@
     # However, it should not be noticeable unless you&#39;re producing large number
     # of metrics (say &gt; 10000 metrics per second).</div>    export_as_gauge: &lt;bool>
 
+<div class="comment">    # Latency metric name pattern, used to identify latency metrics, and add
+    # EventMetric&#39;s LatencyUnit to it.</div>    latency_metric_pattern: &lt;string> | default: ^(.+_|)latency$
+
+<div class="comment">    # Environment variable containing additional labels to be added to all
+    # metrics exported by this surfacer.
+    # e.g. &#34;CLOUDPROBER_ADDITIONAL_LABELS=env=prod,app=identity-service&#34;
+    # You can disable this feature by setting this field to an empty string.
+    # Note: These additional labels have no effect if metrics already have the
+    # same label.</div>    additional_labels_env_var: &lt;string> | default: CLOUDPROBER_ADDITIONAL_LABELS
+
 <div class="comment">    # Matching surfacer specific configuration (one for each type in the above
     # enum)</div>    [prometheus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_prometheus_SurfacerConf">cloudprober.surfacer.prometheus.SurfacerConf</a>&gt; | stackdriver_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_stackdriver_SurfacerConf">cloudprober.surfacer.stackdriver.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_file_SurfacerConf">cloudprober.surfacer.file.SurfacerConf</a>&gt; | postgres_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_postgres_SurfacerConf">cloudprober.surfacer.postgres.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pubsub_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_pubsub_SurfacerConf">cloudprober.surfacer.pubsub.SurfacerConf</a>&gt; | cloudwatch_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_cloudwatch_SurfacerConf">cloudprober.surfacer.cloudwatch.SurfacerConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datadog_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_datadog_SurfacerConf">cloudprober.surfacer.datadog.SurfacerConf</a>&gt; | probestatus_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_probestatus_SurfacerConf">cloudprober.surfacer.probestatus.SurfacerConf</a>&gt; | 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigquery_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_bigquery_SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt;]: &lt;oneof>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigquery_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_bigquery_SurfacerConf">cloudprober.surfacer.bigquery.SurfacerConf</a>&gt; | otel_surfacer &lt;<a href="../surfacer#cloudprober_surfacer_otel_SurfacerConf">cloudprober.surfacer.otel.SurfacerConf</a>&gt;]: &lt;oneof>
 
 <div class="comment"># Servers to run inside cloudprober. These servers can serve as targets for
 # other probes.</div>server &lt;<a href="../servers#cloudprober_servers_ServerDef">cloudprober.servers.ServerDef</a>>:
