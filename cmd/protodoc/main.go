@@ -143,6 +143,9 @@ func main() {
 
 	// Package level documentation
 	for _, msg := range strings.Split(*extraMsgs, ",") {
+		if msg == "" {
+			continue
+		}
 		nextMessageNames = append(nextMessageNames, protoreflect.FullName(msg))
 	}
 	packagesDocs(nextMessageNames, f, l)
