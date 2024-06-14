@@ -21,6 +21,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/Masterminds/sprig/v3"
 	"github.com/cloudprober/cloudprober/logger"
@@ -35,6 +36,8 @@ var (
 	outDir        = flag.String("out_dir", "proto_docs", "Output directory for the documentation.")
 	protoRootDir  = flag.String("proto_root_dir", ".", "Root directory for the proto files.")
 	packagePrefix = flag.String("package_prefix", "", "Package prefix to resolve import paths")
+	rootMsg       = flag.String("root_msg", "cloudprober.ProberConfig", "Root message to start documentation from.")
+	extraMsgs     = flag.String("extra_msgs", "", "Extra messages to include in the documentation. Comma separated list.")
 )
 
 // These variables get overwritten by using -ldflags="-X main.<var>=<value?" at
@@ -126,7 +129,7 @@ func main() {
 	protodoc.BuildFileDescRegistry(protodoc.Files, *protoRootDir, *packagePrefix, l)
 
 	// Top level message
-	m, err := protodoc.Files.FindDescriptorByName("cloudprober.ProberConfig")
+	m, err := protodoc.Files.FindDescriptorByName(protoreflect.FullName(*rootMsg))
 	if err != nil {
 		panic(err)
 	}
@@ -139,6 +142,11 @@ func main() {
 	writeDoc("index", []*msgTokens{mTokens}, l)
 
 	// Package level documentation
+	if *extraMsgs != "" {
+		for _, msg := range strings.Split(*extraMsgs, ",") {
+			nextMessageNames = append(nextMessageNames, protoreflect.FullName(msg))
+		}
+	}
 	packagesDocs(nextMessageNames, f, l)
 
 	l.Infof("Documentation generated in %s", *outDir)
