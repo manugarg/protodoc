@@ -3,8 +3,8 @@ name: Build and deploy gh-pages
 on:
   push:
     paths:
-      - '**'
-      - '.github/workflows/docgen.yml'
+      - "**"
+      - ".github/workflows/docgen.yml"
 
 jobs:
   build-and-deploy:
@@ -41,7 +41,7 @@ jobs:
 
       - name: Build pages
         run: |
-          go run ./cmd/protodoc/. --proto_root_dir=cloudprober --out_dir=docs --package_prefix=github.com/cloudprober/cloudprober
+          go run ./cmd/protodoc/. --proto_root_dir=cloudprober --out_dir=docs --package_prefix=github.com/cloudprober/cloudprober --extra_msgs=cloudprober.rds.Resource
           ls docs
           cd docs && git status
 
