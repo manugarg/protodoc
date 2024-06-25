@@ -378,6 +378,11 @@ header: &lt;<a href="../probes#cloudprober_probes_http_ProbeConf_HeaderEntry">cl
 #  body: &#34;clientId=aweseomeClient&#34;
 #  body: &#34;clientSecret=noSecret&#34;</div>body: &lt;string>
 
+<div class="comment"># Request body from file. This field is similar to the body field above, but
+# value is read from a file.
+# TODO(manugarg): We should consider providing a way to substitute environment
+# variables in the file.</div>body_file: &lt;string>
+
 <div class="comment"># Enable HTTP keep-alive. If set to true, underlying connection is reused
 # for further probes. Default is to close the connection after every request.</div>keep_alive: &lt;bool>
 
