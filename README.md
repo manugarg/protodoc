@@ -1,5 +1,5 @@
 # protodoc
-Protobuf to documentation generator
+Protobuf to documentation generator. See [Cloudprober](https://github.com/cloudprober/cloudprober)'s [config documentation](https://cloudprober.org/docs/config/overview/) for an example.
 
 ### Example:
 
