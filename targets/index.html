@@ -9,7 +9,30 @@
     border-radius: 0;
     padding-left: 10px;
 }
-</style><h3 id="cloudprober_targets_DummyTargets">cloudprober.targets.DummyTargets <a class="anchor" href="#cloudprober_targets_DummyTargets">#</a></h3>
+</style><h3 id="cloudprober_targets_DNSOptions">cloudprober.targets.DNSOptions <a class="anchor" href="#cloudprober_targets_DNSOptions">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># DNS server to use for DNS resolution, instead of system&#39;s default. Server
+# can be specified in the following format: [network://]ip[:port]
+# where network is one of udp, tcp, tcp4, tcp6, udp4, udp6.
+# Example:
+#  - &#34;1.1.1.1&#34;           // Use default network and port (53)
+# - &#34;tcp://1.1.1.1&#34;      // Use tcp network and default port (53)
+# - &#34;tcp://1.1.1.1:513   // Use tcp network and port 513</div>server: &lt;string>
+
+<div class="comment"># DNS TTL (time to live). This controls how often backend DNS server will be
+# queried.</div>ttl_sec: &lt;int32> | default: 300
+
+<div class="comment"># This option controls for how long cached IP can be used in case of resolve
+# errors. Default value for this is set to ttl_sec. It should never be
+# lower than dns_ttl_sec.</div>max_cache_age_sec: &lt;int32>
+
+<div class="comment"># Backend timeout in milliseconds. This option controls how long we&#39;ll wait
+# for the backend DNS server to respond. Note that DNS resolution happens
+# asynchronously, so DNS resolve time should never really affect the probe.
+# This timeout affects how soon DNS resolution is retried, if it&#39;s hanging.</div>backend_timeout_msec: &lt;int32> | default: 5000
+
+</pre><h3 id="cloudprober_targets_DummyTargets">cloudprober.targets.DummyTargets <a class="anchor" href="#cloudprober_targets_DummyTargets">#</a></h3>
 <pre class="protodoc">
 
 </pre><h3 id="cloudprober_targets_Endpoint">cloudprober.targets.Endpoint <a class="anchor" href="#cloudprober_targets_Endpoint">#</a></h3>
@@ -141,13 +164,12 @@ rds_server_options: &lt;<a href="../rds#cloudprober_rds_ClientConf_ServerOptions
 # configurator) service. This functionality works only if lame_duck_options
 # are specified.</div>exclude_lameducks: &lt;bool> | default: true
 
+<div class="comment"># Options to control DNS resolution behavior if using Cloudprober&#39;s DNS
+# resolver, which get triggered only if you&#39;re setting `resolve_first` probe
+# setting to true.</div>dns_options: &lt;<a href="../targets#cloudprober_targets_DNSOptions">cloudprober.targets.DNSOptions</a>>
+
 <div class="comment"># Provide a dns resolver override instead of using the default dns resolver.
-# dns_server can be specified in the following format: [network://]ip[:port]
-# where network is one of udp, tcp, tcp4, tcp6, udp4, udp6.
-# Example:
-#  - &#34;1.1.1.1&#34;           // Use default network and port (53)
-# - &#34;tcp://1.1.1.1&#34;      // Use tcp network and default port (53)
-# - &#34;tcp://1.1.1.1:513   // Use tcp network and port 513</div>dns_server: &lt;string>
+# Deprecated: This option is now deprecated, please use dns_options instead.</div>dns_server: &lt;string>
 
 </pre><h3 id="cloudprober_targets_file_TargetsConf">cloudprober.targets.file.TargetsConf <a class="anchor" href="#cloudprober_targets_file_TargetsConf">#</a></h3>
 <pre class="protodoc">
