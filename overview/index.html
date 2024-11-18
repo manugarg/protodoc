@@ -189,17 +189,11 @@
     # here. Ignore has precendence over allow.
     # Examples:
     #  ignore_metrics_with_name: &#34;validation_failure&#34;
-    #  allow_metrics_with_name: &#34;(total|success|latency)&#34;
-    #
-    # For efficiency reasons, filtering by metric name has to be implemented by
-    # individual surfacers (while going through metrics within an EventMetrics).
-    # As FILE and PUBSUB surfacers export eventmetrics as is, they don&#39;t support
-    # this option.</div>    allow_metrics_with_name: &lt;string>
+    #  allow_metrics_with_name: &#34;(total|success|latency)&#34;</div>    allow_metrics_with_name: &lt;string>
 
     ignore_metrics_with_name: &lt;string>
 
-<div class="comment">    # Whether to add failure metric or not. This option is enabled by default
-    # for all surfacers except FILE and PUBSUB.</div>    add_failure_metric: &lt;bool>
+<div class="comment">    # Whether to add failure metric or not. This option is enabled by default.</div>    add_failure_metric: &lt;bool> | default: true
 
 <div class="comment">    # If set to true, cloudprober will export all metrics as gauge metrics. Note
     # that cloudprober inherently generates only cumulative metrics. To create

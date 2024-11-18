@@ -192,6 +192,8 @@ type: (ScheduleType_UNSPECIFIED|ENABLE|DISABLE): &lt;enum>
 # default we resolve first if it&#39;s a discovered resource, e.g., a k8s
 # endpoint.</div>resolve_first: &lt;bool>
 
+<div class="comment"># DNS Query QueryClass</div>query_class: (IN|CH): &lt;enum>
+
 <div class="comment"># Which DNS protocol is used for resolution.</div>dns_proto: (UDP|TCP|TCP_TLS): &lt;enum>
 
 <div class="comment"># Requests per probe.
@@ -215,9 +217,13 @@ mode: (ONCE|SERVER): &lt;enum>
 
 <div class="comment"># Command.  For ONCE probes, arguments are processed for the following field
 # substitutions:
-# @probe@    Name of the probe
-# @target@   Hostname of the target
-# @address@  IP address of the target
+# @probe@                    Name of the probe
+# @target.name@ or @target@  Hostname of the target
+# @target.port@ or @port@    Port of the target
+# @target.ip@                IP address associated with target
+# @address@                  Resolved IP address of the target, in case of
+#                            discovered targets, same as @target.ip@.
+# @target.label.&lt;x&gt;@         Label x of the target
 #
 # For example, for target ig-us-central1-a, /tools/recreate_vm -vm @target@
 # will get converted to: /tools/recreate_vm -vm ig-us-central1-a</div>command: &lt;string>
@@ -271,6 +277,11 @@ value: &lt;string>
 </pre><h3 id="cloudprober_probes_grpc_ProbeConf">cloudprober.probes.grpc.ProbeConf <a class="anchor" href="#cloudprober_probes_grpc_ProbeConf">#</a></h3>
 <pre class="protodoc">
 
+<div class="comment"># Port for gRPC requests (Corresponding target field: port)
+# Default is 443, but if this field is not set and target has a port, either
+# discovered (e.g., k8s services, ingresses), or configured (e.g. endpoint,
+# file targets), we use target&#39;s port.</div>port: &lt;int32>
+
 <div class="comment"># Optional oauth config. For GOOGLE_DEFAULT_CREDENTIALS, use:
 # oauth_config: { bearer_token { gce_service_account: &#34;default&#34; } }</div>oauth_config: &lt;<a href="../oauth#cloudprober_oauth_Config">cloudprober.oauth.Config</a>>
 
@@ -299,11 +310,12 @@ method: (ECHO|READ|WRITE|HEALTH_CHECK|GENERIC): &lt;enum>
 # methods for backward compatibility. For HEALTH_CHECK and GENERIC, default
 # is 1.</div>num_conns: &lt;int32>
 
-<div class="comment"># If connect_timeout is not specified, reuse probe timeout.</div>connect_timeout_msec: &lt;int32>
+<div class="comment"># If connect_timeout is not specified, reuse probe timeout. Note that this
+# timeout will have an impact only if it is less than the probe timeout.</div>connect_timeout_msec: &lt;int32>
 
 <div class="comment"># URI scheme allows gRPC to use different resolvers
 # Example URI scheme: &#34;google-c2p:///&#34;
-# See https://github.com/grpc/grpc/blob/master/doc/naming.md for more details</div>uri_scheme: &lt;string>
+# See https://github.com/grpc/grpc/blob/master/doc/naming.md for more details</div>uri_scheme: &lt;string> | default: dns:///
 
 headers: &lt;<a href="../probes#cloudprober_probes_grpc_ProbeConf_Header">cloudprober.probes.grpc.ProbeConf.Header</a>>
 
@@ -378,6 +390,11 @@ header: &lt;<a href="../probes#cloudprober_probes_http_ProbeConf_HeaderEntry">cl
 #  body: &#34;clientId=aweseomeClient&#34;
 #  body: &#34;clientSecret=noSecret&#34;</div>body: &lt;string>
 
+<div class="comment"># Request body from file. This field is similar to the body field above, but
+# value is read from a file.
+# TODO(manugarg): We should consider providing a way to substitute environment
+# variables in the file.</div>body_file: &lt;string>
+
 <div class="comment"># Enable HTTP keep-alive. If set to true, underlying connection is reused
 # for further probes. Default is to close the connection after every request.</div>keep_alive: &lt;bool>
 
@@ -418,6 +435,10 @@ header: &lt;<a href="../probes#cloudprober_probes_http_ProbeConf_HeaderEntry">cl
 # Example:
 #   latency_breakdown: [ ALL_STAGES ]
 #   latency_breakdown: [ DNS_LATENCY, CONNECT_LATENCY, TLS_HANDSHAKE_LATENCY ]</div>latency_breakdown: (NO_BREAKDOWN|ALL_STAGES|DNS_LATENCY|CONNECT_LATENCY|TLS_HANDSHAKE_LATENCY|REQ_WRITE_LATENCY|FIRST_BYTE_LATENCY): &lt;enum>
+
+<div class="comment"># Parse HTTP response as additional metrics. If configured, Cloudprober
+# will try to extract metrics from HTTP response and export them along with
+# the default success/total/latency metrics.</div>response_metrics_options: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions</a>>
 
 <div class="comment"># Interval between targets.</div>interval_between_targets_msec: &lt;int32> | default: 10
 
