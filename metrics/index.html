@@ -23,32 +23,83 @@ base: &lt;float>
 
 num_buckets: &lt;uint32>
 
+</pre><h3 id="cloudprober_metrics_payload_HeaderMetric">cloudprober.metrics.payload.HeaderMetric <a class="anchor" href="#cloudprober_metrics_payload_HeaderMetric">#</a></h3>
+<pre class="protodoc">
+
+header_name: &lt;string>
+
+<div class="comment"># By default, metric is name is the snakecase (all lowercase) version of the
+# of header_name.</div>metric_name: &lt;string>
+
+<div class="comment"># If type is not specified, it&#39;s recorded as a string.</div>type: (UNDEFINED|INT|FLOAT|STRING|HTTP_TIME): &lt;enum>
+
+</pre><h3 id="cloudprober_metrics_payload_JSONMetric">cloudprober.metrics.payload.JSONMetric <a class="anchor" href="#cloudprober_metrics_payload_JSONMetric">#</a></h3>
+<pre class="protodoc">
+
+<div class="comment"># JQ filter to extract metrics from JSON. JQ filter should extract a
+# key-value object where the key is the metric name and the value is the
+# metric value. The value can be a string, number, or a bool.</div>jq_filter: &lt;string>
+
+<div class="comment"># JQ filter to extract labels from JSON. JQ filter should extract a map of
+# type map[string]any and each entry in the map is converted to a label.</div>labels_jq_filter: &lt;string>
+
 </pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions">cloudprober.metrics.payload.OutputMetricsOptions <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions">#</a></h3>
 <pre class="protodoc">
 
 metrics_kind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 
 <div class="comment"># Additional labels (comma-separated) to attach to the output metrics, e.g.
-# &#34;region=us-east1,zone=us-east1-d&#34;. ptype=&#34;external&#34; and probe=&#34;&lt;probeName&gt;&#34;
-# are attached automatically.</div>additional_labels: &lt;string>
+# &#34;region=us-east1,zone=us-east1-d&#34;.</div>additional_labels: &lt;string>
 
 <div class="comment"># Whether to aggregate metrics in Cloudprober. If enabled, Cloudprober
-# aggregates the metrics returned by the external probe process -- external
-# probe process should return metrics only since the last probe run.
+# will aggregate parsed metrics.
 # Note that this option is mutually exclusive with GAUGE metrics and
-# cloudprober will fail during initialization if both options are enabled.</div>aggregate_in_cloudprober: &lt;bool> | default: false
+# cloudprober will fail during initialization if both options are enabled.
+# This option doesn&#39;t work for header_metric and json_metric.</div>aggregate_in_cloudprober: &lt;bool> | default: false
 
-<div class="comment"># Metrics that should be treated as distributions. These metrics are exported
-# by the external probe program as comma-separated list of values, for
-# example: &#34;op_latency 4.7,5.6,5.9,6.1,4.9&#34;. To be able to build distribution
-# from these values, these metrics should be pre-configured in external
-# probe:
+<div class="comment"># Metrics that should be treated as distributions. These metrics are present
+# in the output as comma-separated list of values. For example:
+# &#34;op_latency 4.7,5.6,5.9,6.1,4.9&#34;.
+# To be able to build distribution from these values, these metrics should
+# be pre-configured:
 # dist_metric {
 #   key: &#34;op_latency&#34;
 #   value {
 #     explicit_buckets: &#34;1,2,4,8,16,32,64,128,256&#34;
 #   }
-# }</div>dist_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
+# }
+# Note: This option doesn&#39;t work on header_metric and json_metric.</div>dist_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
+
+<div class="comment"># Header to metric mapping. If this mapping is defined and probe&#39;s response
+# is an HTTP response, we will extract the header value and create a metric
+# from it.
+#
+# For example, to track server date:
+# header_metric {
+#   header_name: &#34;date&#34;
+#   metric_name: &#34;server_date&#34;  
+#   type: HTTP_DATE
+# }
+#
+# Note when header_metric is configured, line parsing for metric is
+# disabled.</div>header_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_HeaderMetric">cloudprober.metrics.payload.HeaderMetric</a>>
+
+<div class="comment"># JSON metrics to create from a JSON output.
+# Note when json_metric is configured, line parsing for metric is
+# disabled.
+# e.g. for JSON output:
+# {&#34;status&#34;: &#34;ok&#34;, &#34;data&#34;: {&#34;latency&#34;: 1.23, &#34;count&#34;: 10}}
+#
+# {
+#   jq_filter: &#34;.data&#34;
+# }
+#   will create metrics: &#34;latency=1.23 count=10&#34;.
+#
+# {
+#   jq_filter: &#34;{\&#34;latency\&#34;:.data.latency, \&#34;total\&#34;: (.data.count&#43;1)}&#34;
+#   labels_jq_filter: &#34;{\&#34;status\&#34;: .status}&#34;
+# }
+#   will create metrics: &#34;labels=status=ok latency=1.23 total=11.</div>json_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_JSONMetric">cloudprober.metrics.payload.JSONMetric</a>>
 
 </pre><h3 id="cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry <a class="anchor" href="#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">#</a></h3>
 <pre class="protodoc">
