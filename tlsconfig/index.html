@@ -22,6 +22,10 @@
 
 <div class="comment"># ServerName override</div>server_name: &lt;string>
 
+min_tls_version: (TLS_AUTO|TLS_1_0|TLS_1_1|TLS_1_2|TLS_1_3): &lt;enum>
+
+max_tls_version: (TLS_AUTO|TLS_1_0|TLS_1_1|TLS_1_2|TLS_1_3): &lt;enum>
+
 <div class="comment"># Certificate reload interval in seconds. If configured, the TLS cert will
 # be reloaded every reload_interval_sec seconds. This is useful when
 # certificates are generated and refreshed dynamically.</div>reload_interval_sec: &lt;int32>
