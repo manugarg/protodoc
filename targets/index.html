@@ -14,11 +14,13 @@
 
 <div class="comment"># DNS server to use for DNS resolution, instead of system&#39;s default. Server
 # can be specified in the following format: [network://]ip[:port]
-# where network is one of udp, tcp, tcp4, tcp6, udp4, udp6.
+# where network is one of udp, tcp, tcp4, tcp6, udp4, udp6, tls.
 # Example:
 #  - &#34;1.1.1.1&#34;           // Use default network and port (53)
 # - &#34;tcp://1.1.1.1&#34;      // Use tcp network and default port (53)
-# - &#34;tcp://1.1.1.1:513   // Use tcp network and port 513</div>server: &lt;string>
+# - &#34;tcp://1.1.1.1:513   // Use tcp network and port 513
+# - &#34;tls://8.8.8.8&#34;     // Use tls network and default dot port (853)
+# - &#34;tls://8.8.8.8:8443&#34; // Use tls network and port 8443</div>server: &lt;string>
 
 <div class="comment"># DNS TTL (time to live). This controls how often backend DNS server will be
 # queried.</div>ttl_sec: &lt;int32> | default: 300
