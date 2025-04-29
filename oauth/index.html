@@ -24,13 +24,26 @@
 </pre><h3 id="cloudprober_oauth_Config">cloudprober.oauth.Config <a class="anchor" href="#cloudprober_oauth_Config">#</a></h3>
 <pre class="protodoc">
 
-[http_request &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | bearer_token &lt;<a href="../oauth#cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken</a>&gt; | 
-&nbsp;google_credentials &lt;<a href="../oauth#cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt;]: &lt;oneof>
+[file &lt;string&gt; | http_request &lt;<a href="../oauth#cloudprober_oauth_HTTPRequest">cloudprober.oauth.HTTPRequest</a>&gt; | 
+&nbsp;cmd &lt;string&gt; | gce_service_account &lt;string&gt; | 
+&nbsp;k8s_local_token &lt;bool&gt; | google_credentials &lt;<a href="../oauth#cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials</a>&gt; | 
+&nbsp;bearer_token &lt;<a href="../oauth#cloudprober_oauth_BearerToken">cloudprober.oauth.BearerToken</a>&gt;]: &lt;oneof>
 
-<div class="comment"># How long before the expiry do we refresh. Default is 60 (1m). This applies
-# only to http_request and bearer_token types, and only if token presents
-# expiry in some way.
-# TODO(manugarg): Consider setting default based on probe interval.</div>refresh_expiry_buffer_sec: &lt;int32>
+<div class="comment"># If auto-refreshing based on token&#39;s expiry, how long before the expiry do we
+# refresh.
+#
+# TODO(manugarg): Consider setting default based on probe interval.</div>refresh_expiry_buffer_sec: &lt;int32> | default: 60
+
+<div class="comment"># If set explicitly, we&#39;ll refresh token at this interval regardless of
+# token&#39;s expiry value.
+#
+# If not set explicitly, we don&#39;t refresh at regular interval if token&#39;s
+# expiry is set, otherwise we refresh at the default interval (30s).
+#
+# To disable refresh on interval even if expiry is not set, set this to 0.
+#
+# In most cases, Cloudprober does the right thing based on the retrieved
+# token and you don&#39;t need to set this field.</div>refresh_interval_sec: &lt;float> | default: 30
 
 </pre><h3 id="cloudprober_oauth_GoogleCredentials">cloudprober.oauth.GoogleCredentials <a class="anchor" href="#cloudprober_oauth_GoogleCredentials">#</a></h3>
 <pre class="protodoc">

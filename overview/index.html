@@ -339,4 +339,38 @@
 <div class="comment">  # Lame duck options. If provided, targets module checks for the lame duck
   # targets and removes them from the targets list.</div>  lame_duck_options: &lt;<a href="../targets#cloudprober_targets_lameduck_Options">cloudprober.targets.lameduck.Options</a>>
 
+<div class="comment"># Artifacts options, applicable to probes that generate artifacts. There is
+# only one such probe type right now (2025/03/16) -- BROWSER. These options
+# specify where artifacts will be stored and if they will be served on
+# Cloudprober&#39;s default webserver. Example:
+#
+# global_artifacts_options {
+#   serve_on_web: true
+#   web_server_root: &#34;/output&#34; # local storage&#39;s dir
+#   storage {
+#     local_storage {
+#       dir: &#34;/output&#34;
+#     }
+#     s3 {
+#       bucket: &#34;my-bucket&#34;
+#     }
+#   }
+# }</div>global_artifacts_options &lt;<a href="../probes#cloudprober_probes_browser_artifacts_ArtifactsOptions">cloudprober.probes.browser.artifacts.ArtifactsOptions</a>>:
+<div class="comment">  # Serve test artifacts on Cloudprober&#39;s default webserver. This is
+  # disabled by default for security reasons.</div>  serve_on_web: &lt;bool>
+
+<div class="comment">  # Specify web server path to serve test artifacts on.
+  # Default is &#34;/artifacts/&lt;probename&gt;&#34;.</div>  web_server_path: &lt;string>
+
+<div class="comment">  # Web server root directory. If not provided (recommended), we just use
+  # the first local storage directory if configured, and if provided, we
+  # verify that it is one of the local storages directories. If no local
+  # storage is configured, we return an error for global options and use
+  # &lt;workdir&gt;/output for probe level artifacts options.</div>  web_server_root: &lt;string>
+
+<div class="comment">  # Storage for test artifacts. Note that test artifacts are always
+  # written to the workdir first, and uploaded to the storage backend in a
+  # parallel goroutine. This is to make sure that uploads don&#39;t block the
+  # main probe execution.</div>  storage: &lt;<a href="../probes#cloudprober_probes_browser_artifacts_Storage">cloudprober.probes.browser.artifacts.Storage</a>>
+
 </pre>
