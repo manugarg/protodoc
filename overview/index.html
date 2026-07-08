@@ -15,7 +15,7 @@
 <div class="comment"># Probes to run.</div>probe &lt;<a href="../probes#cloudprober_probes_ProbeDef">cloudprober.probes.ProbeDef</a>>:
 <div class="comment">    # Probe name. It should be unique across all probes.</div>  - name: &lt;string>
 
-    type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|BROWSER|EXTENSION|USER_DEFINED): &lt;enum>
+    type: (PING|HTTP|DNS|EXTERNAL|UDP|UDP_LISTENER|GRPC|TCP|BROWSER|SYSTEM|STARLARK|EXTENSION|USER_DEFINED): &lt;enum>
 
 <div class="comment">    # Interval between two probe runs in milliseconds.
     # Only one of &#34;interval&#34; and &#34;inteval_msec&#34; should be defined.
@@ -89,7 +89,7 @@
     # target doesn&#39;t respond. This is useful, for example, that your firewall is
     # working as expected.
     #
-    # This is currently implemented only by PING and TCP probes.
+    # This is currently implemented only by PING, TCP, and HTTP probes.
     # Note: This field is currently experimental, and may change in future.</div>    negative_test: &lt;bool>
 
 <div class="comment">    # Alerts configuration. If specified, cloudprober will generate alerts on
@@ -111,12 +111,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dns_probe &lt;<a href="../probes#cloudprober_probes_dns_ProbeConf">cloudprober.probes.dns.ProbeConf</a>&gt; | external_probe &lt;<a href="../probes#cloudprober_probes_external_ProbeConf">cloudprober.probes.external.ProbeConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;udp_probe &lt;<a href="../probes#cloudprober_probes_udp_ProbeConf">cloudprober.probes.udp.ProbeConf</a>&gt; | udp_listener_probe &lt;<a href="../probes#cloudprober_probes_udplistener_ProbeConf">cloudprober.probes.udplistener.ProbeConf</a>&gt; | 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grpc_probe &lt;<a href="../probes#cloudprober_probes_grpc_ProbeConf">cloudprober.probes.grpc.ProbeConf</a>&gt; | tcp_probe &lt;<a href="../probes#cloudprober_probes_tcp_ProbeConf">cloudprober.probes.tcp.ProbeConf</a>&gt; | 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser_probe &lt;<a href="../probes#cloudprober_probes_browser_ProbeConf">cloudprober.probes.browser.ProbeConf</a>&gt; | user_defined_probe &lt;string&gt;]: &lt;oneof>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browser_probe &lt;<a href="../probes#cloudprober_probes_browser_ProbeConf">cloudprober.probes.browser.ProbeConf</a>&gt; | system_probe &lt;<a href="../probes#cloudprober_probes_system_ProbeConf">cloudprober.probes.system.ProbeConf</a>&gt; | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;starlark_probe &lt;<a href="../probes#cloudprober_probes_starlark_ProbeConf">cloudprober.probes.starlark.ProbeConf</a>&gt; | user_defined_probe &lt;string&gt;]: &lt;oneof>
 
 <div class="comment">    # Which machines this probe should run on. If defined, cloudprober will run
     # this probe only if machine&#39;s hostname matches this value. This is useful
     # for large deployments, where you may want to use the same prober config
     # everywhere but run this probe only on a subset of machines.</div>    run_on: &lt;string>
+
+<div class="comment">    # How often to re-evaluate (discover) targets in seconds. This controls the
+    # probe scheduler&#39;s target update interval — how often new targets start
+    # being probed and removed targets stop being probed. If not set, defaults
+    # to 1 minute.</div>    targets_update_sec: &lt;int32>
+
+<div class="comment">    # Duration to wait before starting the probe.
+    #
+    # This delay is applied only once, at the very beginning of the probe execution
+    # loop. It is useful for manually staggering the startup of multiple probes,
+    # especially when the probe interval is large and the default automatic
+    # staggering (capped at 1 minute) is not sufficient.
+    #
+    # Note: This delay is additive to the default automatic staggering.</div>    startup_delay_msec: &lt;uint32>
 
 <div class="comment">    # Schedule for the probe. You can use a schedule to specify when a probe
     # should or should not run. This is useful for running probes only during
@@ -161,7 +176,7 @@
     # should match with the name that you used while registering the user defined
     # surfacer.</div>  - name: &lt;string>
 
-    type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|OTEL|USER_DEFINED): &lt;enum>
+    type: (NONE|PROMETHEUS|STACKDRIVER|FILE|POSTGRES|PUBSUB|CLOUDWATCH|DATADOG|PROBESTATUS|BIGQUERY|OTEL|EXTENSION|USER_DEFINED): &lt;enum>
 
 <div class="comment">    # How many metrics entries (EventMetrics) to buffer. This is the buffer
     # between incoming metrics and the metrics that are being processed. Default
@@ -338,5 +353,38 @@
 
 <div class="comment">  # Lame duck options. If provided, targets module checks for the lame duck
   # targets and removes them from the targets list.</div>  lame_duck_options: &lt;<a href="../targets#cloudprober_targets_lameduck_Options">cloudprober.targets.lameduck.Options</a>>
+
+<div class="comment"># Artifacts options, applicable to probes that generate artifacts. There is
+# only one such probe type right now (2025/03/16) -- BROWSER. These options
+# specify where artifacts will be stored and if they will be served on
+# Cloudprober&#39;s default webserver. Example:
+#
+# global_artifacts_options {
+#   serve_on_web: true
+#   web_server_root: &#34;/output&#34; # local storage&#39;s dir
+#   storage {
+#     local_storage {
+#       dir: &#34;/output&#34;
+#     }
+#     s3 {
+#       bucket: &#34;my-bucket&#34;
+#     }
+#   }
+# }</div>global_artifacts_options &lt;<a href="../probes#cloudprober_probes_browser_artifacts_ArtifactsOptions">cloudprober.probes.browser.artifacts.ArtifactsOptions</a>>:
+<div class="comment">  # Serve test artifacts on Cloudprober&#39;s default webserver. This is
+  # disabled by default for security reasons. If it&#39;s set to true and no
+  # local storage is configured, we return an error.</div>  serve_on_web: &lt;bool>
+
+<div class="comment">  # Specify web server path to serve test artifacts on.
+  # Default is &#34;/artifacts/&lt;probename&gt;&#34;.</div>  web_server_path: &lt;string>
+
+<div class="comment">  # Web server root directory. If not provided (recommended), we just use
+  # the first local storage directory if configured, and if provided, we
+  # verify that it is one of the local storages directories.</div>  web_server_root: &lt;string>
+
+<div class="comment">  # Storage for test artifacts. Note that test artifacts are always
+  # written to the workdir first, and uploaded to the storage backend in a
+  # parallel goroutine. This is to make sure that uploads don&#39;t block the
+  # main probe execution.</div>  storage: &lt;<a href="../probes#cloudprober_probes_browser_artifacts_Storage">cloudprober.probes.browser.artifacts.Storage</a>>
 
 </pre>

@@ -57,6 +57,13 @@ protocol: (HTTP|HTTPS): &lt;enum>
 <div class="comment"># Pattern data handler returns pattern data at the url /data_&lt;size_in_bytes&gt;,
 # e.g. &#34;/data_2048&#34;.</div>pattern_data_handler: &lt;<a href="../servers#cloudprober_servers_http_ServerConf_PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler</a>>
 
+<div class="comment"># Custom response headers to be added to all HTTP responses.
+# Example:
+#   response_header {
+#     key: &#34;X-Custom-Header&#34;
+#     value: &#34;custom-value&#34;
+#   }</div>response_header: &lt;<a href="../servers#cloudprober_servers_http_ServerConf_ResponseHeaderEntry">cloudprober.servers.http.ServerConf.ResponseHeaderEntry</a>>
+
 </pre><h3 id="cloudprober_servers_http_ServerConf_PatternDataHandler">cloudprober.servers.http.ServerConf.PatternDataHandler <a class="anchor" href="#cloudprober_servers_http_ServerConf_PatternDataHandler">#</a></h3>
 <pre class="protodoc">
 
@@ -64,6 +71,13 @@ protocol: (HTTP|HTTPS): &lt;enum>
 
 <div class="comment"># Pattern is repeated to build the response, with &#34;response_size mod
 # pattern_size&#34; filled by &#39;0&#39; bytes.</div>pattern: &lt;string> | default: cloudprober
+
+</pre><h3 id="cloudprober_servers_http_ServerConf_ResponseHeaderEntry">cloudprober.servers.http.ServerConf.ResponseHeaderEntry <a class="anchor" href="#cloudprober_servers_http_ServerConf_ResponseHeaderEntry">#</a></h3>
+<pre class="protodoc">
+
+key: &lt;string>
+
+value: &lt;string>
 
 </pre><h3 id="cloudprober_servers_udp_ServerConf">cloudprober.servers.udp.ServerConf <a class="anchor" href="#cloudprober_servers_udp_ServerConf">#</a></h3>
 <pre class="protodoc">

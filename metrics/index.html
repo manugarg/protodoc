@@ -70,6 +70,10 @@ metrics_kind: (UNDEFINED|GAUGE|CUMULATIVE): &lt;enum>
 # }
 # Note: This option doesn&#39;t work on header_metric and json_metric.</div>dist_metric: &lt;<a href="../metrics#cloudprober_metrics_payload_OutputMetricsOptions_DistMetricEntry">cloudprober.metrics.payload.OutputMetricsOptions.DistMetricEntry</a>>
 
+<div class="comment"># If provided we process only lines that match this regex.</div>line_accept_regex: &lt;string>
+
+<div class="comment"># If provided we skip lines that match this regex.</div>line_reject_regex: &lt;string>
+
 <div class="comment"># Header to metric mapping. If this mapping is defined and probe&#39;s response
 # is an HTTP response, we will extract the header value and create a metric
 # from it.
